@@ -417,4 +417,7 @@ class TeacherController extends Zend_Controller_Action
 		$this->examSession->unsetAll();
 		header('Location: ../');
 	}
+	function testforgit()
+	{
+	}
 }
