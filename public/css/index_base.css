@@ -1,0 +1,26 @@
+@charset "utf-8";
+body {
+	background: transparent;
+	color: #11449E;
+}
+a {
+	text-decoration: none;
+}
+
+a:link {
+	color: #205AA7;
+	text-decoration: none;
+}
+a:visited {
+	color: #AF4A92;
+	text-decoration: none;
+}
+a:hover {
+	color: #E54646;
+	text-decoration: none;
+}
+
+.mainbody{
+	border:5px solid #678FC2;
+	text-align:left!important;
+	}
