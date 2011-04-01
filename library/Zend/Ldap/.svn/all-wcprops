@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap
+END
+Collection.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Collection.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Exception.php
+END
+Dn.php
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Dn.php
+END
+Attribute.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Attribute.php
+END
+Filter.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter.php
+END
+Node.php
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node.php
+END
+Converter.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Converter.php
+END

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node
+END
+Collection.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Collection.php
+END
+RootDse.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/RootDse.php
+END
+Schema.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Schema.php
+END
+ChildrenIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/ChildrenIterator.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Abstract.php
+END

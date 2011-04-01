@@ -1,0 +1,26 @@
+<?php  include_once 'header.phtml';?>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#sub').click(function (){
+		var valueStr = document.getElementById("value").value;
+		var keyStr = document.getElementById("key").value;
+		$.post("searchstudent",{'value':valueStr, 'key':keyStr },function(data){
+			document.getElementById("getData").innerHTML = data;
+		})
+	})
+})
+</script>
+<div style="float:left; margin-left:30px;">
+	<form action="" method="post">输入关键字
+    	<input id="value" name="value" type="text">
+        <select id="key" name="key" >
+        	<option value="username">学号</option>
+        	<option value="name">名字</option>
+        </select>
+        <input id='sub' name="sub" type="button" value="查询">
+    </form>
+<div id="getData"></div>
+
+</div>
+
+<?php include_once 'footer.phtml';?>

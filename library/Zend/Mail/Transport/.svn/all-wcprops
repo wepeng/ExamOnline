@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport
+END
+Sendmail.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport/Sendmail.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport/Exception.php
+END
+File.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport/File.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport/Abstract.php
+END
+Smtp.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Mail/Transport/Smtp.php
+END

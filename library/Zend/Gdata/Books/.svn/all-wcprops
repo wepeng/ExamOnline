@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books
+END
+VolumeEntry.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books/VolumeEntry.php
+END
+VolumeFeed.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books/VolumeFeed.php
+END
+CollectionEntry.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books/CollectionEntry.php
+END
+VolumeQuery.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books/VolumeQuery.php
+END
+CollectionFeed.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Books/CollectionFeed.php
+END

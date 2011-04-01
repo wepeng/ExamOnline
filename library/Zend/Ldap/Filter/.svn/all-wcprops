@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter
+END
+Logical.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Logical.php
+END
+Mask.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Mask.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Exception.php
+END
+Not.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Not.php
+END
+Or.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Or.php
+END
+And.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/And.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/Abstract.php
+END
+String.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Filter/String.php
+END

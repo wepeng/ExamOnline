@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App
+END
+BaseMediaSource.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/BaseMediaSource.php
+END
+HttpException.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/HttpException.php
+END
+FeedSourceParent.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/FeedSourceParent.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Exception.php
+END
+LoggingHttpClientAdapterSocket.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/LoggingHttpClientAdapterSocket.php
+END
+FeedEntryParent.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/FeedEntryParent.php
+END
+MediaFileSource.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/MediaFileSource.php
+END
+MediaSource.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/MediaSource.php
+END
+Entry.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Entry.php
+END
+MediaEntry.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/MediaEntry.php
+END
+BadMethodCallException.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/BadMethodCallException.php
+END
+Feed.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Feed.php
+END
+VersionException.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/VersionException.php
+END
+InvalidArgumentException.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/InvalidArgumentException.php
+END
+Base.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Base.php
+END
+Extension.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Extension.php
+END
+Util.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/Util.php
+END
+AuthException.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/AuthException.php
+END
+CaptchaRequiredException.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/CaptchaRequiredException.php
+END
+IOException.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/App/IOException.php
+END

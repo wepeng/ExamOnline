@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension
+END
+Date.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Date.php
+END
+Publisher.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Publisher.php
+END
+Creator.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Creator.php
+END
+Subject.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Subject.php
+END
+Rights.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Rights.php
+END
+Title.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Title.php
+END
+Identifier.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Identifier.php
+END
+Description.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Description.php
+END
+Language.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Language.php
+END
+Format.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/DublinCore/Extension/Format.php
+END

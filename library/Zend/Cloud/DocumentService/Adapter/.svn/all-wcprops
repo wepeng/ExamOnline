@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/DocumentService/Adapter
+END
+SimpleDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/DocumentService/Adapter/SimpleDb.php
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure.php
+END
+AbstractAdapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/DocumentService/Adapter/AbstractAdapter.php
+END

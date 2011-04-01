@@ -1,0 +1,69 @@
+<?php  include_once 'header.phtml';?>
+<script type="text/javascript">
+	var xmlHttpRequest;  
+	//XmlHttpRequest对象 
+	function createXmlHttpRequest(){ 
+			if(window.ActiveXObject){ //如果是IE
+					return new ActiveXObject("Microsoft.XMLHTTP"); 
+			}else if(window.XMLHttpRequest){ //非IE浏览器 
+					return new XMLHttpRequest(); 
+			} 
+	} 
+	
+	//设置已选择的试卷名和试卷ID
+	function setExamName(title,exam_id)
+	{
+		document.getElementById("examName").textContent = title;
+		document.getElementById("examId").value = exam_id;		
+
+		var url = "setreexam?exam_id="+exam_id;
+		
+		//1.创建XMLHttpRequest组建 
+		xmlHttpRequest = createXmlHttpRequest(); 
+			 
+		//2.设置回调函数 
+		xmlHttpRequest.onreadystatechange = HuiDiaoFun; 
+			 
+		//3.初始化XMLHttpRequest组建 
+		xmlHttpRequest.open("post",url,true); 
+			 
+		//4.发送请求 
+		xmlHttpRequest.send(null);   
+	}       
+	//回调函数 
+	function HuiDiaoFun(){ 
+			if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
+					var valueReturned = xmlHttpRequest.responseText;
+					document.getElementById("paperParts").innerHTML = valueReturned;
+			} 
+	}
+</script>
+<div style="float:left; margin-left:30px;">
+	<form name="reexamForm" action="setreexam" method="post">
+	选择重考试卷：<span id="examName"></span><br/>
+	<input type="hidden" id="examId" name="examId"/>
+	<div id="paperList" style="border:1px #CCC solid; padding:10px">
+	<b>最近进行的考试</b><br>
+		<?php
+			if(is_array($this->getRecentlyExamList))
+			{
+				foreach($this->getRecentlyExamList as $value)
+				{
+					echo "<a id='".$value['id']."' href=\"JavaScript:setExamName('".$value['name']."','".$value['id']."')\">".$value['name']."</a><br/>";
+				}
+			}else
+			{
+				echo $this->noSearchResult."<br>";
+			}
+
+		?>
+	</div>
+	选择重考部分：<br/>
+	<div id="paperParts" style="border:1px #CCC solid; padding:5px;"></div><br/>
+	
+	输入考生学号（考生间用逗号（，）区分）：<input name="studentNums" type="text" value="" />(考生是否存在)<br/>
+	<input type="button" onClick="reexamForm.submit()" value="确定" />
+	</form>
+</div>
+
+<?php include_once 'footer.phtml';?>

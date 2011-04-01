@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Schema
+END
+Item.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Schema/Item.php
+END
+ActiveDirectory.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Schema/ActiveDirectory.php
+END
+OpenLdap.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Ldap/Node/Schema/OpenLdap.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter/WindowsAzure.php
+END
+AbstractAdapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter/AbstractAdapter.php
+END
+ZendQueue.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter/ZendQueue.php
+END
+Sqs.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter/Sqs.php
+END

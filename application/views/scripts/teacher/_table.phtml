@@ -1,0 +1,34 @@
+<form action="#" method="post">
+		<table id="tb" style="border:1px solid #000">
+			<tr >
+				<th>序  号</th>
+				<th>编  辑</th>
+				<th>登录名</th>
+				<th>姓  名</th>
+				<th>性  别</th>
+				<th colspan="2">操    作</th>
+			</tr>
+<?php 
+$i = 0;
+if(is_array($result)): 
+	foreach($result as $value) : ?>
+			<tr>
+			<td align="center"> <?php echo ++$i; ?>
+				</td>
+					<td align="center"><img src="../../public/images/edit.gif" height="24px" width="24px" alt="编辑" ></img><input type="hidden" name="id" value="<?php $value['id'] ?>">
+				</td>
+				<td><input  disabled="false"  type="text" name="loginname" value="<?php echo $value['username'] ?>"/>
+				</td>
+				<td><input type="text" name="name" value="<?php echo $value['name'] ?>" />
+				</td>
+				<td><input type="text" name="gender"  value="<?php echo $value['sex'] ?> "/>
+				</td>	
+				</td>
+				<td><input type="button" name="resetpw" value="重置密码" />
+				</td>
+				<td width="60px" align="center"><img src="../../public/images/delete.gif" height="24px" width="24px" alt="删除"></img>
+				</td>
+			</tr>
+			<?php endforeach; endif;?>
+	 </table>
+</form>
