@@ -1,0 +1,110 @@
+@charset "utf-8";
+/*===全局页面基础参数========*/
+body,input,table,select,textarea,h1,h2,h3,h4,h5,h6,button{
+	font-family:Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight:normal;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+ul,li{
+	list-style: none;
+	line-height:150%;
+}
+img{
+	border-width:0px
+}
+td,th{
+	
+}
+em{
+	font-style:normal;
+}
+strong,b{
+	font-weight: bold;
+}
+body{
+	text-align:center;
+}
+/*===全局框架position参数========*/
+.main_html,.mainbody{	
+	height:100%;
+	overflow: hidden;
+	text-align:left;
+}
+.main_html>.mainbody{		/*-- for !IE6.0 --*/
+	width: auto;
+	height: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	text-align:left
+}
+#bodyDiv {
+	width: 100%;
+	height: 100%;
+	_padding-top:80px;
+	_padding-bottom:22px;
+	background:#fff;
+}
+#headDiv{
+	width:100%;
+	height:80px;
+	position:absolute;
+	top:0px;
+	z-index:999;
+}
+#footerDiv{
+	width:100%;
+	height:22px;
+	position:absolute;
+	bottom:0px;
+	_bottom:-1px;		 /*-- for IE6.0 --*/
+	overflow: hidden;
+	z-index:991;
+}
+#mainDiv{
+	width: 100%;
+	height: 100%;
+	_padding-left:156px;
+	z-index:992;
+}
+#bodyDiv>#mainDiv {
+	height:auto;
+	position:absolute;
+	top:80px;
+	bottom:22px;
+	z-index:992;
+}
+
+#leftDiv{	
+	width:156px;
+	height:100%;
+	position:absolute;
+	left:0px;
+	overflow: hidden;
+}
+#rightDiv {
+	width: 100%;
+	height: 100%;
+}
+#mainDiv>#rightDiv {
+	width:auto;
+	position:absolute;
+	left:156px;
+	right:0px;
+}
+#rightDiv div{
+	height:100%;
+	width:100%;
+	overflow:auto!important;
+}
+#rightDiv .rightcontiframe{
+	width:100%;/*==for ff==*/
+	*width:98%!important;/*==for ie7==*/
+	*width:100%;/*==for ie6==*/
+}
