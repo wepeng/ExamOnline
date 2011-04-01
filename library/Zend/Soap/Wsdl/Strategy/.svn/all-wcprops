@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy
+END
+AnyType.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/AnyType.php
+END
+ArrayOfTypeComplex.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/ArrayOfTypeComplex.php
+END
+ArrayOfTypeSequence.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/ArrayOfTypeSequence.php
+END
+DefaultComplexType.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/DefaultComplexType.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/Interface.php
+END
+Composite.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/Composite.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl/Strategy/Abstract.php
+END

@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon
+END
+ResultSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/ResultSet.php
+END
+Item.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Item.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Exception.php
+END
+EditorialReview.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/EditorialReview.php
+END
+SimpleDb.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/SimpleDb.php
+END
+Offer.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Offer.php
+END
+SimilarProduct.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/SimilarProduct.php
+END
+Accessories.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Accessories.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Abstract.php
+END
+Query.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Query.php
+END
+Sqs.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Sqs.php
+END
+Ec2.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Ec2.php
+END
+ListmaniaList.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/ListmaniaList.php
+END
+OfferSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/OfferSet.php
+END
+Authentication.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Authentication.php
+END
+Image.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/Image.php
+END
+CustomerReview.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/CustomerReview.php
+END
+S3.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/Amazon/S3.php
+END

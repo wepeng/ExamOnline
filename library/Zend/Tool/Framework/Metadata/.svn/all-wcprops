@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata
+END
+Tool.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata/Tool.php
+END
+Interface.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata/Interface.php
+END
+Basic.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata/Basic.php
+END
+Attributable.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata/Attributable.php
+END
+Dynamic.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Tool/Framework/Metadata/Dynamic.php
+END

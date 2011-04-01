@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl
+END
+Shortener.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/Shortener.php
+END
+JdemCz.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/JdemCz.php
+END
+AbstractShortener.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/AbstractShortener.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/Exception.php
+END
+TinyUrlCom.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/TinyUrlCom.php
+END
+IsGd.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/IsGd.php
+END
+MetamarkNet.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/ShortUrl/MetamarkNet.php
+END

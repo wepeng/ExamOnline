@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/EnglishExam/!svn/ver/1/library/Zend/TimeSync
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/TimeSync/Exception.php
+END
+Ntp.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/TimeSync/Ntp.php
+END
+Protocol.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/TimeSync/Protocol.php
+END
+Sntp.php
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/EnglishExam/!svn/ver/1/library/Zend/TimeSync/Sntp.php
+END

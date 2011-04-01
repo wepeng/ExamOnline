@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File
+END
+MimeType.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/MimeType.php
+END
+Sha1.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Sha1.php
+END
+FilesSize.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/FilesSize.php
+END
+NotExists.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/NotExists.php
+END
+IsCompressed.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/IsCompressed.php
+END
+ExcludeMimeType.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/ExcludeMimeType.php
+END
+Size.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Size.php
+END
+Extension.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Extension.php
+END
+Crc32.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Crc32.php
+END
+ImageSize.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/ImageSize.php
+END
+IsImage.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/IsImage.php
+END
+Exists.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Exists.php
+END
+Hash.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Hash.php
+END
+Upload.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Upload.php
+END
+WordCount.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/WordCount.php
+END
+Md5.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Md5.php
+END
+ExcludeExtension.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/ExcludeExtension.php
+END
+Count.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Validate/File/Count.php
+END

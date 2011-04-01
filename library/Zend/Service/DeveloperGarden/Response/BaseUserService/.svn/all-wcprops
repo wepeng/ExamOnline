@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/BaseUserService
+END
+GetQuotaInformationResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/BaseUserService/GetQuotaInformationResponse.php
+END
+GetAccountBalanceResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/BaseUserService/GetAccountBalanceResponse.php
+END
+ChangeQuotaPoolResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/BaseUserService/ChangeQuotaPoolResponse.php
+END

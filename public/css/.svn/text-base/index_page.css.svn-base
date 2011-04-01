@@ -1,0 +1,288 @@
+@charset "utf-8";
+.floatleft{
+	float:left;
+}
+.floatright{
+	float:right;
+	}
+/*=========首页自定义功能样式===========*/
+.portallet {
+	text-align: center;
+	width:98%;
+	margin:0 auto;
+	margin-top:5px;
+}
+
+.portallet .portallet_tool {
+	margin: 4px 0;
+	clear: both;
+	display: block;
+	text-align: right;
+}
+
+.portallet .FGSideLeft {
+	width: 32%;
+	float: left;
+}
+
+.portallet .FGSideright {
+	width: 33%;
+	float: left;
+	margin-left: 0.5%;
+}
+.portallet .FGSideLeft2{
+	width: 58%;
+	float: left;
+	margin-left: 1%;
+}
+.portallet .FGSideright2 {
+	width: 36%;
+	float: left;
+	margin-left: 1%;
+}
+.movebox {
+	width: 100%;
+	text-align: left;
+	margin-bottom:10px;
+}
+.movebox h2 {
+	clear: both;
+	float:left;
+	cursor: pointer;
+	text-align:left;
+	width: 100%;
+}
+.movebox .titilebox {
+	float: left;
+}
+.movebox .titilebox em{
+	font-weight:bold;
+	display:block;
+	margin-left:10px;
+}
+
+/*==收起==展开==最大化==还原==关闭==编辑*/
+.movebox .minbox,.movebox .maxbox,.movebox .windowbox,.movebox .restore,.movebox .delbox {
+	float: right;
+	cursor: pointer;
+	display: block;
+}
+/*====内容====*/
+.movebox .movebox_con {
+	margin: 0px;
+	list-style: none;
+	clear: both;
+	background: #fff;
+	padding:3px 0;
+	min-height:170px;
+	_height:150px;
+}
+.movebox .movebox_con ul{
+	width:93%;
+	margin:0 auto;
+	}
+.movebox .movebox_con ul li {
+	margin: 1px 0px;
+}
+/*=================列表形式============*/
+..movebox_con .portlet_list li{
+	line-height:180%;
+	width:100%;
+	clear:right;
+	}
+.movebox_con .portlet_list li a{
+	line-height:180%;
+	padding-left:8px;
+	float:left;
+	}
+.movebox_con .portlet_list li a:hover{
+	text-decoration: underline;
+	}
+.movebox_con ul.portlet_list .date{
+	float:right;
+	display:block;
+}
+.movebox_con ul.portlet_list li h5{
+	float:right;
+	}
+.movebox_con ul.portlet_list h6{
+	width:100%;
+	}
+.movebox_con ul.portlet_list h6 a{
+	color:blue;
+	float:right:
+	}
+.movebox_con .mobilesearch h3{
+	color:#000;
+	}
+.movebox_con .icbasearch h3{
+	text-align:left;
+	}
+.movebox_con .baidusearch h3{
+	text-align:left;
+	}
+/*======portallet弹出列表样式============*/
+.portalList {
+	width: 100%;
+	list-style: none;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.portalList a:hover .simple {
+	color: red;
+}
+
+.portalList .formbox {
+	display: block;
+	height: 330px;
+}
+
+.portalList .list {
+	width: 98%;
+	margin: 0 atuo;
+	height:320px;
+	overflow-y:auto;
+}
+
+.portalList .list li {
+	width: 45%;
+	padding: 15px 0;
+	float: left;
+}
+
+.portalList .list li span {
+	float: left;
+	width: 110px;
+	margin: 0 10px;
+	text-align: center;
+}
+
+.portalList .list li span img {
+	margin: 3px 0;
+}
+
+.portalList .list li dl {
+	color: #000;
+	float: left;
+	text-align: left;
+}
+
+.portalList .list li dl dt {
+	margin-bottom: 5px;
+}
+
+.portalList .list li dl dt a {
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+/*===============简洁方式显示=========*/
+.portalList .simple_list {
+	width: 95%;
+	margin: 0 atuo;
+	height:320px;
+	overflow-y:auto;
+}
+
+.portalList .simple_list li {
+	width: 32%;
+	padding: 10px 0;
+	float: left;
+	text-align: left;
+	overflow:hidden;
+}
+
+.portalList .simple_list li a {
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: underline;
+	float: left;
+}
+
+.portalList .simple_list li .btn_zj {
+	display: block;
+	float: left;
+	margin: 0 2px;
+	cursor: pointer;
+}
+
+.portalList .simple_list li .btn_sc {
+	display: block;
+	float: left;
+	margin: 0 2px;
+	cursor: pointer;
+}
+/*===========树结构===========*/
+.tree{ 
+}
+.tree li{
+	text-align:left;
+	text-indent:1em;
+}
+.tree li a{
+	cursor:pointer;
+	padding:2px;
+}
+.tree .sub{
+	margin-left:1.8em;
+}
+.tree a:hover{
+	text-decoration: underline;
+	color:blue;
+}
+.tree .current{
+	background: #EDF3FA;
+	border: 1px dotted #C8D7E8;
+	font-size:bold;
+	padding:2px;
+}
+/*=========显示新闻页样式=======*/
+.newspage_bg{
+	padding:50px 0 10px 0;
+}
+.newspage{
+	margin:0 auto;
+	width:700px;
+}
+.newspagebg{
+	padding-left:1px;
+}
+.newspage .title{
+	width:100%;
+}
+.newspage .title h3{
+	font-size:25px;
+	font-weight:bold;
+	width:90%;
+	padding:20px 0 10px 0;
+}
+.newspage .title h4{
+	font-weight:normal;
+	color:#000;
+	width:90%;
+	border-bottom:1px solid #ccc;
+	margin:5px 0;
+	padding:2px 0;
+}
+.newspage .newcont{
+	padding:10px 0;
+	width:90%;
+	margin: 10px auto;
+	text-align:left;
+	font-size:16px;
+	font-family: 楷体_gb2312;
+	min-height:350px;
+	_height:350px;
+	color:#000;
+	line-height:180%;
+}
+.newspage .download{
+	width:90%;
+	margin:5px auto;
+	text-align:left;
+}
+.newspage .newsbar{
+	padding-bottom:10px;
+}

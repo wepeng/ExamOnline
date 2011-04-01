@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/SendSms
+END
+SendFlashSMSResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/SendSms/SendFlashSMSResponse.php
+END
+SendSMSResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/SendSms/SendSMSResponse.php
+END
+SendSmsAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/SendSms/SendSmsAbstract.php
+END

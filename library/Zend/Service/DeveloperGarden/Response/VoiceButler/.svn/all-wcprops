@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler
+END
+CallStatusResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/CallStatusResponse.php
+END
+TearDownCallResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/TearDownCallResponse.php
+END
+CallStatus2Response.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/CallStatus2Response.php
+END
+NewCallSequencedResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/NewCallSequencedResponse.php
+END
+NewCallResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/NewCallResponse.php
+END
+VoiceButlerAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/VoiceButler/VoiceButlerAbstract.php
+END

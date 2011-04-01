@@ -1,0 +1,207 @@
+﻿@charset "utf-8";
+/*=========首页自定义功能样式===========*/
+.portallet_tool a.btn_zj {
+	background: url(images/index_icons.gif) no-repeat;
+	background-position: -50px -60px;;
+	color: #2C5D9F !important;
+	padding-left: 1.5em;
+	padding-top: 2px;
+}
+.movebox h2 {
+	background:url(images/index_movebox_title.gif) no-repeat right top;
+	border-bottom:1px solid #BED0E8;
+}
+.movebox .titilebox {
+	background:url(images/index_movebox_title.gif) no-repeat left top;
+	padding-right:2em;
+}
+.movebox .titilebox em{
+	color:#11449E;
+	padding:3px 1em 1px 0em;
+}
+.movebox .titilebox em.ico_nor{
+	background:url(images/index_movebox_title_ico_1.gif) no-repeat left center;
+	text-indent:1.5em;
+}
+.movebox .titilebox em.ico_rili{
+	background:url(images/index_movebox_title_ico_rili.gif) no-repeat left center;
+	text-indent:1.5em;
+}
+movebox_title_ico_rili.gif
+/*==收起==展开==最大化==还原==关闭==编辑*/
+.movebox .minbox,.movebox .maxbox,.movebox .windowbox,.movebox .restore,.movebox .delbox {
+	height: 15px;
+	width: 15px;
+	float: right;
+	cursor: pointer;
+	display: block;
+	background: url(images/index_movebox_ico.gif) no-repeat left top;
+	margin:2px 2px 0 0;
+}
+.movebox a:hover.maxbox {
+	background-position: 0 -15px;
+}
+.movebox a.minbox {
+	background-position: -15px 0;
+}
+.movebox a:hover.minbox {
+	background-position: -15px -15px;
+}
+.movebox a.windowbox {
+	background-position: -30px 0;
+}
+.movebox a:hover.windowbox {
+	background-position: -30px -15px;
+}
+.movebox a.restorebox {
+	background-position: -45px 0;
+}
+.movebox a:hover.restorebox {
+	background-position: -45px -15px;
+}
+.movebox a.delbox {
+	background-position: -60px 0;
+}
+.movebox a:hover.delbox {
+	background-position: -60px -15px;
+}
+/*============内容==========*/
+.movebox .movebox_con {
+	border: solid #CFCECC;
+	border-width: 0px 1px 1px 1px;
+}
+/*=================列表形式============*/
+.movebox_con ul.portlet_list{
+	width:98%;
+}
+.movebox_con ul.portlet_list li{
+	background: url(images/index_portlet_list_underline.gif) repeat-x left bottom;
+	width:100%;
+	}
+.movebox_con ul.portlet_list li a{
+	background: url(images/index_portlet_list_arrow.gif) no-repeat left center;
+	text-indent:0.2em;
+	float:left
+	}
+/*======列表形式 其他列表图标============*/
+.movebox_con ul.news li a{
+	background: url(images/index_portlet_list_arrow_news.gif) no-repeat left center;
+	text-indent:0.3em;
+	}
+.movebox_con ul.notice li a{
+	background: url(images/index_portlet_list_arrow_news.gif) no-repeat left center;
+	text-indent:0.3em;
+	}
+.movebox_con ul.notice li a{
+	background: url(images/index_portlet_list_arrow_notice.gif) no-repeat left center;
+	text-indent:0.3em;
+	}
+.movebox_con ul.portlet_list li a:hover{
+	text-decoration: underline;
+	color:#0006FF;
+	}
+.movebox_con ul.portlet_list .date{
+	color:#000;
+	font-family:Arial
+}
+.movebox_con ul.portlet_list h6{
+	height:30px;
+	width:100%;
+	}
+.movebox_con .mobilesearch h3{
+	height:30px;
+	width:100%;
+	color:#000;
+	}
+.movebox_con .icbasearch h3{
+	background: url(images/index_porlet-icba.gif) no-repeat left;
+	height:30px;
+	width:100%;
+	}
+.movebox_con .baidusearch h3{
+	background: url(images/index_porlet-baidu.gif) no-repeat left;
+	height:30px;
+	width:100%;
+	}
+.movebox_con li h5{
+	font-weight:normal;
+	color:#333;
+}
+.movebox_con h6 a{
+	font-weight:normal;
+}
+/*======portallet弹出列表样式============*/
+.portalList .simple {
+	background: url(images/index_icons.gif) no-repeat left bottom;
+	background-position: -50px -100px;
+	padding-left: 1.5em;
+	color: #10478B;
+}
+
+.portalList a:hover .simple {
+	background: url(images/index_icons.gif) no-repeat left bottom;
+	background-position: -50px -100px;
+	padding-left: 1.5em;
+}
+.portalList .list li span img {
+	border: 1px solid #3366CC;
+}
+
+.portalList .list li dl {
+	color: #000;
+	float: left;
+	text-align: left;
+}
+
+.portalList .list li dl dt {
+	margin-bottom: 5px;
+}
+
+.portalList .list li dl dt a {
+	color: #0000CC;
+}
+
+/*===============简洁方式显示=========*/
+.portalList .simple_list li a {
+	color: #0000CC;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.portalList .simple_list li .btn_zj {
+	background: url(images/index_icons.gif) no-repeat;
+	background-position: -50px -120px;
+	height: 14px;
+	width: 14px;
+}
+
+.portalList .simple_list li .btn_sc {
+	background: url(images/index_icons.gif) no-repeat;
+	background-position: -64px -120px;
+	height: 14px;
+	width: 14px;
+}
+/*=========显示新闻页样式=======*/
+.newspage_bg{
+	background: url(images/index_newscont_bgpic.gif) no-repeat 5% top;
+}
+.newspage{
+	background:#fff url(images/index_newscont_bg.gif) repeat-y right top;
+}
+.newspagebg{
+	background: url(images/index_newscont_leftborder.gif) repeat-y left top;
+}
+.newspage .title{
+	background: url(images/index_newscont_title.gif) no-repeat right top;
+}
+.newspage .title h3{
+	background: url(images/index_newscont_titlebg.gif) no-repeat left bottom;
+}
+.newspage .title h4{
+}
+.newspage .newcont{
+}
+.newspage .newsbar{
+	background: url(images/index_newscont_bot.gif) no-repeat right bottom;
+}
