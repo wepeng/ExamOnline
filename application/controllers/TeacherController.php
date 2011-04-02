@@ -505,13 +505,12 @@ class TeacherController extends Zend_Controller_Action
 	}
 
 	function resetpwAction() {
-		exit();
 		switch ($_POST['type'])
 		{ 
 		case 's': //修改学生密码为空
-			if($this->sys->resetPassword($_POST['username'], "", 'student'))
+			if($this->sys->resetPassword($_POST['username'], "123", 'student'))
 		   	{
-				echo '密码成功置空！';
+				echo '成功设置'.$_POST['username'].'密码为123。';
 			}
 			else 
 			{
@@ -519,10 +518,42 @@ class TeacherController extends Zend_Controller_Action
 			}
 			break;
 		case 't'://修改教师密码为空
-			$this->sys->resetPassword($_POST['username'], "", 'teacher');
+			if($this->sys->resetPassword($_POST['username'], "123", 'teacher'))
+			{
+				echo '成功设置'.$_POST['username'].'密码为123。';
+			}
+			else
+			{
+				echo '修改失败';
+			}
 
 			break;
+		}
+	}
+	function deletepersonAction() {
+		switch ($_POST['type'])
+		{ 
+		case 's': //修改学生密码为空
+			if($this->sys->deleteperson($_POST['username'], 'student'))
+			{
+				echo '成功删除'.$_POST['username'];
+			}
+			else 
+			{
+				echo '删除失败！';
+			}
+			break;
+		case 't'://修改教师密码为空
+			if($this->sys->deleteperon($_POST['username'], 'teacher'))
+			{
+				echo '成功删除'.$_POST['username'];
+			}
+			else
+			{
+				echo '删除失败';
+			}
 
+			break;
 		}
 	}
 }

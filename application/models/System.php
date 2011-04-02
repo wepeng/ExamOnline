@@ -63,5 +63,17 @@ class System
 		}
 		
 	}
+	function deleteperson($username, $table)
+	{
+		$sql = "DELETE FROM `$table` WHERE `username` = $username ";
+		$result = $this->db->query($sql);	
+		if($result) 
+		{
+			return TRUE	;
+		}else 
+		{
+			return FALSE;
+		}
+	}
 	
 }
