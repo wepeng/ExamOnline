@@ -24,11 +24,13 @@ if(is_array($result)):
 				<td><input type="text" name="gender"  value="<?php echo $value['sex'] ?> "/>
 				</td>	
 				</td>
-				<td><input type="button" name="resetpw" value="重置密码" />
+				<td><input type="button" name="resetpw" onclick="handle(<?php echo "'".$value['username']."'" ?>, 2,'t')" value="重置密码" />
 				</td>
-				<td width="60px" align="center"><img src="../../public/images/delete.gif" height="24px" width="24px" alt="删除"></img>
+				<td width="60px" align="center"><img src="../../public/images/delete.gif" 
+			onclick="handle(<?php echo "'".$value['username']."'" ?>, 3,'t')" height="24px" width="24px" alt="删除"></img>
 				</td>
 			</tr>
 			<?php endforeach; endif;?>
 	 </table>
 </form>
+<?php include("_jsfunchandle.inc") ?>

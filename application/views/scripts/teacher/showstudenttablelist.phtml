@@ -31,55 +31,14 @@ if(is_array($this->result)):
 						<a  href="#" name="restrictive" style="color:green">可  考</a>
 
 				</td>
-				<td><input  type="button" onclick="handle(<?php echo $value['username'] ?>, 2)"
+				<td><input  type="button" onclick="handle(<?php echo "'".$value['username']."'" ?>, 2,'s')"
 			  value="重置密码" />
 				</td>
-				<td width="60px" align="center"><img src="../../public/images/delete.gif" height="24px" width="24px" alt="删除" onclick="handle(<?php echo $value['username'] ?>, 3)"></img>
+				<td width="60px" align="center"><img src="../../public/images/delete.gif" height="24px" width="24px" alt="删除" onclick="handle(<?php echo "'".$value['username']."'" ?>, 3,'s')"></img>
 				</td>
 			</tr>
 			<?php endforeach; endif;?>
 		</table>
 	</form>
-<script type="text/javascript" language="javascript" >
-		//显示表格效果
-		$(function(){  
-			$('tr:odd').css('background', 'RGB(227,222,193)');
-				$("#tb tr").hover(function(){  
-					$(this).addClass("td1");
-				},function(){  
-					$(this).removeClass("td1");  
-				});
-		});
+	<?php include("_jsfunchandle.inc"); ?>
 
-//处理选项type：
-function handle(username, type)
-{
-	switch(type) 
-	{
-	case 2: //重设密码
-		var ask = "你确定将"+username+"重新设置为默认密码？---默认密码为123";
-		var r = confirm(ask);
-		if(r == true)
-		{
-			$.post('resetpw', {'username': username , 'type': 's'}, 
-				function(data) 
-				{
-					alert(data);
-				});	
-		}
-		break;
-	case 3://删除
-		if(confirm("你确定将"+username+"删除？"))
-		{
-			$.post('deleteperson', {'username': username , 'type': 's'}, 
-				function(data) 
-				{
-					alert(data);
-					$(this).remove();
-				});	
-		}
-		break;
-	}
-
-}
-</script>
