@@ -1,0 +1,512 @@
+﻿@charset "utf-8";
+/*====================登录样式==================*/
+.login_right dl{
+	width:200px;
+}
+.login_right dt{
+	float:left;
+	margin:7px 0;
+	height:20px;
+	line-height:20px;
+}
+.login_right dd{
+	float:left;
+	margin:7px 0;
+	height:20px;
+	line-height:20px;
+}
+
+.login_right .btn_dl,.login_right .btn_cz{
+	outline-width: 0;
+	border-width: 0 !important;
+	cursor:pointer;
+	margin:0 1px;
+}
+/*=================载入==================*/
+.loading{
+	position:absolute;
+	left:300px;
+	top:150px;
+	}
+/*====================报头样式==================*/
+.masthead {
+	margin-top: 6px;
+}
+
+.head {
+	width: 100%;
+	float: left;
+	overflow:hidden;
+}
+/*====================学校图片====================*/
+.head .logo {
+	float: left;
+	padding: 2px 5px 0 5px;
+}
+.head .logo img {
+	float:left;
+}
+.head .logo {
+	float: left;
+	height:47px;
+}
+/*====================节日图片====================*/
+a.specialogo {
+	display:none;
+}
+/*==================用户信息多功能区====================*/
+.info {
+	padding-right:10px;
+	float:right;
+}
+.info ul{
+	padding-left:15px;
+	float:right;
+}
+.info li{
+	display:inline;
+	height:23px;
+	line-height:23px;
+	padding:0 2px 0 5px!important;
+	*padding:0 5px 0 5px;
+}
+
+/*===================横向导航样式====================*/
+.nav {
+	width:100%;
+	z-index: 500;
+	position: relative;
+	float:left;
+}
+*html nav{
+	float:left;/*sll20081120*/
+	}
+.nav li.top {
+	display: block;
+	float: left;
+}
+.nav li a.top_link {
+	display: block;
+	float: left;
+	text-decoration: none;
+	font-weight: bold;
+	cursor: pointer;
+}
+.nav li a.top_link span {
+	float: left;
+	display: block;
+}
+
+.nav li a.top_link span.down {
+	float: left;
+	display: block;
+}
+.nav table {
+	border-collapse: collapse;
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* Default link styling */
+/* Style the list OR link hover. Depends on which browser is used */
+.nav a:hover {
+	visibility: visible;
+	position: relative;
+	z-index: 200;
+	cursor:pointer
+}
+
+.nav li:hover {
+	position: relative;
+	z-index: 200;
+}
+
+/* keep the 'next' level invisible by placing it off screen. */
+.nav ul, 
+.nav :hover ul ul, 
+.nav :hover ul :hover ul ul,
+.nav :hover ul :hover ul :hover ul ul,
+.nav :hover ul :hover ul :hover ul :hover ul ul {
+	position: absolute;
+	left: -9999px;
+	top: -9999px;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.nav :hover ul.sub {
+	white-space: nowrap;
+	height: auto;
+	z-index: 300;
+	left: 0;
+	width: 120px;
+}
+.nav :hover ul.sub li {
+	display: block;
+	position: relative;
+	float: left;
+	font-weight: normal;
+	text-align:left;
+	width: 120px;
+}
+
+.nav :hover ul.sub li a {
+	display: block;
+	text-decoration: none;
+}
+.nav :hover ul :hover ul,
+.nav :hover ul :hover ul :hover ul,
+.nav :hover ul :hover ul :hover ul :hover ul,
+.nav :hover ul :hover ul :hover ul :hover ul :hover ul {
+	white-space: nowrap;
+	height: auto;
+	left: 120px;
+	z-index: 400;
+	width: 120px;
+}
+.nav .navbug{
+	position:absolute;
+	visibility:inherit;
+	top:0px;
+	left:0px;               /* =====FGW2008-03-08加入===== */
+	width:128px;
+	height:500px;
+	z-index:-999;
+	filter: Alpha(Opacity=0);
+	}
+/*========主导航====简单型===========*/
+.nav_simp{
+	width:100%;
+	float:left;
+}
+.nav_simp li{
+	float:left;
+}
+/*===================左边树形航样式====================*/
+.nav_leftsub{
+	float:left;	
+	width:142px;
+	height:100%;
+}
+.nav_leftsub li a{
+	display:block;;
+	text-align:left;
+}
+.nav_leftsub ul a{
+	background: none;
+	border:0;
+}
+.nav_leftsub .sub {
+   display: none;
+}
+/*======主内容样式================*/
+.content .left_con{
+	margin-right:-155px;
+	width:155px;
+	float:left;
+	text-align:center;
+	}
+.content .right_con{
+	width:auto;
+	margin-left:155px;
+	}
+.content .right_con_hide {
+	width:auto;
+	margin-left:6px;
+}
+/*============选项卡样式===当前位置===============*/
+.tab {
+	width:100%;	
+}
+.tab div{border:0!important;}/*========EXT冲突=========*/
+.tab ul {
+}
+.tab li {
+	float: left;
+}
+.location {
+	display:block;
+	margin-left:5px;
+	text-align:left;
+	padding:5px 0;
+}
+.location em {
+	font-style: normal;
+}
+/*======收缩卡样式==============*/
+.retract {
+	float: left;
+	height:100%;
+}
+.retract a {
+	display:block;
+	margin-top:150px;
+}
+.retract_on {
+	float: left;
+}
+.retract_on a {
+	display:block;
+}
+/*=======================多功能区样式=====================*/
+.toolbox {
+	width: 100%;
+	margin: 0 auto;
+	margin-top:2px;
+	margin-bottom:2px;
+}
+.toolbox .buttonbox {
+	text-align: left;
+	padding: 2px 0px 1px 6px;
+}
+p.toolbox_fot {
+	clear: both;
+}
+p.toolbox_fot em {
+	padding: 1px 0px 1px 2px;
+	display: block;
+}
+/*=========隐藏显示按钮区样式=========*/
+.buttonbox .btn_yc {
+	border-width: 0;
+	outline-width: 0;
+	border-width: 0 !important;
+	float: right;
+}
+.buttonbox .btn_xs {
+	border-width: 0;
+	outline-width: 0;
+	border-width: 0 !important;
+	float: right;
+}
+/*=========按钮区样式==========*/
+.buttonbox ul {
+	width: 96%;
+	float: left;
+	clear: both;
+	padding: 1px 0;
+}
+
+.buttonbox li {
+	float: left;
+	margin-right:2px;
+}
+/*=========过滤区样式======底部样式和左右有问题====*/
+.searchbox {
+	float: left;
+	margin: 2px 2px 0 2px;
+}
+.searchbox p.search_con {
+	padding: 2px 10px 2px 10px;
+	text-align:left;
+	word-break:keep-all;
+}
+.searchbox p.search_title {
+}
+.searchbox p.search_title em {
+	display: block;
+	font-size: 95%;
+	font-style: normal;
+	padding: 1px 10px 0px 10px;
+}
+/*=======主内容顶部框=======*/
+.main_box {
+	width: 100%;
+	margin: 3px auto;
+}
+
+.mid_box {
+	width: 100%;
+	text-align: center;
+}
+/*==========多项选择========*/
+#xxk {
+	width: 100%;
+	margin: 0 auto;
+	line-height: normal;
+	margin-top:2px;
+	clear:both;
+}
+#xxk ul {
+	margin-left:1em;
+}
+#xxk li {
+	margin: 0px 2px 0px 0px;
+	padding: 0px 5px 0px 0px;
+	float: left;
+	cursor:pointer;
+	
+}
+#xxk li a {
+	display: block;
+	padding: 5px 15px 4px 15px;
+	text-decoration: none;
+	float: left;
+	word-break:keep-all
+}
+
+#xxk li a:hover {
+	text-decoration: none;
+	float: left;
+}
+#xxk li.current a {
+	text-decoration: none;
+}
+#xxk span {
+	float: left;
+	cursor: pointer;
+}
+#xxk h2 {
+	float: left;
+	cursor: pointer;
+}
+
+#xxk h3 {
+	float: right;
+	cursor: pointer;
+}
+/*=======查询结果数据量样式=考虑会不会影响其他title====*/
+.mid_box .title p {
+	text-align: left;
+	padding: 2px 0 4px 5px;
+}
+.mid_box .title p em{
+	color:red;
+	font-weight:bold;
+}
+/*===============form内容区域样式=======底部样式有问题=============*/
+.formbox{
+	display:block;
+	width:98%;
+	margin:0 auto;
+	}
+/*===============分页内容区域样式===================*/
+.footbox {
+	width: 100%;
+	display:block;
+	text-align: right;
+	clear:both;
+}
+
+.footbox .footbox_con {
+	font-style:normal;
+	display:block;
+	padding:4px 5px 3px 0;
+}
+.footbox .pagination{
+	display:block;
+	padding:3px 0;
+	}
+.footbox .pagination a{
+	text-decoration: underline;
+	}
+/*========选择:全选--反选---不选样式===========*/
+.footbox .pagination .pageleft {
+	float:left;
+	padding-left:1.2em;
+	display:block;
+	color:red;
+	font-weight:bold;
+}
+/*=======分页样式=========*/
+.footbox .pagination .pageright {
+	float:right;
+	padding-right:1.2em;
+	display:block;
+}
+
+/*===============分页内容区域样式===================*/
+.footbox .footbutton{
+	text-align:right;
+	display:block;
+	clear:both;
+	padding:5px 0;
+	}
+/*==================尾部内容样式==========*/
+.footer {
+	text-align: center;
+}
+.footer p {
+	display: block;
+	height:22px;
+	line-height:22px;
+}
+/*==================弹出窗口样式==========*/
+.open_win{
+	width:98%;
+	margin-top:2px;
+	}
+.open_win h3{
+	width:100%;
+	text-align:left;
+	padding-top:3px;
+	}
+.open_win h3 em{
+	font-weight:bold;
+	display:block;
+	padding-left:1.2em;
+	margin-left:0.3em;
+	}
+.open_win .opencon{
+	width:100%;
+	display:block;
+	}
+.open_win .openbutton{
+	display:block;
+	text-align:right;
+	margin:5px;
+	}
+/*========弹出提示层==新=======*/
+.notice_open h3 {
+	cursor:move;
+	text-align:left;
+}
+
+.notice_open h3 em {
+	margin:2px 0 0 5px;
+}
+.notice_open .con{
+	width:100%;
+	text-align:center;
+	margin:20px 0;
+	}
+.notice_open .con span{
+	display:block;
+	}
+.notice_open .footbutton{
+	text-align:right;
+	margin:5px;
+	}
+/*=========提示弹出层===========*/
+
+.noticehelp{
+	position: absolute;
+	z-index: 999;
+	padding:4px;
+	}
+/*====皮肤列表======*/
+.skinlist{
+	width:98%;
+	margin:0 auto;
+	height:450px;
+	}
+.skinlist li{
+	float:left;
+	width:200px;
+	margin:10px;
+	border:1px solid #ccc;
+	padding:4px;
+	}
+.skinlist li img{
+	clear:both;
+	}
+.skinlist li span{
+	clear:both;
+	width:100%;
+	}
