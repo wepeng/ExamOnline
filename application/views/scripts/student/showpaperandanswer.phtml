@@ -1,7 +1,18 @@
 <?php  include_once 'header.phtml';?>
-<iframe height="300px" width="800px" src="../../public/exam/<?php echo $this->tpaper; ?>"></iframe>
-<br/><br/>
-<div style="border:1px #CCC solid; height:300px; overFlow-y:scroll;">
-
+<div style="float:left; margin-left:30px; ">
+	<iframe height="400px" width="800px" src="../../public/exam/<?php echo $this->tpaper; ?>"></iframe>
+	<br/><br/>
+	<div style="border:1px #CCC solid; height:150px; width:800px; overFlow-y:scroll;">
+		<?php 
+			echo $this->paperAnswer;
+		?>
+	</div>
 </div>
+<div style="clear:both"></div>
+<div style=" clear:both; border:1px #CCC solid; width:150px; top:150px; position:fixed; right:30px; padding:10px;">
+	<a href="showpaperandanswer?paper_id=220&part=1">第一部分</a><br/>
+	<a href="showpaperandanswer?paper_id=220&part=2">第二部分</a><br/>
+	<a href="">第三部分</a><br/>
+</div>
+
 <?php include_once 'footer.phtml';?>

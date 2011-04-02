@@ -1012,6 +1012,15 @@ class Examination extends Zend_Db
 		}
 		return substr($answers, 0, strlen($answers)-1);
 	}
+	
+	/**
+	 * 获取试卷答案
+	 */
+	public function getPaperAnswer($paper_id)
+	{
+		$sql = "select * from paper_answer where paper_id='".$paper_id."'";
+		return $this->db->query($sql)->fetchAll();
+	}
 }
 
 

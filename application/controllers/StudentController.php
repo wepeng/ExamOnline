@@ -263,9 +263,19 @@ class StudentController extends Zend_Controller_Action
 		}
 	}
 	
+	/**
+	 * 
+	 * 显示考生考过的试卷和答案
+	 */
 	function showpaperandanswerAction()
 	{
-		$this->view->tpaper = $_GET['paper_id']."_1_1.html";
+		if(isset($_GET['paper_id']) && isset($_GET['part']))
+		{
+			$this->view->tpaper = $_GET['paper_id']."_".$_GET['part']."_1.html";
+			$answer = $this->examination->getPaperAnswer($_GET['paper_id']);
+			if(count($answer)>0)
+				$this->view->paperAnswer = $answer[0]['answer'];
+		}
 	}
 	
 	/**
