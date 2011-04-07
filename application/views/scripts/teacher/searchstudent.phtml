@@ -5,7 +5,7 @@ $(document).ready(function(){
 		var valueStr = document.getElementById("value").value;
 		var keyStr = document.getElementById("key").value;
 		$.post("searchstudent",{'value':valueStr, 'key':keyStr },function(data){
-			document.getElementById("getData").innerHTML = data;
+			$("#getData").html(data);
 		})
 	})
 })

@@ -378,10 +378,14 @@ class TeacherController extends Zend_Controller_Action
 			}
 			else
 			{
-				foreach($result as $value){
-				 	echo "学号：".$value['username']." 姓名：".$value['name']." 性别："
-				 		.$value['sex']." 密码：".$value['password'];
-				}
+			//	foreach($result as $value){
+			//	 	echo "学号：".$value['username']." 姓名：".$value['name']." 性别："
+			//	 		.$value['sex']." 密码：".$value['password'];
+			//		}
+				$this->view->result = $result;
+				$this->view->allclass = $this->teacher->getAllClass();
+				echo $this->view->render('teacher/showstudenttablelist.phtml');
+				
 			}
 			exit;
 		}
@@ -468,6 +472,7 @@ class TeacherController extends Zend_Controller_Action
 		}
 		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
 		$this->view->classes = $controlclasses;
+		$this->view->allclass = $this->teacher->getAllClass();
 		$this->showstudenttablelistAction($controlclasses);
 
 	}

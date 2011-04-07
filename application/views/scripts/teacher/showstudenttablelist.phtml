@@ -12,6 +12,8 @@
 			</tr>
 <?php 
 $i = 0;
+$allcalss = array();
+if(isset($this->allclass)) $allclass = $this->allclass;
 if(is_array($this->result)): 
 	foreach($this->result as $value) : ?>
 			<tr>

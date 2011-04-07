@@ -134,4 +134,10 @@ class Teacher extends Zend_Db
 			FROM teacher WHERE level_id=1 AND name like "%'.$name.'%"';
 		return $this->db->query($sql)->fetchAll();
 	}
+
+	function getAllClass() 
+	{
+		$sql = 'SELECT id, class_name, teacher_id FROM `class`';
+		return $this->db->query($sql)->fetchAll();
+	}
 }
