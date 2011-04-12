@@ -1,5 +1,8 @@
 @charset "UTF-8";
 /* CSS Document */
+*{ padding:0; margin:0;}
+html{ overflow-x:hidden;}
+body{ background:#fff;}
 
 .flexigrid
 	{
@@ -768,7 +771,7 @@ div.colCopy {
 	padding:2px 10px;
 	border:none;
 }
-.input_text{ background:url(../../images/admin/input.gif);}
+.input_text{ background:url(../images/input.gif);}
 .input_dis{ background:url(../images/admin/dia_input_disable.gif);}
 .dia_mb{
 	margin-bottom:10px;}
@@ -787,7 +790,8 @@ div.colCopy {
 	width:100px;
 	float:left;
 	margin-top:5px;
-	background:url(../../images/admin/login_Btn.gif);
+	background:url(../images/login_Btn.gif);
+	cursor: pointer;
 	text-align:center;
 	color:#000;}
 #alert_msg{	

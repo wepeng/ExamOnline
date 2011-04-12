@@ -460,7 +460,6 @@ class TeacherController extends Zend_Controller_Action
 
 	function managestudentAction() 
 	{
-		print_r($_POST);
 		$controlclasses = array(); 
 		$students = array();
 		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
@@ -598,13 +597,24 @@ class TeacherController extends Zend_Controller_Action
 		}
 	}
 
-	//flexigird --data
-	function getStudentJsonDataAction()
+	function headerAction() {
+	
+	}
+
+	function footerAction(){
+	}
+
+	function quickmenuAction(){
+	}
+
+		//flexigird --data
+	function getstudentjsondataAction()
 	{
-		$page = $_POST['page'];
-		$rp = $_POST['rp'];
-		$sortname = $_POST['sortname'];
-		$sortorder = $_POST['sortorder'];
+		error_reporting(0);
+		$page = isset($_POST['page']) ? $_POST['page'] : '';
+		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
+		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
+		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
 		if (!$sortname) $sortname = 'student.name';
 		if (!$sortorder) $sortorder = 'desc';
 		if($_POST['query']!=''){
@@ -617,6 +627,33 @@ class TeacherController extends Zend_Controller_Action
 		if (!$rp) $rp = 60;
 		$start = (($page-1) * $rp);
 		$limit = "LIMIT $start, $rp";
-		$row = $this->teacher->getStudent($where, $sort, $limit);
+		$result = $this->teacher->getStudent($where, $sort, $limit);
+		$total = count($result);
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+		header("Cache-Control: no-cache, must-revalidate" );
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		foreach ($result as $row ) {
+			if ($rc) $json .= ",";
+			$json .= "\n{";
+			$json .= "id:'".$row['id']."',";
+			$json .= "cell:['".$row['id']."','".$row['username']."'";
+			$json .= ",'".addslashes($row['name'])."'";
+			$json .= ",'".addslashes($row['sex'])."'";
+			$json .= ",'".addslashes($row['class_name'])."']";
+			$json .= "}";
+			$rc = true;
+		}
+		$json .= "]\n";
+		$json .= "}";
+		echo $json;
 	}
+
 }

@@ -5,55 +5,14 @@
 <title>学生管理</title>
 <link rel="stylesheet" type="text/css" href="../../public/css/flexigrid.css" />
 <script type="text/javascript" src="../../public/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="../../public/js/flexigrid2.js"></script>
+<script type="text/javascript" src="../../public/js/flexigrid.js"></script>
 <script type="text/javascript" src="../../public/js/managestudent.js"></script>
 </head>
 <body>
-	<h2>教师界面</h2>
-	<hr/>
-	<div style=" float:left; border-right:1px solid #000000; width:150px;">
-		<?php echo $this->showlist; ?>
-		<a href="quit">退出</a>
-	</div>
-
-<body>
-<div style="float:left; margin-left:30px;">
-<p>可操作的班级数:<?php echo count($this->classes)?></p>
-选择您要操作的班级:
-<SELECT ID="selectclass" NAME="class" SIZE="1">
-<?php foreach($this->classes as $value) 
-{ 
-	echo '<OPTION VALUE='.$value['id'].'>'.$value['class_name'].'</OPTION>';
-}
-?>
-</SELECT>
-<b id="loading" style="display:none">请求载入中。。。</b>
-<script type="text/javascript" language="javascript">
-//ajax请求学生列表
-$('#selectclass').change(function (){  
-	$.post(  
-		'showstudenttablelist',  
-		{  
-			'classid': $('#selectclass').val(),
-				'classname':$('#selectclass').find("option:selected").text()
-		},  
-		function (data){  $('#tablelist').html(data); }
-	);  
-}
-);
-$("#loading").ajaxStart(function(){
-    $(this).show();
- }); 
-$("#loading").ajaxSuccess(function(){
-	$(this).hide();
-}
- );
-
-
 </script>
     <div id="tablelist">
-	<?php echo $this->render('/teacher/showstudenttablelist.phtml')?>
+	<?php echo $this->render('/teacher/showstudenttablelist.phtml');?>
 	</div>
-</div
+</div>
 </body>
 </html>

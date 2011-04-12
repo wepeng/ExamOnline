@@ -1,0 +1,43 @@
+@charset "utf-8";
+<!--
+*{ padding:0; margin:0;}
+body{
+	font-family:"微软雅黑", Arial, "MS Sans Serif", System;
+	background:#1e5b9c;
+	}
+a{ color:#000; text-decoration:none;}
+a:hover{ text-decoration:underline; color:#06f;}
+html { overflow-x: hidden; overflow-y:auto; } 
+
+#nav_menu{
+	height:30px;
+	width:160px;
+	background:url(../images/admin/nav_menu.png);
+	margin-bottom:5px;}
+#main{
+	width:140px;
+	margin:0 auto;
+	list-style:none;
+	}
+#main p{
+	height:24px;
+	width:110px;
+	padding-left:30px;
+	font-size:14px;
+	color:#fff;
+	background:url(../images/admin/quickMenu.gif);
+	cursor:pointer;
+	}
+#main li{
+	margin-bottom:2px;}
+#main ul{
+	list-style:none;
+	width:126px;
+	margin:0 auto;
+	padding:10px 0 10px 10px;
+	font-size:12px;
+	background:#fff;
+	display:none;
+	}
+
+-->

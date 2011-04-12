@@ -1,18 +1,21 @@
 $(document).ready(function(){
-
+	var winW=  document.documentElement.clientWidth;
+	var winH = document.documentElement.clientHeight;
 	$("#flex1").flexigrid
 		(
 			{
-				url: 'managestudent',
+				url: 'getstudentjsondata',
 					dataType: 'json',
 					colModel : [
 					{display: 'ID', name : 'id', width : 40, sortable : true, align: 'center'},
-					{display: '学    号', name : 'username', width : 120, sortable : true, align: 'center'},
-					{display: '姓    名', name : 'name', width : 100, sortable : true, align: 'center'},
-					{display: '性    别', name : 'sex', width : 120, sortable : true, align: 'center'},
+					{display: '学    号', name : 'username', width : 140, sortable : true, align: 'center'},
+					{display: '姓    名', name : 'name', width : 140, sortable : true, align: 'center'},
+					{display: '性    别', name : 'sex', width : 60, sortable : true, align: 'center'},
 					{display: '班    级', name : 'class_name', width : 130, sortable : true, align: 'center'}
 					],
 					buttons : [
+					{name:'选择班级', bclass: 'select_class', onpress : goToDo},
+					{separator: true},
 					{name: '编 辑', bclass: 'edit', onpress: goToDo},
 					{separator: true},
 					{name: '添 加', bclass: 'add', onpress : goToDo},
@@ -21,7 +24,6 @@ $(document).ready(function(){
 					{separator: true},
 					{name:'重置为默认密码', bclass: 'resetpw', onpress : goToDo},
 					{separator: true}
-
 					],
 					searchitems : [
 					{display: '学 号', name : 'username'},
@@ -37,9 +39,10 @@ $(document).ready(function(){
 					pagestat:'显示第{from}条到{to}条，共{total}条数据。',
 					procmsg:'正在处理，请稍后...',
 					showTableToggleBtn: true,
-					width: 700,
-					height: "auto",
-					resizable:false
+					width:'auto',
+					height: (winH-155),
+					resizable:false,
+					checkbox:true
 			}
 	);   
 	
@@ -73,15 +76,13 @@ function checkForm(type,str){
 function showDialog(datas){
 	
 	var html = $('<div id="shade"></div>');
-	var w=  document.documentElement.clientWidth;
-	var h = document.documentElement.clientHeight;
 	html.css({
 		'opacity':'0.5',
-		height:h,
-		width:w
+		height:winH,
+		width:winW
 	});
 	$('body').append(html);
-	$('#dialog').show();
+	$('#dialog').css('opacity','0.9').show();
 	
 	if(datas){					/* 编辑 */
 		$('#dialog_form input[name=id]').val(datas['id']);
@@ -144,7 +145,7 @@ function showDialog(datas){
 					$('span.notice').text('姓名格式不对（只支持中英文）');
 				}	
 			}else{
-				$('span.notice').text('学号格式不对（只能是数字 并且不大于11个）');
+				$('span.notice').text('学号格式不对（只能是数字 并且小于11位）');
 			}
 			
 		});
@@ -169,8 +170,16 @@ function goToDo(com,grid)
 	switch(com){
 	case '删 除':
 		if($('.trSelected',grid).length > 0){
-			$('#confirm_msg').show().find('span').text('确定删除'+$('.trSelected',grid).length+'个学生？');
+			var html = $('<div id="shade"></div>');
+			html.css({
+				'opacity':'0.5',
+				height:winH,
+				width:winW
+			});
+			$('body').append(html);
+			$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length+'个学生？');
 			$('#confirm_yes').unbind('click').click(function(){
+				$('#shade').remove();
 				var items = $('.trSelected',grid);
 				var itemlist ='';
 				for(i = 0; i < items.length; i++){
@@ -190,6 +199,7 @@ function goToDo(com,grid)
 			});
 			$('#confirm_cancel').click(function(){
 				$('#confirm_msg').hide();
+				$('#shade').remove();
 			});
 		} else {
 			alert_msg('请选择学生');
@@ -203,7 +213,7 @@ function goToDo(com,grid)
 		if(itemsLen==0){
 			alert_msg('请选择要编辑的学生');
 		}else if(itemsLen>1){
-			alert_msg('一次只能编辑一个学生');
+			alert_msg('一次只能编辑一行信息');
 		}else if(itemsLen==1){
 			var datas = get_selectInfo(grid);
 			//alert(datas['id']);
@@ -214,23 +224,52 @@ function goToDo(com,grid)
 		var d= get_selectInfo(grid);
 		//alert($('form#dialog_form').serialize())
 		if(d['id']){
-			$('#confirm_msg').show().find('span').text('你确定重置为默认密码？');
+			var html = $('<div id="shade"></div>');
+			html.css({
+				'opacity':'0.5',
+				height:winH,
+				width:winW
+			});
+			$('body').append(html);
+			$('#confirm_msg').show().find('span.confirm_text').text('你确定重置为默认密码？');
 			$('#confirm_yes').unbind('click').click(function(){
 				var datas = { id:d['id'],type:'s' };
 				$.post('reset.php',datas,function(data){
 					alert(data+'-----成功');
 				});
+				$('#shade').remove();
 				$('#confirm_msg').hide();
 			});
 			$('#confirm_cancel').click(function(){
 				$('#confirm_msg').hide();
+				$('#shade').remove();
 			});
 		}else{
 			alert_msg('请选择学生');
 		}
-		
+		break;
+	case '选择班级':
+		var html = $('<div id="shade"></div>');
+		html.css({
+			'opacity':'0.5',
+			height:winH,
+			width:winW
+		});
+		$('body').append(html);
+		$('#chose_class').show().find('span.btns').click(function(){
+			//alert($(this).text())
+			var class_name = $(this).text();
+			//ajax.relod()
+			$('#shade').remove();
+			$('#chose_class').hide();
+		});
 		break;
 	}
 }
+$(".btns").hover(function(){
+			$(this).css({"background":"url(../images/login_Btn_hover.gif)", "color" : "#fff" });
+		}, function(){
+			$(this).css({"background":"url(../images/login_Btn.gif)", "color" : "#000" });
+		});
 
-});	
+});

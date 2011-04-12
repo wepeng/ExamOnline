@@ -1,5 +1,5 @@
 <?php  
-include_once 'header.phtml';?>
+include_once '_header.phtml';?>
 <div style="float:left; margin-left:30px;">
 
 <form action="manageteacher" method="post">
@@ -20,6 +20,6 @@ $result = $this->teacherlist;
 if(!is_array($result)) echo '查无教师';
 include '_table.phtml';
 
-include_once 'footer.phtml'; 
+include_once '_footer.phtml'; 
 
 ?>
