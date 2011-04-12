@@ -576,29 +576,85 @@ class TeacherController extends Zend_Controller_Action
 
 	function addOrUpdateTeacherAction()
 	{
-		$data = array(
-			'username' => trim($_POST['username']),
-			'password' => trim($_POST['password']),
-			'name'     => trim($_POST['name']),
-			'sex'      => $_POST['sex'],
-			'level_id' => $_POST['level_id']
-		);
+
 		$table = 'teacher';
-		if(isset($_POST['id'])) //if get the 'id'，means to update
+		if(!empty($_POST['id'])) //if get the 'id'，means to update
 		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex'],
+				'level_id' => $_POST['level_id']
+			);
 			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
 			$result = $this->teacher->update($data, $where, $table);
 			if($reslut) $this->view->msg = "修改 ".$data['name']." 成功！";
 		}
 		else                   //if not get 'id', means to add
 		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'password' => '123',
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex'],
+				'level_id' => $_POST['level_id']
+			);
 			$result = $this->teacher->insert($data, $table);
 			if($result) $this->view->msg = "添加 ".$data['name']."成功！";
 		}
 	}
 
+	function addorupdatestudentAction()
+	{
+		$table = 'student';
+		if(!empty($_POST['id'])) //if get the 'id'，means to update
+		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex']
+			);
+			$class = array(
+				'class_id' => $_POST['class_id']
+			);
+			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
+			$class_where = "WHERE `student_id` = ".$_POST['id']."";
+			$result = $this->teacher->update($data, $where, $table);
+			$class = $this->teacher->update($class, $class_where, 'class_student');
+			if($result && $class) echo 'yes';
+			else echo 'no';
+		}
+		else                   //if not get 'id', means to add
+		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'password' => '123',
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex']
+			);
+			$lastid = $this->teacher->insert($data, $table); //return the last insert id;
+
+			if($lastid === '0' || $lastid)
+			{
+				$class_data = array(
+					'class_id' => $_POST['class_id'],
+					'student_id' => $lastid
+				);
+				$result = $this->teacher->insert($class_data, 'class_student');
+				if($result === '0' || $result ) $this->view->msg =  "yes";
+			}
+			else
+			{
+				$this->view->msg = 'no';
+			}
+		}
+
+
+	}
+
+
 	function headerAction() {
-	
+
 	}
 
 	function footerAction(){
@@ -607,7 +663,7 @@ class TeacherController extends Zend_Controller_Action
 	function quickmenuAction(){
 	}
 
-		//flexigird --data
+	//flexigird --data
 	function getstudentjsondataAction()
 	{
 		error_reporting(0);
@@ -617,9 +673,15 @@ class TeacherController extends Zend_Controller_Action
 		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
 		if (!$sortname) $sortname = 'student.name';
 		if (!$sortorder) $sortorder = 'desc';
-		if($_POST['query']!=''){
+		if($_POST['query'] != ''){
 			$where = "WHERE `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' AND";
-		} else {
+		} 
+		else if($_POST['class_id'] != '' && $_POST['query'] == '')
+		{
+			$where = "WHERE `class_student`.`class_id`=".$_POST['class_id']." AND ";
+		}
+		else
+		{
 			$where ='WHERE';
 		}
 		$sort = "ORDER BY $sortname $sortorder";

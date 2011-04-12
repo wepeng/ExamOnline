@@ -91,15 +91,14 @@ function showDialog(datas){
 		$('#dialog_form input[name=name]').val(datas['name']);
 		var sex = '#dialog_form input[name=sex][value='+datas['sex']+']';
 		$(sex).attr('checked','checked');
-		$('#dialog_form input[name=sex]').val(datas['sex']);
-		var class_name = '#dialog_form option[value='+datas['class_name']+']';
+		var class_name = '#dialog_form option[text='+datas['class_id']+']';
 		$(class_name).attr('selected','selected');
 		/** 编辑的 ok 按钮 **/
 		$('#okBtn').unbind('click').click(function(){
 			var ifUsername = $('#dialog_form input[name=username]').val()==datas['username']?false:true;
 			var ifName = $('#dialog_form input[name=name]').val()==datas['name']?false:true;
-			var ifSex = $('#dialog_form input[name=sex]').val()==datas['sex']?false:true;
-			var ifClassname = $('#dialog_form select[name=class_name]').val()==datas['class_name']?false:true;
+			var ifSex = $('#dialog_form input[name=sex]:checked').val()==datas['sex']?false:true;
+			var ifClassname = $('#dialog_form select[name=class_id] option:selected').text()==datas['class_name']?false:true;
 			//alert($('#dialog_form select[name=class_name]').val()+'   '+datas['class_name']);
 			var ckusername = checkForm('username',$('#dialog_form input[name=username]').val());
 			var ckname = checkForm('name',$('#dialog_form input[name=name]').val());
@@ -107,8 +106,14 @@ function showDialog(datas){
 				if(ckname){
 					if(ifUsername || ifName || ifSex || ifClassname){
 					/** 修改了 **/
-						$.post('edit.php',$('form#dialog_form').serialize(),function(data){
-							alert(data);
+						$.post('addorupdatestudent',$('form#dialog_form').serialize(),function(data){
+							if(data == 'yes') {
+								msg = '修改成功!';
+								$('#flex1').flexReload();//表格重载  
+							}else {
+								msg = '修改失败!';
+							}
+							alert_msg(msg);
 						});
 						$('#cancelBtn').click();
 					}else{
@@ -134,8 +139,15 @@ function showDialog(datas){
 			if(ckusername ){
 				if(ckname){
 					//if(cksex){
-						$.post('add.php',$('form#dialog_form').serialize(),function(data){
-							alert(data);
+						$.post('addorupdatestudent',$('form#dialog_form').serialize(),function(data){
+							if(data == 'yes') {
+								msg = '添加成功!';
+								$('#flex1').flexReload();//表格重载  
+							}else {
+								msg = '添加失败!';
+							}
+							alert_msg(msg);
+						
 						});
 						$('#cancelBtn').click();
 					//}else{
@@ -152,6 +164,7 @@ function showDialog(datas){
 	}
 	/**** cancel 按钮 ****/
 	$('#cancelBtn').click(function(){
+	    $('#dialog_form input[name=id]').val('');
 		$('#dialog_form input[name=dis_id]').val('');
 		$('#dialog_form input[name=username]').val('');
 		$('#dialog_form input[name=name]').val('');
@@ -169,7 +182,7 @@ function goToDo(com,grid)
 {
 	switch(com){
 	case '删 除':
-		if($('.trSelected',grid).length > 0){
+		if($('.trSelected',grid).length == 1){
 			var html = $('<div id="shade"></div>');
 			html.css({
 				'opacity':'0.5',
@@ -180,20 +193,11 @@ function goToDo(com,grid)
 			$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length+'个学生？');
 			$('#confirm_yes').unbind('click').click(function(){
 				$('#shade').remove();
-				var items = $('.trSelected',grid);
-				var itemlist ='';
-				for(i = 0; i < items.length; i++){
-					itemlist += items[i].id.substr(3)+",";
-				}
-				$.ajax({
-					type: "POST",
-						dataType: "json",
-						url: "delete.php",
-						data: "items="+itemlist,
-						success: function(data){
-							alert("Query: "+data.query+" - Total affected rows: "+data.total);
-							$("#flex1").flexReload();
-						}
+				var delete_username = $('.trSelected td:nth-child(2)',grid).text();
+				$.post('deleteperson',{ username : delete_username, type : 's'},function(data){
+					alert_msg('删除成功~');
+					$('#flex1').flexReload();//表格重载  
+
 				});
 				$('#confirm_msg').hide();
 			});
@@ -201,7 +205,9 @@ function goToDo(com,grid)
 				$('#confirm_msg').hide();
 				$('#shade').remove();
 			});
-		} else {
+		} else if($('.trSelected',grid).length > 1){
+			alert_msg('为了避免操作错误，一次只能删除一个学生。');
+		}else{
 			alert_msg('请选择学生');
 		} 
 		break;
@@ -216,60 +222,63 @@ function goToDo(com,grid)
 			alert_msg('一次只能编辑一行信息');
 		}else if(itemsLen==1){
 			var datas = get_selectInfo(grid);
-			//alert(datas['id']);
 			showDialog(datas);
 		}
 		break;
 	case '重置为默认密码':
 		var d= get_selectInfo(grid);
-		//alert($('form#dialog_form').serialize())
-		if(d['id']){
-			var html = $('<div id="shade"></div>');
-			html.css({
-				'opacity':'0.5',
-				height:winH,
-				width:winW
-			});
-			$('body').append(html);
-			$('#confirm_msg').show().find('span.confirm_text').text('你确定重置为默认密码？');
-			$('#confirm_yes').unbind('click').click(function(){
-				var datas = { id:d['id'],type:'s' };
-				$.post('reset.php',datas,function(data){
-					alert(data+'-----成功');
-				});
-				$('#shade').remove();
-				$('#confirm_msg').hide();
-			});
-			$('#confirm_cancel').click(function(){
-				$('#confirm_msg').hide();
-				$('#shade').remove();
-			});
-		}else{
-			alert_msg('请选择学生');
+		var itemsLen = $('.trSelected',grid).length;
+		if(itemsLen==0){
+			alert_msg('请选择需要重置密码的学生');
+		}else if(itemsLen>1){
+			alert_msg('为了避免操作错误，一次只能重置一个学生密码。');
+		}else if(itemsLen==1){
+			if(d['id']){
+				var html = $('<div id="shade"></div>');
+				html.css({
+						'opacity':'0.5',
+						height:winH,
+						width:winW
+						});
+				$('body').append(html);
+				$('#confirm_msg').show().find('span.confirm_text').text('你确定重置为默认密码？');
+				$('#confirm_yes').unbind('click').click(function(){
+						var datas = { username:d['username'],type:'s' };
+						$.post('resetpw',datas,function(data){
+							alert(data+'-----成功');
+							});
+						$('#shade').remove();
+						$('#confirm_msg').hide();
+						});
+				$('#confirm_cancel').click(function(){
+						$('#confirm_msg').hide();
+						$('#shade').remove();
+						});
+			}else{
+				alert_msg('请选择学生');
+			}
 		}
 		break;
 	case '选择班级':
 		var html = $('<div id="shade"></div>');
 		html.css({
-			'opacity':'0.5',
-			height:winH,
-			width:winW
-		});
+				'opacity':'0.5',
+				height:winH,
+				width:winW
+				});
 		$('body').append(html);
 		$('#chose_class').show().find('span.btns').click(function(){
-			//alert($(this).text())
-			var class_name = $(this).text();
-			//ajax.relod()
-			$('#shade').remove();
-			$('#chose_class').hide();
-		});
+				var class_name = $(this).text();
+				$('#shade').remove();
+				$('#chose_class').hide();
+				});
 		break;
 	}
 }
 $(".btns").hover(function(){
-			$(this).css({"background":"url(../images/login_Btn_hover.gif)", "color" : "#fff" });
+		$(this).css({"background":"url(../images/login_Btn_hover.gif)", "color" : "#fff" });
 		}, function(){
-			$(this).css({"background":"url(../images/login_Btn.gif)", "color" : "#000" });
+		$(this).css({"background":"url(../images/login_Btn.gif)", "color" : "#000" });
 		});
 
 });

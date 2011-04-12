@@ -70,11 +70,11 @@ class Choice {
 	private function selectHtml() {
 		$this->html = '';
 		$this->html .= '<select ';
-		if($this->_id) $this->html .= 'id="'.$this->_id.'"'; $this->html .= ' >';
+		if($this->_id) $this->html .= 'id="'.$this->_id.'"'; 
+		if($this->_name)	$this->html .= ' name ="'.$this->_name.'" '; 
+		$this->html .= ' >';
 		foreach($this->data as $value) {
 			$this->html .=	'<option ';
-
-			if($this->_name)	$this->html .= ' name ="'.$this->_name.'[]" '; 
 			if($this->_valueKey)	$this->html .= ' value="'.$value[$this->_valueKey].'"';
 			if(isset($value['default']))
 			{

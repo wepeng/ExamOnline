@@ -155,7 +155,8 @@ class Teacher extends Zend_Db
 		$volumns .= ')';
 		$values .= ')';
 		$sql = "INSERT $table $volumns VALUES $values";
-		return $this->db->query($sql);
+		$this->db->query($sql);
+		return $this->db->lastInsertId();
 
 	}
 
@@ -166,7 +167,7 @@ class Teacher extends Zend_Db
 		{
 			$values .= '`'.$key.'` = "'.$value.'",';
 		}
-		$set = substr($set, 0, -1);
+		$values = substr($values, 0, -1);
 		$sql = "UPDATE $table SET $values $where";
 		$result = $this->db->query($sql);
 		return $result; 
@@ -174,8 +175,8 @@ class Teacher extends Zend_Db
 
 	function getStudent($where, $sort, $limit)
 	{
-		$sql = "SELECT student.id,username,name,sex,password, class_name FROM student,class,class_student cs $where 
-			student.id=cs.student_id AND class.id=cs.class_id $sort $limit";
+		$sql = "SELECT student.id,username,name,sex,password, class_name FROM student,class,class_student  $where 
+			student.id=class_student.student_id AND class.id=class_student.class_id $sort $limit";
 		return $this->db->query($sql)->fetchAll();
 	}
 }
