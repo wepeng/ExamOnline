@@ -1,46 +1,25 @@
-	<form action="#" method="post">
-		<table id="tb" style="border:1px solid #000">
-			<tr >
-				<th>序  号</th>
-				<th>编  辑</th>
-				<th>学  号</th>
-				<th>姓  名</th>
-				<th>性  别</th>
-				<th>班  级</th>
-				<th>考试状态</th>
-				<th colspan="2">操    作</th>
-			</tr>
-<?php 
-$i = 0;
-$allcalss = array();
-if(isset($this->allclass)) $allclass = $this->allclass;
-if(is_array($this->result)): 
-	foreach($this->result as $value) : ?>
-			<tr>
-			<td align="center"> <?php echo ++$i; ?>
-				</td>
-					<td align="center"><img src="../../public/images/edit.gif" height="24px" width="24px" alt="编辑" ></img>
-				</td>
-				<td><input  disabled="false"  type="text" name="loginname" value="<?php echo $value['username'] ?>"/>
-				</td>
-				<td><input type="text" name="name" value="<?php echo $value['name'] ?>" />
-				</td>
-				<td><input type="text" name="gender"  value="<?php echo $value['sex'] ?> "/>
-				</td>
-				<td><input type="text" name="classname" value="<?php echo $this->classname ?>" />
-				</td>
-			<td align="center">
-						<a  href="#" name="restrictive" style="color:green">可  考</a>
+<table id="flex1" style="display:none"></table>
 
-				</td>
-				<td><input  type="button" onclick="handle(<?php echo "'".$value['username']."'" ?>, 2,'s')"
-			  value="重置密码" />
-				</td>
-				<td width="60px" align="center"><img src="../../public/images/delete.gif" height="24px" width="24px" alt="删除" onclick="handle(<?php echo "'".$value['username']."'" ?>, 3,'s')"></img>
-				</td>
-			</tr>
-			<?php endforeach; endif;?>
-		</table>
-	</form>
-	<?php include("_jsfunchandle.inc"); ?>
-
+	<div id="dialog">
+	   <form id="dialog_form" name="dialog_form" action="#">
+			<input type="hidden" name="id" />
+	  <span>ID :</span><input type="text" disabled="disabled" name='dis_id' /><br/>
+			<span>学号 :</span><input maxlength="11" type="text" name="username" /><br/>
+			<span>姓名 :</span><input type="text" name="name" /><br/>
+			<span>性别 :</span>
+			<input type="radio" name="sex" checked="checked" value="男">男
+			<input type="radio" name="sex" value="女">女<br/>
+			<span>班级名称 :</span>
+				<?php echo $this->allclassselect; ?>
+			<br/>
+		<span class="notice"></span>
+		 <span id="okBtn">OK</span>
+		 <span id="cancelBtn">Cancel</span>
+	   </form>
+	</div>
+	<div id="alert_msg"></div>
+	<div id="confirm_msg">
+		<span></span><br/>
+		<button id="confirm_yes">Yes</button>
+		<button id="confirm_cancel">Cancel</button>
+	</div>

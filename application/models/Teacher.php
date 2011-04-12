@@ -140,4 +140,42 @@ class Teacher extends Zend_Db
 		$sql = 'SELECT id, class_name, teacher_id FROM `class`';
 		return $this->db->query($sql)->fetchAll();
 	}
+
+	function insert($data, $table)         //insert data to database by tablename
+	{
+		$columns = '(';
+		$values = '(';
+		foreach($data as $key => $value) 
+		{
+			$columns .= '`'.$key.'`,';     //use '`' to distinguish which is columns
+			$values .= '"'.$value.'",';    //use '"' to distinguish which is value, if not it can't  working 
+		}
+		$volumns = substr($columns, 0 , -1);  //remove the last ','
+		$values = substr($values, 0, -1);
+		$volumns .= ')';
+		$values .= ')';
+		$sql = "INSERT $table $volumns VALUES $values";
+		return $this->db->query($sql);
+
+	}
+
+	function update($data, $where, $table)
+	{
+		$values = '';
+		foreach($data as $key => $value) 
+		{
+			$values .= '`'.$key.'` = "'.$value.'",';
+		}
+		$set = substr($set, 0, -1);
+		$sql = "UPDATE $table SET $values $where";
+		$result = $this->db->query($sql);
+		return $result; 
+	}
+
+	function getStudent($where, $sort, $limit)
+	{
+		$sql = "SELECT student.id,username,name,sex,password, class_name FROM student,class,class_student cs $where 
+			student.id=cs.student_id AND class.id=cs.class_id $sort $limit";
+		return $this->db->query($sql)->fetchAll();
+	}
 }

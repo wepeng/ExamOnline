@@ -8,15 +8,6 @@
 <script type="text/javascript" src="../../public/js/flexigrid2.js"></script>
 <script type="text/javascript" src="../../public/js/managestudent.js"></script>
 </head>
-<body>
-	<h2>教师界面</h2>
-	<hr/>
-	<div style=" float:left; border-right:1px solid #000000; width:150px;">
-		<?php echo $this->showlist; ?>
-		<a href="quit">退出</a>
-	</div>
-
-<body>
 <div style="float:left; margin-left:30px;">
 <p>可操作的班级数:<?php echo count($this->classes)?></p>
 选择您要操作的班级:
@@ -54,6 +45,5 @@ $("#loading").ajaxSuccess(function(){
     <div id="tablelist">
 	<?php echo $this->render('/teacher/showstudenttablelist.phtml')?>
 	</div>
-</div
-</body>
-</html>
+</div>
+<?php include_once 'footer.phtml';?>

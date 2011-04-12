@@ -1,5 +1,7 @@
 <?php
 require_once 'Zend/Controller/Action.php';
+require_once 'Zend/Json.php';
+require_once 'lib/choice.class.php';
 /**
  * 
  * 教师控制类,包含普通教师、系主任和管理员
@@ -458,6 +460,7 @@ class TeacherController extends Zend_Controller_Action
 
 	function managestudentAction() 
 	{
+		print_r($_POST);
 		$controlclasses = array(); 
 		$students = array();
 		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
@@ -472,7 +475,13 @@ class TeacherController extends Zend_Controller_Action
 		}
 		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
 		$this->view->classes = $controlclasses;
-		$this->view->allclass = $this->teacher->getAllClass();
+		$classes = $this->teacher->getAllClass();
+		$c = new Choice($classes);
+		$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
+		$c->setShowType('select');
+		$this->view->allclassselect = $c->getHtml();
+
+
 		$this->showstudenttablelistAction($controlclasses);
 
 	}
@@ -496,7 +505,7 @@ class TeacherController extends Zend_Controller_Action
 		else //if has POST	
 		{
 			if(is_numeric($_POST['classid']))
-		   	{
+			{
 				$students = $this->teacher->getStudentByClassId($_POST['classid']);
 				$this->view->classname = $_POST['classname'];
 				$this->view->result = $students;
@@ -510,55 +519,104 @@ class TeacherController extends Zend_Controller_Action
 	}
 
 	function resetpwAction() {
+		$msg_ok =	'成功设置'.$_POST['username'].'密码为123。';
+		$msg_false = '密码已经是默认的123，你丫，想修改多少次？';
 		switch ($_POST['type'])
 		{ 
 		case 's': //修改学生密码为123
 			if($this->sys->resetPassword($_POST['username'], "123", 'student'))
-		   	{
-				echo '成功设置'.$_POST['username'].'密码为123。';
+			{
+				$this->view->msg = $msg_ok;
 			}
 			else 
 			{
-				echo '密码已经是默认的123，你丫，想修改多少次？';
+				$this->view->msg = $msg_false;
 			}
 			break;
 		case 't'://修改教师密码为123
 			if($this->sys->resetPassword($_POST['username'], "123", 'teacher'))
 			{
-				echo '成功设置'.$_POST['username'].'密码为123。';
+				$this->view->msg = $msg_ok;
 			}
 			else
 			{
-				echo '密码已经是默认的123，你丫，想修改多少次？';
+				$this->view->msg = $msg_false;
 			}
 
 			break;
 		}
 	}
 	function deletepersonAction() {
+		$msg_ok =  '成功删除'.$_POST['username'];
+		$msg_false =  '删除失败！';
 		switch ($_POST['type'])
 		{ 
 		case 's': 
 			if($this->sys->deleteperson($_POST['username'], 'student'))
 			{
-				echo '成功删除'.$_POST['username'];
+				$this->view->msg = $msg_ok;
 			}
 			else 
 			{
-				echo '删除失败！';
+				$this->view->msg = $msg_false;
 			}
 			break;
 		case 't':
 			if($this->sys->deleteperson($_POST['username'], 'teacher'))
 			{
-				echo '成功删除'.$_POST['username'];
+				$this->view->msg = $msg_ok;
 			}
 			else
 			{
-				echo '删除失败';
+				$this->view->msg = $msg_false;
 			}
 
 			break;
 		}
+	}
+
+	function addOrUpdateTeacherAction()
+	{
+		$data = array(
+			'username' => trim($_POST['username']),
+			'password' => trim($_POST['password']),
+			'name'     => trim($_POST['name']),
+			'sex'      => $_POST['sex'],
+			'level_id' => $_POST['level_id']
+		);
+		$table = 'teacher';
+		if(isset($_POST['id'])) //if get the 'id'，means to update
+		{
+			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
+			$result = $this->teacher->update($data, $where, $table);
+			if($reslut) $this->view->msg = "修改 ".$data['name']." 成功！";
+		}
+		else                   //if not get 'id', means to add
+		{
+			$result = $this->teacher->insert($data, $table);
+			if($result) $this->view->msg = "添加 ".$data['name']."成功！";
+		}
+	}
+
+	//flexigird --data
+	function getStudentJsonDataAction()
+	{
+		$page = $_POST['page'];
+		$rp = $_POST['rp'];
+		$sortname = $_POST['sortname'];
+		$sortorder = $_POST['sortorder'];
+		if (!$sortname) $sortname = 'student.name';
+		if (!$sortorder) $sortorder = 'desc';
+		if($_POST['query']!=''){
+			$where = "WHERE `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' AND";
+		} else {
+			$where ='WHERE';
+		}
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 60;
+		$start = (($page-1) * $rp);
+		$limit = "LIMIT $start, $rp";
+		$row = $this->teacher->getStudent($where, $sort, $limit);
 	}
 }
