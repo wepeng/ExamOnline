@@ -94,8 +94,12 @@ class Teacher extends Zend_Db
 			AND c.id = cs.class_id
 			AND c.id = '.$class_id.''
 			;
-		$result = $this->db->query($sql)->fetchAll();
-		return $result;
+		$result = $this->db->query($sql);
+		if($result) {
+			return $result->fetchAll();
+		}else {
+			return FALSE;
+		}
 	}
 
 	public  function getClass($teacher_id, $level_id) 
@@ -116,8 +120,12 @@ class Teacher extends Zend_Db
 			$result = NULL;
 			break;
 		}
-		$result = $this->db->query($sql)->fetchAll();
-		return $result;
+		$result = $this->db->query($sql);
+		if($result) {
+			return $result->fetchAll();
+		} else {
+			return FALSE;
+		}
 	}
 
 	function getTeacher()
@@ -125,20 +133,23 @@ class Teacher extends Zend_Db
 		$sql = 'SELECT t.id, t.username, t.name, t.sex, t.level_id 
 			FROM teacher t 
 			WHERE t.level_id = 1';
-		return $this->db->query($sql)->fetchAll();
-	}
-
-	function searchTeacher($name)
-	{
-		$sql = 'SELECT id,username,password,name,sex  
-			FROM teacher WHERE level_id=1 AND name like "%'.$name.'%"';
-		return $this->db->query($sql)->fetchAll();
+		$result = $this->db->query($sql);
+			if($result) {
+				return $result->fetchAll();
+			}else {
+				return FALSE;
+			}
 	}
 
 	function getAllClass() 
 	{
 		$sql = 'SELECT id, class_name, teacher_id FROM `class`';
-		return $this->db->query($sql)->fetchAll();
+		$result =  $this->db->query($sql);
+			if($result) {
+				return $result->fetchAll();
+			}else {
+				return FALSE;
+			}
 	}
 
 	function insert($data, $table)         //insert data to database by tablename
@@ -155,8 +166,13 @@ class Teacher extends Zend_Db
 		$volumns .= ')';
 		$values .= ')';
 		$sql = "INSERT $table $volumns VALUES $values";
-		$this->db->query($sql);
-		return $this->db->lastInsertId();
+		$result = $this->db->query($sql);
+		if($result) {
+			return $this->db->lastInsertId(); //return last insert id
+		}
+		else {
+			return FALSE;
+		}
 
 	}
 
@@ -169,14 +185,32 @@ class Teacher extends Zend_Db
 		}
 		$values = substr($values, 0, -1);
 		$sql = "UPDATE $table SET $values $where";
-		$result = $this->db->query($sql);
-		return $result; 
+		if($result = $this->db->query($sql)) {
+			return TRUE;
+		}else{
+			return FALSE;
+		}	
+	}
+
+	function delete($where, $table) 
+	{
+		$sql = "DELETE FROM $table $where";
+		return $this->db->query($sql);
 	}
 
 	function getStudent($where, $sort, $limit)
 	{
 		$sql = "SELECT student.id,username,name,sex,password, class_name FROM student,class,class_student  $where 
 			student.id=class_student.student_id AND class.id=class_student.class_id $sort $limit";
-		return $this->db->query($sql)->fetchAll();
+		if($result = $this->db->query($sql)) {
+			return $result->fetchAll();
+		}else {
+			return FALSE;
+		}
+	}
+
+	function runSQL($sql)
+	{
+		return $result = $this->db->query($sql);
 	}
 }

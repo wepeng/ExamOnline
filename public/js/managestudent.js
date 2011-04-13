@@ -50,9 +50,12 @@ $('div.pSearch').click();
 /* 显示提示信 息*/
 function alert_msg(msg){			
 	$('#alert_msg').text(msg).css('opacity','0.8').show(200,function(){
-		var alert_timer = setTimeout( function(){$('#alert_msg').hide();	},800);
+		var alert_timer = setTimeout( function(){$('#alert_msg').hide();	},1000);
 	});
 }
+
+
+
 
 /* 获得选取的信息 */
 function get_selectInfo(grid){
@@ -138,7 +141,6 @@ function showDialog(datas){
 			//var cksex = $('#dialog_form input[name=sex]').val()==null?false:true;
 			if(ckusername ){
 				if(ckname){
-					//if(cksex){
 						$.post('addorupdatestudent',$('form#dialog_form').serialize(),function(data){
 							if(data == 'yes') {
 								msg = '添加成功!';
@@ -150,9 +152,6 @@ function showDialog(datas){
 						
 						});
 						$('#cancelBtn').click();
-					//}else{
-					//	$('span.notice').text('请选择学生性别');
-					//}					
 				}else{
 					$('span.notice').text('姓名格式不对（只支持中英文）');
 				}	
@@ -168,9 +167,6 @@ function showDialog(datas){
 		$('#dialog_form input[name=dis_id]').val('');
 		$('#dialog_form input[name=username]').val('');
 		$('#dialog_form input[name=name]').val('');
-		//$('#dialog_form input[name=sex]:checked').attr('checked','');
-		//$('#dialog_form input[name=sex]').val('');
-		//$('#dialog_form option:selected').attr('selected','');
 		$('span.notice').text('');
 		$('#shade').remove();
 		$('#dialog').hide();
@@ -245,7 +241,7 @@ function goToDo(com,grid)
 				$('#confirm_yes').unbind('click').click(function(){
 						var datas = { username:d['username'],type:'s' };
 						$.post('resetpw',datas,function(data){
-							alert(data+'-----成功');
+							alert(data);
 							});
 						$('#shade').remove();
 						$('#confirm_msg').hide();
@@ -260,25 +256,51 @@ function goToDo(com,grid)
 		}
 		break;
 	case '选择班级':
-		var html = $('<div id="shade"></div>');
-		html.css({
-				'opacity':'0.5',
-				height:winH,
-				width:winW
-				});
-		$('body').append(html);
-		$('#chose_class').show().find('span.btns').click(function(){
-				var class_name = $(this).text();
-				$('#shade').remove();
-				$('#chose_class').hide();
-				});
+		$.getJSON('getcontrolclassjson',function(data){
+				var class_info = new Array();
+				class_info = data;
+				if(class_info.length > 0) {
+				var opt='';
+				for(o=0;o<class_info.length;o++){
+				opt += '<span class="btns" id=\"class_id_'+ class_info[o].id +'\">'+ class_info[o].class_name +'</span>';
+				}
+				$('#chose_class span.chose_class_btns').html(opt);
+				var html = $('<div id="shade"></div>');
+				html.css({
+					'opacity':'0.5',
+					height:winH,
+					width:winW
+					});
+				$('body').append(html);
+				$('#chose_class').show().find('span.btns').click(function(){
+					var cid = $(this).attr('id').substr(9);
+					$('#shade').remove();
+					$('#chose_class').hide();
+					//reload
+					jQuery('#flex1').flexOptions({newp:1, params:[{name:'class_id', value: cid},{name:'qtype',value:'class_id'}]});
+					jQuery("#flex1").flexReload(); 
+					});	
+				} else {
+					alert_msg('您目前没有可操作的班级.');
+				}		
+		});
+
+
 		break;
+
 	}
 }
-$(".btns").hover(function(){
-		$(this).css({"background":"url(../images/login_Btn_hover.gif)", "color" : "#fff" });
-		}, function(){
-		$(this).css({"background":"url(../images/login_Btn.gif)", "color" : "#000" });
-		});
+
+$('.btns').live('mouseover',function(){
+		$(this).css({
+			'background':'url(../images/login_Btn_hover.gif)',
+			color:'#fff'
+			});
+		}).live('mouseout',function(){
+			$(this).css({
+				'background':'url(../images/login_Btn.gif)',
+				color:'#000'
+				});
+			})
 
 });

@@ -1,25 +1,17 @@
-<?php  
-include_once '_header.phtml';?>
-<div style="float:left; margin-left:30px;">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>教师管理</title>
+<link rel="stylesheet" type="text/css" href="../../public/css/flexigrid.css" />
+<script type="text/javascript" src="../../public/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../../public/js/flexigrid.js"></script>
+<script type="text/javascript" src="../../public/js/manageteacher.js"></script>
 
-<form action="manageteacher" method="post">
-<input type="text" name="Name" />
-<input type="submit" name="submit" value="搜索" />
-<input type="button" value="添加教师" name="add" /><br/>
-
-<div id="addteacherFrame">
-	用户名：<input type="text" name="username"/><br/> 
-	密码：<input type="text" name="password"/><br/> 
-	真实姓名：<input type="text" name="name"/><br/> 
-	性别：<input type="radio" name="sex" value="男"/>男 <input type="radio" name="sex" value="女"/>女<br/> 
-</div>
-</form>
-
+</head>
+<body>
 <?php
-$result = $this->teacherlist;
-if(!is_array($result)) echo '查无教师';
 include '_table.phtml';
-
-include_once '_footer.phtml'; 
-
 ?>
+</body>
+</html>

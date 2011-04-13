@@ -1,36 +1,25 @@
-<form action="#" method="post">
-		<table id="tb" style="border:1px solid #000">
-			<tr >
-				<th>序  号</th>
-				<th>编  辑</th>
-				<th>登录名</th>
-				<th>姓  名</th>
-				<th>性  别</th>
-				<th colspan="2">操    作</th>
-			</tr>
-<?php 
-$i = 0;
-if(is_array($result)): 
-	foreach($result as $value) : ?>
-			<tr>
-			<td align="center"> <?php echo ++$i; ?>
-				</td>
-					<td align="center"><img src="../../public/images/edit.gif" height="24px" width="24px" alt="编辑" ></img><input type="hidden" name="id" value="<?php $value['id'] ?>">
-				</td>
-				<td><input  disabled="false"  type="text" name="loginname" value="<?php echo $value['username'] ?>"/>
-				</td>
-				<td><input type="text" name="name" value="<?php echo $value['name'] ?>" />
-				</td>
-				<td><input type="text" name="gender"  value="<?php echo $value['sex'] ?> "/>
-				</td>	
-				</td>
-				<td><input type="button" name="resetpw" onclick="handle(<?php echo "'".$value['username']."'" ?>, 2,'t')" value="重置密码" />
-				</td>
-				<td width="60px" align="center"><img src="../../public/images/delete.gif" 
-			onclick="handle(<?php echo "'".$value['username']."'" ?>, 3,'t')" height="24px" width="24px" alt="删除"></img>
-				</td>
-			</tr>
-			<?php endforeach; endif;?>
-	 </table>
-</form>
-<?php include("_jsfunchandle.inc") ?>
+<table id="flex1" style="display:none"></table>
+	<div id="dialog">
+       <form id="dialog_form" name="dialog_form" action="#">
+			<input type="hidden" name="id" />
+	  		<div class="dia_mb"><span>I&nbsp;&nbsp;D </span> <input class="input_dis" type="text" disabled="disabled" name='dis_id' /></div>
+            <div class="dia_mb">登录名  <input maxlength="11" class="input_text" type="text" name="username" /></div>
+            <div class="dia_mb">姓&nbsp;&nbsp;名  <input type="text" class="input_text" name="name" /></div>
+            <span>性&nbsp;&nbsp;别  </span>
+            <input type="radio" name="sex" checked="checked" value="男">男
+            <input type="radio" name="sex" value="女">女
+            <br/>
+            <br/><br/>
+		 <span class="notice"></span><br/>
+         <div class="dia_btn">
+             <span class="btns" id="okBtn">OK</span>
+             <span class="btns" id="cancelBtn">Cancel</span>
+         </div>
+       </form>
+	</div>
+	<div id="alert_msg"></div>
+	<div id="confirm_msg">
+		<span class="confirm_text"></span><br/><br/>
+		<span class="btns" id="confirm_yes" class="">Yes</span>
+		<span class="btns" id="confirm_cancel">Cansel</span>
+	</div>

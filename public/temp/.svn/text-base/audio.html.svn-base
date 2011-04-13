@@ -1,6 +1,0 @@
-<div id="wpl" style="overflow:hidden;width:80px; margin:5px auto;">
-			<div style="overflow:hidden;">
-				<EMBED src="<exam:wplname>" volume="100"  loop="false" style="margin-left:-210px;"  width="300px" height=25px hidden="FALSE" 		auto_old="fault" type="audio/x-pn-realaudio-plugin"  autostart=true >
-				</EMBED>
-			</div>
-</div>

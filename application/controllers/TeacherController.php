@@ -423,71 +423,35 @@ class TeacherController extends Zend_Controller_Action
 		$this->examSession->unsetAll();
 		header('Location: ../');
 	}
-	//login-qin
+	/*
+	 *	编辑教师
+	 * login-qin
+	 */
 	function manageteacherAction()
 	{
 		$this->sys->checkLogined();
-		//	$result = $this->teacher->getTeacher();
-		//	if(is_array($result)) {
-		//		$this->view->result = $result;
-		//	}
-
-		if(isset($_POST['Name']))
-		{
-			$result = $this->teacher->searchTeacher($_POST['Name']);
-			if(count($result) > 0)
-			{
-				$this->view->teacherlist = $result;
-			}
-			else
-			{
-				$this->view->teacherlist = "没有找到。";
-			}
-		}
-		else 
-		{
-			$result = $this->teacher->getTeacher();
-			if(count($result) > 0)
-			{
-				$this->view->teacherlist = $result;
-			}
-			else
-			{
-				$this->view->teacherlist = "没有教师！";
-			}
-		}
 	}
 
 	function managestudentAction() 
 	{
-		$controlclasses = array(); 
 		$students = array();
-		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
-		{ 
-			$level_id = $this->examSession->level_id;
-			$teacher_id = $this->examSession->teacher_id;
-		}
-		else 
+		if(!isset($this->examSession->level_id) && !isset($this->examSession->teacher_id)) 
 		{
 			header('Loacation:../');
 			exit();
 		}
-		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
-		$this->view->classes = $controlclasses;
 		$classes = $this->teacher->getAllClass();
 		$c = new Choice($classes);
 		$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
 		$c->setShowType('select');
-		$this->view->allclassselect = $c->getHtml();
-
-
-		$this->showstudenttablelistAction($controlclasses);
+		$this->view->allclassselect = $c->getHtml(); //生成select html
+		//$this->showstudenttablelistAction();//加载showstudenttablelist
 
 	}
 
 	function showstudenttablelistAction() 
 	{
-		if(func_num_args() > 0) $class = func_get_arg(0); //如果调用该函数有参数传递，赋值给$class
+	/*	if(func_num_args() > 0) $class = func_get_arg(0); //如果调用该函数有参数传递，赋值给$class
 		if(empty($_POST)) //没有Ajax传来的参数，则显示第一个班级信息
 		{
 			if(is_array($class))
@@ -515,6 +479,7 @@ class TeacherController extends Zend_Controller_Action
 			}
 
 		}
+	 */
 	}
 
 	function resetpwAction() {
@@ -574,21 +539,23 @@ class TeacherController extends Zend_Controller_Action
 		}
 	}
 
-	function addOrUpdateTeacherAction()
+	function addorupdateteacherAction()
 	{
-
 		$table = 'teacher';
 		if(!empty($_POST['id'])) //if get the 'id'，means to update
 		{
 			$data = array(
 				'username' => trim($_POST['username']),
 				'name'     => trim($_POST['name']),
-				'sex'      => $_POST['sex'],
-				'level_id' => $_POST['level_id']
+				'sex'      => $_POST['sex']
 			);
 			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
 			$result = $this->teacher->update($data, $where, $table);
-			if($reslut) $this->view->msg = "修改 ".$data['name']." 成功！";
+			if($result) {
+					$this->view->msg = "yes";
+			} else {
+					$this->view->msg = 'no';
+			}
 		}
 		else                   //if not get 'id', means to add
 		{
@@ -597,12 +564,53 @@ class TeacherController extends Zend_Controller_Action
 				'password' => '123',
 				'name'     => trim($_POST['name']),
 				'sex'      => $_POST['sex'],
-				'level_id' => $_POST['level_id']
+				'level_id' => '1'
 			);
 			$result = $this->teacher->insert($data, $table);
-			if($result) $this->view->msg = "添加 ".$data['name']."成功！";
+			if($result === '0' || $result) {
+				$this->view->msg = 'yes';
+			} else {
+				$this->view->msg = 'no';
+			}
 		}
 	}
+
+	function addorupdateleaderAction()
+	{
+		$table = 'teacher';
+		if(!empty($_POST['id'])) //if get the 'id'，means to update
+		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex']
+			);
+			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
+			$result = $this->teacher->update($data, $where, $table);
+			if($result) {
+				$this->view->msg = "yes";
+			} else {
+				$this->view->msg = 'no';
+			}
+		}
+		else                   //if not get 'id', means to add
+		{
+			$data = array(
+				'username' => trim($_POST['username']),
+				'password' => '123',
+				'name'     => trim($_POST['name']),
+				'sex'      => $_POST['sex'],
+				'level_id' => '2'
+			);
+			$result = $this->teacher->insert($data, $table);
+			if($result === '0' || $result) {
+				$this->view->msg = 'yes';
+			} else {
+				$this->view->msg = 'no';
+			}
+		}
+	}
+
 
 	function addorupdatestudentAction()
 	{
@@ -667,20 +675,36 @@ class TeacherController extends Zend_Controller_Action
 	function getstudentjsondataAction()
 	{
 		error_reporting(0);
+		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
+		{
+			header('Loacation:../');
+			exit();
+		}
+		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
 		$page = isset($_POST['page']) ? $_POST['page'] : '';
 		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
 		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
 		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
 		if (!$sortname) $sortname = 'student.name';
 		if (!$sortorder) $sortorder = 'desc';
-		if($_POST['query'] != ''){
+		if($_POST['query'] != '') //to search
+		{
 			$where = "WHERE `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' AND";
 		} 
-		else if($_POST['class_id'] != '' && $_POST['query'] == '')
+		else if($_POST['class_id'] != '' && $_POST['query'] == '') //get ajax value to switch class
 		{
 			$where = "WHERE `class_student`.`class_id`=".$_POST['class_id']." AND ";
 		}
-		else
+		else if($_POST['class_id'] == '' && $_POST['query'] == '') //no search and no class_id post ,show the first default class student
+		{
+			$where = "WHERE `class_student`.`class_id`=".$controlclasses[0]['id']." AND";
+		}
+		else 
 		{
 			$where ='WHERE';
 		}
@@ -716,6 +740,149 @@ class TeacherController extends Zend_Controller_Action
 		$json .= "]\n";
 		$json .= "}";
 		echo $json;
+	}
+
+	function getteacherjsondataAction()
+	{
+		error_reporting(0);
+		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
+		{
+			header('Loacation:../');
+			exit();
+		}
+		$page = isset($_POST['page']) ? $_POST['page'] : '';
+		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
+		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
+		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
+		if (!$sortname) $sortname = 't1.username';
+		if (!$sortorder) $sortorder = 'desc';
+		if($_POST['query'] != '') //to search
+		{
+			$where = "WHERE `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' ";
+		} 
+		else 
+		{
+			$where ="WHERE t1.level_id=1 AND NOT EXISTS
+				(SELECT * FROM teacher t2 WHERE t2.id = $teacher_id AND t2.id = t1.id )";
+		}
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 60;
+		$start = (($page-1) * $rp);
+		$limit = "LIMIT $start, $rp";
+		$sql = "SELECT t1.id, t1.username, t1.name, t1.sex FROM teacher t1 $where $sort $limit";
+		$data = $this->teacher->runSQL($sql);
+		if($data) $result = $data->fetchAll();
+		$total = count($result);
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+		header("Cache-Control: no-cache, must-revalidate" );
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		foreach ($result as $row ) {
+			if ($rc) $json .= ",";
+			$json .= "\n{";
+			$json .= "id:'".$row['id']."',";
+			$json .= "cell:['".$row['id']."','".$row['username']."'";
+			$json .= ",'".addslashes($row['name'])."'";
+			$json .= ",'".addslashes($row['sex'])."']";
+			$json .= "}";
+			$rc = true;
+		}
+		$json .= "]\n";
+		$json .= "}";
+		echo $json;
+	}
+
+	function getleaderjsondataAction()
+	{
+		error_reporting(0);
+		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
+		{
+			header('Loacation:../');
+			exit();
+		}
+		$page = isset($_POST['page']) ? $_POST['page'] : '';
+		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
+		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
+		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
+		if (!$sortname) $sortname = 't1.username';
+		if (!$sortorder) $sortorder = 'desc';
+		if($_POST['query'] != '') //to search
+		{
+			$where = "WHERE `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' ";
+		} 
+		else 
+		{
+			$where ="WHERE t1.level_id=2 AND NOT EXISTS
+				(SELECT * FROM teacher t2 WHERE t2.id = $teacher_id AND t2.id = t1.id )";
+		}
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 60;
+		$start = (($page-1) * $rp);
+		$limit = "LIMIT $start, $rp";
+		$sql = "SELECT t1.id, t1.username, t1.name, t1.sex FROM teacher t1 $where $sort $limit";
+		$data = $this->teacher->runSQL($sql);
+		if($data) $result = $data->fetchAll();
+		$total = count($result);
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+		header("Cache-Control: no-cache, must-revalidate" );
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		foreach ($result as $row ) {
+			if ($rc) $json .= ",";
+			$json .= "\n{";
+			$json .= "id:'".$row['id']."',";
+			$json .= "cell:['".$row['id']."','".$row['username']."'";
+			$json .= ",'".addslashes($row['name'])."'";
+			$json .= ",'".addslashes($row['sex'])."']";
+			$json .= "}";
+			$rc = true;
+		}
+		$json .= "]\n";
+		$json .= "}";
+		echo $json;
+	}
+
+	function getcontrolclassjsonAction() //push class json to view 
+	{
+		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
+		{
+			header('Loacation:../');
+			exit();
+		}
+		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
+		$json = Zend_Json :: encode($controlclasses);
+		$this->view->json = $json;
 	}
 
 }
