@@ -195,7 +195,9 @@ class Teacher extends Zend_Db
 	function delete($where, $table) 
 	{
 		$sql = "DELETE FROM $table $where";
-		return $this->db->query($sql);
+		$result = $this->db->query($sql);
+		if($result) return TRUE;
+		else return FALSE;
 	}
 
 	function getStudent($where, $sort, $limit)
@@ -213,4 +215,30 @@ class Teacher extends Zend_Db
 	{
 		return $result = $this->db->query($sql);
 	}
+
+	function getAllTeacher()
+	{
+		$sql = "SELECT id, username, name FROM teacher";
+		$result = $this->db->query($sql);
+		if($result) {
+			return $result->fetchAll();	
+		}else {
+			return FALSE;
+		}
+	}
+
+	function deleteclass($class_id) 
+	{
+		$where = "WHERE `class`.`id` = $class_id";
+		$ifclass = $this->delete($where, 'class'); //Delete class
+
+		$where = " WHERE `id` IN (SELECT `student_id` FROM  `class_student` WHERE `class_id` = $class_id )";
+		$ifstudent = $this->delete($where, 'student'); //Delete student belong the class
+
+		$where = " WHERE `class_id` = $class_id";
+		$ifclass_student = $this->delete($where, 'class_student'); //Delete class and student mapping table data
+		if($ifclass && $ifstudent && $ifclass_student) return TRUE;
+		else return FALSE;
+	}
+
 }

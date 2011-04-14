@@ -441,45 +441,22 @@ class TeacherController extends Zend_Controller_Action
 			exit();
 		}
 		$classes = $this->teacher->getAllClass();
-		$c = new Choice($classes);
-		$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
-		$c->setShowType('select');
-		$this->view->allclassselect = $c->getHtml(); //生成select html
+		if(empty($classes)) {
+			$this->view->allclassselect = '<br/>
+				<span style="color:#900;font-weight:bold">没有班级提供选择<br/>需要管理员或系主任创建班级后才能添加学生。</span>';
+		}else{
+			$c = new Choice($classes);
+			$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
+			$c->setShowType('select');
+			$this->view->allclassselect = $c->getHtml(); //生成select html
+		}
 		//$this->showstudenttablelistAction();//加载showstudenttablelist
 
 	}
 
 	function showstudenttablelistAction() 
 	{
-	/*	if(func_num_args() > 0) $class = func_get_arg(0); //如果调用该函数有参数传递，赋值给$class
-		if(empty($_POST)) //没有Ajax传来的参数，则显示第一个班级信息
-		{
-			if(is_array($class))
-			{
-				$students = $this->teacher->getStudentByClassId($class[0]['id']); //根据页面传来班级参数获取学生
-				$this->view->classname = $class[0]['class_name'];
-			}
-			else 
-			{
-				$student = array();
-			}
-			$this->view->result = $students;
-		} 
-		else //if has POST	
-		{
-			if(is_numeric($_POST['classid']))
-			{
-				$students = $this->teacher->getStudentByClassId($_POST['classid']);
-				$this->view->classname = $_POST['classname'];
-				$this->view->result = $students;
-			}
-			else 
-			{
-				echo '你丫，想蒙我，你传的参数根本不对！';
-			}
-
-		}
-	 */
+	
 	}
 
 	function resetpwAction() {
@@ -542,6 +519,13 @@ class TeacherController extends Zend_Controller_Action
 	function addorupdateteacherAction()
 	{
 		$table = 'teacher';
+		$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+		if(!$username || !$name )  //if username or name empty, exit;
+		{
+			echo 'no';
+			exit();
+		}
 		if(!empty($_POST['id'])) //if get the 'id'，means to update
 		{
 			$data = array(
@@ -552,9 +536,9 @@ class TeacherController extends Zend_Controller_Action
 			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
 			$result = $this->teacher->update($data, $where, $table);
 			if($result) {
-					$this->view->msg = "yes";
+				$this->view->msg = "yes";
 			} else {
-					$this->view->msg = 'no';
+				$this->view->msg = 'no';
 			}
 		}
 		else                   //if not get 'id', means to add
@@ -578,6 +562,12 @@ class TeacherController extends Zend_Controller_Action
 	function addorupdateleaderAction()
 	{
 		$table = 'teacher';
+		$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+		if(!$username || !$name ) { //if username or name empty, exit;
+		echo 'no';
+		exit();
+		}	
 		if(!empty($_POST['id'])) //if get the 'id'，means to update
 		{
 			$data = array(
@@ -615,6 +605,19 @@ class TeacherController extends Zend_Controller_Action
 	function addorupdatestudentAction()
 	{
 		$table = 'student';
+
+		if(!isset($_POST['class_id']) || empty($_POST['class_id']))  //if have no class , exit
+		{
+			echo 'no';
+			exit();
+		} 
+		$username = isset($_POST['username']) ? trim($_POST['username']) : ''; 
+		$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+		if(!$username || !$name )  //if username or name empty, exit;
+		{
+			echo 'no';
+			exit();
+		}
 		if(!empty($_POST['id'])) //if get the 'id'，means to update
 		{
 			$data = array(
@@ -660,18 +663,26 @@ class TeacherController extends Zend_Controller_Action
 
 	}
 
-
+	/**
+	 * HTML head frame
+	 */
 	function headerAction() {
-
 	}
-
+	/**
+	 * HTML footer frame
+	 */
 	function footerAction(){
 	}
-
+	/**
+	 * HTML footer frame
+	 */
 	function quickmenuAction(){
 	}
 
-	//flexigird --data
+	/**
+	 * gete data for
+	 * flexigird 
+	 */ 
 	function getstudentjsondataAction()
 	{
 		error_reporting(0);
@@ -686,6 +697,9 @@ class TeacherController extends Zend_Controller_Action
 			exit();
 		}
 		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
+		if(empty($controlclasses)) $controlclasses  = array(
+			array( 'id' => '-1' )  //if controlclass is empty , init it;
+		);
 		$page = isset($_POST['page']) ? $_POST['page'] : '';
 		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
 		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
@@ -868,6 +882,9 @@ class TeacherController extends Zend_Controller_Action
 		echo $json;
 	}
 
+	/**
+	 * Get the class by the teacher level id
+	 */ 
 	function getcontrolclassjsonAction() //push class json to view 
 	{
 		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
@@ -883,6 +900,126 @@ class TeacherController extends Zend_Controller_Action
 		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
 		$json = Zend_Json :: encode($controlclasses);
 		$this->view->json = $json;
+	}
+
+	function manageclassAction(){
+		$data = $this->teacher->getALLTeacher();
+		$select = new Choice($data);
+		$select->valueByDataKey('id')->textByDataKey('name')->name('teacher_id');
+		$select->setShowType('select');
+		$this->view->selectteacher = $select->getHtml();
+
+	}
+
+	function getclassjsondataAction() {
+		error_reporting(0);
+		if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
+		{
+			header('Loacation:../');
+			exit();
+		}
+		$page = isset($_POST['page']) ? $_POST['page'] : '';
+		$rp = isset($_POST['rp']) ? $_POST['rp'] : '';
+		$sortname = isset($_POST['sortname']) ? $_POST['sortname'] : '';
+		$sortorder = isset($_POST['sortorder']) ? $_POST['sortorder'] : '';
+		if (!$sortname) $sortname = 'id';
+		if (!$sortorder) $sortorder = 'desc';
+		if($_POST['query'] != '') //to search
+		{
+			$on = "on `".$_POST['qtype']."` LIKE '%".$_POST['query']."%' AND ";
+		} 
+		else 
+		{
+			$on ="on ";
+		}
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 60;
+		$start = (($page-1) * $rp);
+		$limit = "LIMIT $start, $rp";
+		$sql = "SELECT class.id,class.class_name,teacher.id teacher_id , teacher.username,
+			teacher.name from class left join teacher $on class.teacher_id = teacher.id $sort $limit";
+		$data = $this->teacher->runSQL($sql);
+		if($data) $result = $data->fetchAll();
+		$total = count($result);
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+		header("Cache-Control: no-cache, must-revalidate" );
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		foreach ($result as $row ) {
+			if ($rc) $json .= ",";
+			$json .= "\n{";
+			$json .= "id:'".$row['id']."',";
+			$json .= "cell:['".$row['id']."','".$row['class_name']."'";
+			$json .= ",'".addslashes($row['teacher_id'])."'";
+			$json .= ",'".addslashes($row['username'])."'";
+			$json .= ",'".addslashes($row['name'])."']";
+			$json .= "}";
+			$rc = true;
+		}
+		$json .= "]\n";
+		$json .= "}";
+		echo $json;
+	}
+
+	function addorupdateclassAction()
+	{
+		$table = 'class';
+		if(!trim($_POST['class_name'])) {
+			echo 'no';
+			exit();
+		}
+		if(!empty($_POST['id'])) //if get the 'id'，means to update
+		{
+
+			$data = array(
+				'id'          => trim($_POST['id']),
+				'class_name'  => trim($_POST['class_name']),
+				'teacher_id'  => $_POST['teacher_id']
+			);
+
+			$where = "WHERE `".$table."`.`id` = ".$_POST['id']."";
+			$result = $this->teacher->update($data, $where, $table);
+			if($result)	$this->view->msg = 'yes';
+			else 	$this->view->msg = 'no';
+		}
+		else                   //if not get 'id', means to add
+		{
+			$data = array(
+				'class_name' => trim($_POST['class_name']),
+				'teacher_id' => $_POST['teacher_id']
+			);
+			$result = $this->teacher->insert($data, $table); //return the last insert id;
+			if($result === '0' || $result ) { $this->view->msg =  "yes";
+			}
+			else
+			{
+				$this->view->msg = 'no';
+			}
+		}
+
+	}
+	function deleteclassAction()
+	{
+		if(!empty($_POST['class_id'])) {
+			$result = $this->teacher->deleteclass($_POST['class_id']);
+			if($result) echo 'yes';
+			else echo 'no';
+		}else {
+			echo 'no';
+		}
 	}
 
 }
