@@ -55,6 +55,9 @@ a#changepwd:hover{ color:#ccc;}
 	text-align:center;
 	margin-top:1px;
 	}
+#menu .btn:hover{	
+	background-image:url(../../public/images/menu_btn.gif);
+	}
 #menu .btn a{ color:#000; font-size:14px;}
 #menu .s{
 	height:11px;
@@ -83,7 +86,8 @@ a#changepwd:hover{ color:#ccc;}
 	}
 #content table caption{
 	font-size:20px;
-	color:#00F;
+	font-weight: bold;
+	color:#55F;
 	padding:0 5px 5px 5px;
 	}
 #content table th{

@@ -1,4 +1,6 @@
-//管理成绩的table
+//管理成绩
+var winW=  document.documentElement.clientWidth;
+var winH = document.documentElement.clientHeight;
 $("#flex1").flexigrid
 	({
 	url: 'scorelist',
@@ -41,7 +43,7 @@ $("#flex1").flexigrid
 	pagestat : '显示第 {from} 条到 {to} 条,共 {total} 条数据',// 显示当前页和总页面的样式  
 	procmsg : '正在处理,请稍候 ...',// 正在处理的提示信息
 	width : 'auto', // 宽度值，auto表示根据每列的宽度自动计算   
-	height: 'auto'
+	height: (winH-155)
 	}); 
 	
 	function test(com,grid)

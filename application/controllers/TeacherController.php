@@ -167,24 +167,8 @@ class TeacherController extends Zend_Controller_Action
 			{
 				$class_ids = $_POST['class_id'];
 			}
-			echo "<div>";
-			echo "试卷名：".$paper_name."<br/>";
-			echo "类别：".$category_id."<br/>";
-			if(isset($_POST['class_id']))
-			{
-				foreach ($_POST['class_id'] as $value)
-				{
-					echo "班级：".$value."<br/>";
-				}
-			}
-			echo "排除的学号：".$rejectStus."<br/>";
-			echo "另外允许的学号：".$otherStus."<br/>";
-			echo "开始时间：".$startTime."<br/>";
-			echo "结束时间：".$endTime."<br/>";
-			echo "</div>";
-			
 			$this->examination->saveExamSetData($paper_id, $paper_name, $category_id, $startTime, $endTime, $class_ids, $rejectStus, $otherStus);
-			
+			$this->view->msg = "已成功添加一场考试：".$paper_name;
 		}
 	}
 
@@ -250,7 +234,7 @@ class TeacherController extends Zend_Controller_Action
 			$studentNums = $_POST['studentNums'];
 			$this->examination->saveReExamSetData($exam_id, $parts, $studentNums, $this->examSession->teacher_id);
 			
-			echo "添加成功。";
+			$this->view->msg = "设置成功";
 		}
 	}
 	
@@ -459,6 +443,7 @@ class TeacherController extends Zend_Controller_Action
 		{
 			foreach($result as $value)
 			{
+				$value['parts_score'] = str_replace("#", ",", $value['parts_score']);
 				if ($rc) $json .= ",";
 				$json .= "\n{";
 				$json .= "student_id:'".$value['student_id']."',";

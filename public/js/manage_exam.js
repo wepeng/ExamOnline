@@ -1,4 +1,6 @@
-//管理考试的table
+//管理考试
+var winW=  document.documentElement.clientWidth;
+var winH = document.documentElement.clientHeight;
 $("#flex1").flexigrid
 	({
 	url: 'examlist',
@@ -12,9 +14,6 @@ $("#flex1").flexigrid
 				{display: '类别', name : 'category_name', width : 100, sortable : true, align: 'left'}
 				],
 	buttons : [
-		{name: '添加', bclass: 'grid_add', onpress : test},
-		{ // 设置分割线  
-							separator : true  },
 		{name: '删除', bclass: 'grid_delete', onpress : test},
 		{separator: true},
 		{name: '修改', bclass: 'grid_edit', onpress : test},
@@ -43,7 +42,7 @@ $("#flex1").flexigrid
 	pagestat : '显示第 {from} 条到 {to} 条,共 {total} 条数据',// 显示当前页和总页面的样式  
 	procmsg : '正在处理,请稍候 ...',// 正在处理的提示信息
 	width : 'auto', // 宽度值，auto表示根据每列的宽度自动计算   
-	height: 'auto'
+	height: (winH-155)
 	}); 
 	
 	function test(com,grid)

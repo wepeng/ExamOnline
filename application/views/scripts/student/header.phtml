@@ -5,24 +5,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" language="javascript" src="../../public/js/jquery-1.2.3.js"></script>
 <link rel="stylesheet" type="text/css" href="../../public/css/student.css">
-<script type="text/javascript">
-<!--
-$(function(){
-	$('#menu li.btn').hover(function(){
-		$(this).css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
-	},function(){
-		if($(this).attr('click')!='yes'){
-			$(this).css('background','').find('a').css('color','#000');
-		}
-	});
-	
-	$('#menu li.btn').click(function(){
-		$(this).attr('click','yes').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
-		$(this).siblings('li.btn').attr('click','no').css('background','').find('a').css('color','#000');
-	}).eq(0).click();
-})
--->
-</script>
+
 <script type="text/javascript">
 <!--
 //表格
@@ -42,15 +25,15 @@ $(function(){
 			<span class="fm">欢迎您：<span id="showUsername"><?php echo $this->username; ?></span></span>
 	</div>
 	<ul id="menu">
-		<li class="btn first"><a href='showexamtime'>考试查询</a></li>
+		<li class="btn first" id="showexam"><a href='showexamtime'>考试查询</a></li>
 			
 			<li class="s"></li>
 			
-			<li class="btn"><a href='reexam'>重考查询</a></li>
+			<li class="btn" id="reexam"><a href='reexam'>重考查询</a></li>
 			
 			<li class="s"></li>
 			
-			<li class="btn"><a href='showexamrecord'>考试记录</a></li>
+			<li class="btn" id="record"><a href='showexamrecord'>考试记录</a></li>
 			
 			<li class="s"></li>
 			

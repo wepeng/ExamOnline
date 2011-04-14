@@ -213,7 +213,7 @@ class StudentController extends Zend_Controller_Action
 			$this->examination->_checkoneanswer($_GET['examination_id'], $this->examSession->student_id);
 		}
 		$result = $this->examination->getStudentScore($this->examSession->student_id, $_GET['examination_id']);
-		echo $result[0]['total_score'];
+		echo "<br/>得分：".$result[0]['total_score'];
 	}
 	
 	/**

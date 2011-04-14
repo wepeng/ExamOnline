@@ -42,12 +42,12 @@
 	})       
 
 </script>
-<div style="float:left; margin-left:30px;">
+<div style="margin-left:30px; margin-top:20px;">
 	<form name="reexamForm" action="setreexam" method="post">
-	选择重考考试：<span id="examName" style="color:#F00;"></span><br/>
+	<b>选择重考考试：</b><span id="examName" style="color:#F00;"></span><br/><br/>
 	<input type="hidden" id="examId" name="examId"/>
-	<div id="showExamList" style="border:1px #CCC solid; padding:10px">
-		<h3>最近进行的考试</h3><br>
+	<div id="showExamList" style="width:600px; height:300px; border:1px #CCC solid; padding:10px">
+		<b>最近进行的考试</b><br><br/>
 		<?php
 			if(is_array($this->getRecentlyExamList))
 			{
@@ -66,13 +66,14 @@
 
 	</div><br/>
 	选择重考部分：<br/>
-	<div id="paperParts" style="border:1px #CCC solid; padding:5px;"></div><br/>
+	<div id="paperParts" style="width:610px; min-height:20px; border:1px #CCC solid; padding:5px;"></div><br/>
 	
 	输入重考学号（多个用逗号隔开，如: 111,112,113）：<br/>
-	<input id="studentNums" name="studentNums" type="text" style="width:400px;" value="" />
+	<input id="studentNums" name="studentNums" type="text" style="width:550px;" value="" />
 	<input type="button" id="checkStu" value="检查考生" /> <span id="checkResult"></span><br/><br/>
-	<input type="button" onClick="reexamForm.submit()" value="确定" />
+	<input type="button" style="width:60px;" onClick="reexamForm.submit()" value="确定" />
 	</form>
+	<br/><div style="color:#F00;"><?php echo $this->msg; ?></div>
 </div>
 
 <?php include_once '_footer.phtml';?>
