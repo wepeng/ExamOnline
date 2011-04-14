@@ -1,0 +1,33 @@
+<?php  include_once 'header.phtml';?>
+
+<table>
+	<caption>您的已考记录</caption>
+	<tr>
+		<th>试卷名</th>
+		<th>分类</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+		<th>分数</th>
+		<th>查看</th>
+	</tr>
+<?php 
+	if(is_array($this->result))
+	{
+		foreach ($this->result as $value)
+		{
+?>
+		<tr>
+		<td><?php echo $value['name'];?></td>
+		<td><?php echo $value['category_name'];?></td>
+		<td><?php echo $value['startTime'];?></td>
+		<td><?php echo $value['endTime'];?></td>
+		<td><?php echo $value['total_score'];?></td>
+		<td><?php echo '<a href="showpaperandanswer?examination_id='.$value['id'].'&paper_id='.$value['paper_id'].'&part=1">查看试题和答案</a>';?></td>
+		</tr>
+<?php
+		}
+	}
+?>
+</table>
+
+<?php include_once 'footer.phtml';?>

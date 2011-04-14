@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>英语在线考试系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="utf-8">
+<script type="text/javascript" language="javascript" src="js/jquery-1.2.3.js"></script>
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+body{ 
+	font-family:"微软雅黑", Arial, "MS Sans Serif", System;
+	background:#fff;}
+
+#loginArea{
+	height:350px;
+	width:560px;
+	padding-top:150px;
+	padding-left:240px;
+	background:url(images/loginArea.png);
+	margin:0 auto;
+	margin-top:30px;
+	font-size:14px;
+	font-weight:bold;
+	color:#eee;
+}
+label{
+	margin-right:20px;}
+.input{
+	height:20px;
+	width:170px;
+	padding-left:10px;
+	padding-top:2px;
+	border:none;
+	background:url(images/input.gif);
+	}
+span{
+	margin-left:14px;}
+#login{
+	color:#494949;
+	height:22px;
+	width:100px;
+	border:none;
+	background:url(images/login_Btn.gif);
+	text-align:center;
+	font-weight:bold;
+	margin-left:150px;
+	margin-top:50px;}
+#loginArea div{
+	margin:10px 0 5px 130px;
+	}
+-->
+</style>
+</head>
+<script type="text/javascript">
+$(function(){
+$('#login').hover(function(){
+		$(this).css({
+			'background':'url(images/login_Btn_hover.gif)',
+			color:'#fff'
+		});
+	},function(){
+		$(this).css({
+			'background':'url(images/login_Btn.gif)',
+			color:'#494949'
+		});
+	});
+$('#login').click(function(){
+	if(document.getElementById("sd").checked == true){
+		document.getElementById("form1").action="Student/login";
+		}else if(document.getElementById("tc").checked == true){
+		document.getElementById("form1").action="Teacher/login";
+	}
+	document.form1.submit();
+	});	
+})
+</script>
+<body>
+	<div id="loginArea">
+    <form name="form1" method="post" action="#" id="form1">
+    <br/>
+    	用户名：<input class="input" name="username" type="text" />        <br/><br/>
+        <span>密码：</span><input class="input" name="password" type="password" />        <br/>
+        <div>
+        <label for="sd"><input checked="checked" id="sd" type="radio" name="c">学生</label>
+        <label for="tc"><input id="tc" type="radio" name="c">教师</label><br/>
+        </div>
+        <button id="login" type="submit">登&nbsp;录</button>
+    </form>
+    </div>
+</body>
+</html>

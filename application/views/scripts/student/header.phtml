@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Insert title here</title>
+<script type="text/javascript" language="javascript" src="../../public/js/jquery-1.2.3.js"></script>
+<link rel="stylesheet" type="text/css" href="../../public/css/student.css">
+<script type="text/javascript">
+<!--
+$(function(){
+	$('#menu li.btn').hover(function(){
+		$(this).css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
+	},function(){
+		if($(this).attr('click')!='yes'){
+			$(this).css('background','').find('a').css('color','#000');
+		}
+	});
+	
+	$('#menu li.btn').click(function(){
+		$(this).attr('click','yes').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
+		$(this).siblings('li.btn').attr('click','no').css('background','').find('a').css('color','#000');
+	}).eq(0).click();
+})
+-->
+</script>
+<script type="text/javascript">
+<!--
+//表格
+$(function(){
+	$('table tr:not(:has(th)):odd').addClass('table_odd');
+	$('table tr:not(:has(th)):even').addClass('table_even');
+})
+-->
+</script>
+</head>
+<body>
+<div id="wraper">
+	<div id="head">
+		<img id="logo" src="../../public/images/logo.png" />
+			<a id="exit" class="fm" href="quit">退出</a>
+			<a id="changepwd" class="fm" href="resetpassword">修改密码</a>
+			<span class="fm">欢迎您：<span id="showUsername"><?php echo $this->username; ?></span></span>
+	</div>
+	<ul id="menu">
+		<li class="btn first"><a href='showexamtime'>考试查询</a></li>
+			
+			<li class="s"></li>
+			
+			<li class="btn"><a href='reexam'>重考查询</a></li>
+			
+			<li class="s"></li>
+			
+			<li class="btn"><a href='showexamrecord'>考试记录</a></li>
+			
+			<li class="s"></li>
+			
+			<li class="fr"><input class='search' type="text" /><li>
+	</ul>
+	
+	<div id="content">

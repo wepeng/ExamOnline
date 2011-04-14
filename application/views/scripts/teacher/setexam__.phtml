@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>管理</title>
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+body{ background:#efefef; font-family:"微软雅黑", Arial, "MS Sans Serif", System; font-size:14px; padding-bottom:15px;s}
+h1{ color:#06C; font-size:22px;}
+a{ text-decoration:none; color:#000;}
+a:hover{ text-decoration:underline;color:#900;}
+
+html{ overflow-x:hidden;}
+
+#main{
+	width:90%;
+	background:#fff;
+	padding:15px;
+	margin:10px auto;}
+#showExamList{
+	width:400px;
+	padding:10px;
+	background:#C4E1FF;
+	margin-bottom:15px;}
+#paperTitle{ color:#900;}
+#searchBtn,#sub{
+	height:22px;
+	width:100px;
+	text-align:center;
+	border:none;
+	}
+#searchBtn{
+	background:url(../images/login_Btn.gif);}
+	#sub{background:url(../images/login_Btn_hover.gif); margin-left:200px; margin-top:20px; color:#fff;}
+-->
+</style>
+<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery_corner.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+	$(function(){
+		$('.corner').corner('10px');
+	})
+	function showPaperList(category_id)
+	{
+
+		url = "setexam";
+
+		$.post(url,{'category_id': category_id}, function (data){
+
+			$('#paperList').html(data);
+
+			
+
+		});
+
+	}
+
+	//设置已选择的试卷名和试卷ID
+
+	function setPaperName(title,paper_id)
+
+	{
+
+		document.getElementById("paperTitle").textContent = title;
+
+		document.getElementById("paperName").value = title;
+
+		document.getElementById("paperId").value = paper_id;
+
+	}
+
+	//搜索试卷
+
+	function searchPaper()
+
+	{
+
+		title = document.getElementById("getSearchName").value;
+
+		$.post('setexam',{'searchByName':title},function(data){
+
+			$('#paperList').html(data);
+
+			});
+
+	}
+
+</script>
+
+<div id="main" class="corner">
+	<h1>设置考试</h1><br/>
+    <span>请选择试卷</span><br/><br/>
+	<form name="form1" action="setexam" method="post">
+         <!-- 试卷显示列表 -->
+         <b>试卷列表</b>
+        <div id="showExamList" class="corner">
+            <div id="paperList">None</div><br>
+        </div>
+        <input type="text" id="getSearchName" name="getSearchName" />
+        <input type="button" id='searchBtn' onClick="JavaScript:searchPaper()" value="搜索试卷" /><br/><br/>
+        <span>试卷名：</span><span id="paperTitle">未选择试卷</span><br/><br/>
+        <input type="hidden" id="paperName" name="paperName" value="" />
+        <input type="hidden" id="paperId" name="paperId" value="" />
+        <span>选择试卷类别：</span>
+		<?php
+		if(is_array($this->categoryList))
+		{
+			foreach($this->categoryList as $value)
+			{
+				echo "<input type='radio' onClick='showPaperList(".$value['id'].")' name='paperCategoryID' value='".$value['id']."'>".$value['name']."&nbsp;&nbsp;";
+			}	
+		}
+		?><br/><br/>
+    
+       	<span>选择班级：</span>
+        <?php 
+		if(is_array($this->showClassList))
+		{
+			foreach($this->showClassList as $value)
+			{
+				echo '<input type="checkbox" name="class_id[]" value="'.$value['id'].'"/>'.$value['class_name']."&nbsp;&nbsp;";
+			}
+		}
+		else
+		{
+			echo "没有您管理的班级";
+		}
+		?>	<br/><br/>
+        <input type="text" name="rejectStus" /> 排除的学生<br/><br/>
+       <input type="text" name="otherStus" />  其他可以参加考试的学生<br/><br/>
+        <input type="text" name="startTime" /> 开始考试时间<br/><br/>
+        <input type="text" name="endTime" /> 结束考试时间<br/><br/>
+        <div>
+            </div>
+        <input id="sub" type="button" name="setExamSubmit" onClick="form1.submit()"  value="确定" />
+	</form>
+</div>
+
+<script type="text/javascript">
+
+	
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

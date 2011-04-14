@@ -1,0 +1,58 @@
+<?php  include_once '_header.phtml';?>
+
+<script type="text/javascript">
+	//显示页面框
+	function showPageFram()
+	{
+		pageNum = document.getElementById("pageNum").value;
+		document.getElementById("pageFrame").innerHTML = "";
+		for(var i=1; i<=pageNum; i++)
+		{
+			document.getElementById("pageFrame").innerHTML += "第" + i + "页：ID:<input type='text' name='pageIndex[]'/> Name:<input name='partName[]' value=''/> Direction:<input name='direction[]' value=''/> Time:<input name='partTime[]' value=''/><br/>";
+		}
+	}
+</script>
+<div style="float:left; margin-left:30px;">
+<FORM action="editupexam" name="examform" method="post">
+	<h2>编辑将要上传的试卷</h2>
+	
+	试卷名：<input type="text" name="title"><br/>
+	选择试卷类别：
+	<?php 
+	if($this->showPaperCategory && count($this->showPaperCategory)>0)
+	{
+		foreach($this->showPaperCategory as $value)
+		{
+			echo "<input type='radio' name='paperCategoryId' value='".$value['id']."'>".$value['name'];
+		}
+	}
+	?>
+	<br/>
+	试卷分为几页：<input type="text" id="pageNum" name="pageNum" /><input type="button" onClick="JavaScript:showPageFram();" value="确定"><br/>
+	<div id="pageFrame"></div><br/>
+	
+	<input type="button" onClick="examform.submit()" value="提交试卷" /> <br/><br/>
+	
+	<table border="1">
+	<tr>
+		<td>ID</td><td>名称</td><td>概要</td>
+	</tr>
+	<?php
+		if($this->temporaryPartList)
+		{
+			foreach($this->temporaryPartList as $value)
+			{
+				echo "<tr>";
+				echo "<td>".$value['id']."</td>";
+				echo "<td>".$value['name']."</td>";
+				echo "<td>".$value['overview']."</td>";
+				echo "</tr>";
+			}
+		}
+	?>
+	</table>
+	
+</FORM>	
+</div>
+
+<?php include_once '_footer.phtml';?>

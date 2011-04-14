@@ -1,0 +1,165 @@
+<?php  include_once '_header.phtml';?>
+<script type="text/javascript" src="../../public/js/Calendar.js"></script>
+<script language="javascript">
+	//日历
+  var cdr = new Calendar("cdr");
+  document.write(cdr);
+  cdr.showMoreDay = true;
+</script>
+<script type="text/javascript">
+	//按分类显示试卷列表
+	function showPaperList(category_id)
+	{
+		url = "setexam";
+		$.post(url,{'category_id': category_id}, function (data){
+			$('#paperList').html(data);
+		});
+	}
+	//设置已选择的试卷名和试卷ID
+	function setPaperName(title,paper_id)
+	{
+		document.getElementById("paperTitle").textContent = title;
+		document.getElementById("paperName").value = title;
+		document.getElementById("paperId").value = paper_id;
+	}
+	//搜索试卷
+	function searchPaper()
+	{
+		title = document.getElementById("getSearchName").value;
+		$.post('setexam',{'searchByName':title},function(data){
+			$('#paperList').html(data);
+			});
+	}
+
+	//检查学号是否存在
+	$(document).ready(function(){
+		$('#checkReject').click(function(){
+			$.post('checkstudents',{'checkStuNums':$('#rejectStus').val()}, function(data){
+				$('#checkRejectResult').html(data);
+			})
+		});	
+		$('#checkPermit').click(function(){
+			$.post('checkstudents',{'checkStuNums':$('#otherStus').val()}, function(data){
+				$('#checkPermitResult').html(data);
+			})
+		})
+	})
+</script>
+<div style="float:left; margin-left:30px;">
+	<h2>设置考试</h2>
+	<span style="color:#F00"><?php echo $this->error."<br/>"; ?></span>
+	<form name="form1" action="setexam" method="post">
+	
+
+	试卷名：<span id="paperTitle" style="color:#F00;"> </span><br/><br/>
+				<input type="hidden" id="paperName" name="paperName" value="" />
+				<input type="hidden" id="paperId" name="paperId" value="" />
+	* 选择试卷类别：
+	<?php
+	if(is_array($this->categoryList))
+	{
+		foreach($this->categoryList as $value)
+		{
+			echo "<input type='radio' onClick='showPaperList(".$value['id'].")' name='paperCategoryID' value='".$value['id']."'>".$value['name']."&nbsp;&nbsp;";
+		}	
+	}
+	?>
+	<br/><br/>
+	<input type="text" id="getSearchName" name="getSearchName" /><input type="button" onClick="JavaScript:searchPaper()" value="搜索试卷" /><br/><br/>
+	
+	<!-- 试卷显示列表 -->
+	<div id="showExamList">
+		<b>试卷列表</b><br>
+		<div id="paperList"></div>
+	</div><br/>
+	
+	选择班级：
+	<?php 
+		if(is_array($this->showClassList))
+		{
+			foreach($this->showClassList as $value)
+			{
+				echo '<input type="checkbox" name="class_id[]" value="'.$value['id'].'"/>'.$value['class_name']."&nbsp;&nbsp;";
+			}
+		}
+		else
+		{
+			echo "没有您管理的班级";
+		}
+	?>
+	<br/><br/>
+	排除的学号（多个用逗号隔开，如: 111,112,113）：<br/>
+	<input type="text" style="width:300px;" name="rejectStus" id="rejectStus" /> <input type="button" id="checkReject" value="检查" /> <span id="checkRejectResult"></span><br/><br/>
+	班级外允许参加考试的学号（多个用逗号隔开，如: 111,112,113）：<br>
+	<input type="text" style="width:300px;" name="otherStus" id="otherStus" /> <input type="button" id="checkPermit" value="检查" /> <span id="checkPermitResult"></span><br/><br/>
+	
+	<div>
+		* 开始考试时间：
+		<input type="text" name="startDate" onfocus="cdr.show(this);" value=""/>
+		<select class="time_in" name="startHour">
+		<script type="text/javascript">
+			for(var i=0; i<24; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>:
+		<select class="time_in" name="startMinute">
+		<script type="text/javascript">
+			for(var i=0; i<60; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>:
+		<select class="time_in" name="startSecond">
+		<script type="text/javascript">
+			for(var i=0; i<60; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>
+	</div><br>						
+	<div>
+		* 结束考试时间：
+		<input type="text" name="endDate" onfocus="cdr.show(this);" value=""/>
+		<select class="time_in" name="endHour">
+		<script type="text/javascript">
+			for(var i=0; i<24; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>:
+		<select class="time_in" name="endMinute">
+		<script type="text/javascript">
+			for(var i=0; i<60; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>:
+		<select class="time_in" name="endSecond">
+		<script type="text/javascript">
+			for(var i=0; i<60; i++){
+				var str = "<option value="+i+">"+i+"</option>";
+				document.write(str);
+			}
+		</script>
+		</select>
+	</div><br/>					
+	
+	<div>
+	<?php
+		
+	?>
+	</div>
+	<input type="button" name="setExamSubmit" onClick="form1.submit()"  value="确定" />
+	</form>
+</div>
+<script type="text/javascript">
+	
+</script>
+
+<?php include_once '_footer.phtml';?>

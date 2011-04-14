@@ -1,0 +1,54 @@
+<?php  include_once 'header.phtml';?>
+
+<table>
+	<caption>您将要进行的考试</caption>
+	<tr>
+		<th>试卷名</th>
+		<th>分类</th>
+		<th>考试开始时间</th>
+		<th>考试结束时间</th>
+		<th>状态</th>
+	</tr>
+<?php 
+	if(is_array($this->result))
+	{
+		foreach ($this->result as $value)
+		{
+?>
+		<tr>
+		<td><?php echo $value['name']?></td>
+		<td><?php echo $value['pcategory_name']?></td>
+		<td><?php echo $value['startTime']?></td>
+		<td><?php echo $value['endTime']?></td>
+		<td><?php
+		$date = explode(' ',$value['startTime']);
+		$ymd = explode('-', $date[0]);
+		$hms = explode(':', $date[1]);
+		//print_r($hms);
+		//echo $hms[1]."wepeng";
+		$startTime = mktime($hms[0],$hms[1],$hms[2],$ymd[1],$ymd[2],$ymd[0]);
+		
+		$date = explode(' ',$value['endTime']);
+		$ymd = explode('-', $date[0]);
+		$hms = explode(':', $date[1]);
+		$endTime = mktime($hms[0],$hms[1],$hms[2],$ymd[1],$ymd[2],$ymd[0]);
+		
+		$now = time()+8*60*60;
+		
+		if($now>$startTime && $now<$endTime)
+		{
+			echo "<a style='color:#f00' href='doexam?examination_id=".$value['id']."&paper_id=".$value['paper_id']."'>进入考试</a>";
+		} 
+		else
+		{
+			echo '考试未开始';
+		}
+		?></td>
+		</tr>
+<?php
+		}
+	}
+?>
+</table>
+
+<?php include_once 'footer.phtml';?>
