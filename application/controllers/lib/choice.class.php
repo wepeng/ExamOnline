@@ -1,10 +1,10 @@
 <?php
 /**
  *  Class Name : Choice 
- *  Describe: This Class is used to format  data:array to  select or checkbox html,
+ *  @Describe: This Class is used to format  data:array to  select or checkbox html,
  *  Your give array_data will show by select or  checkbox in use html;
- *  Acthor: Qinwei
- *  Example:
+ *  @Acthor: Qinwei
+ *  @Example:
  * $data = array(
  * 	array("class_id" => 1 , "class_name" => "081班"),	
  *	array("class_id" => 2 , "class_name" => "082班"),

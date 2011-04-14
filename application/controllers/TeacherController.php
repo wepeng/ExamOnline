@@ -181,6 +181,8 @@ class TeacherController extends Zend_Controller_Action
 			
 			echo "添加成功。";
 		}
+
+		print_r($_POST);
 	}
 	
 	/**
