@@ -20,7 +20,9 @@ class TeacherController extends Zend_Controller_Action
 		$this->teacher = new Teacher();
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
-		$this->view->showlist = file_get_contents("../application/views/scripts/teacher/teacher".$this->examSession->level_id.".phtml");
+		$showlist = file_get_contents("../application/views/scripts/teacher/teacher".$this->examSession->level_id.".phtml");
+		$this->quickmenuAction($showlist);
+
 	}
 	
 	function indexAction()
@@ -677,6 +679,7 @@ class TeacherController extends Zend_Controller_Action
 	 * HTML footer frame
 	 */
 	function quickmenuAction(){
+		if(func_num_args() > 0) $this->view->showlist = func_get_arg(0);
 	}
 
 	/**
