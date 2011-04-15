@@ -546,6 +546,7 @@ class TeacherController extends Zend_Controller_Action
 				$json .= "\n{";
 				$json .= "id:'".$value['id']."',";
 				$json .= "title:'".$value['title']."',";
+				$json .= "category_name:'".$value['category_name']."',";
 				$json .= "introduction:'".$value['introduction']."',";
 				$json .= "listening_test:'".$value['listening_test']."',";
 				$json .= "time:'".$value['time']."'";

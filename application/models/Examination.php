@@ -1207,8 +1207,11 @@ class Examination extends Zend_Db
 	 */
 	public function getPaperList($where="",$sort="",$limit="")
 	{
-		$where = ($where=="") ? "" : "WHERE ".$where;
-		$sql = "SELECT * FROM paper $where $sort $limit";
+		$where = ($where=="") ? "" : " AND ".$where;
+		$sql = "SELECT p.id, p.introduction, p.listening_test, p.title, p.time, pc.name category_name  
+				FROM paper p, papercategory pc  
+				WHERE pc.id = p.category_id 		
+				$where $sort $limit";
 		$result = $this->db->query($sql)->fetchAll();
 		return $result;
 	}
