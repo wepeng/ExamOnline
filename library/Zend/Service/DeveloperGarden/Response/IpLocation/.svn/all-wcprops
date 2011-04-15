@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation
+END
+IPAddressLocationType.php
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/IPAddressLocationType.php
+END
+CityType.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/CityType.php
+END
+LocateIPResponse.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/LocateIPResponse.php
+END
+LocateIPResponseType.php
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/LocateIPResponseType.php
+END
+RegionType.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/RegionType.php
+END
+GeoCoordinatesType.php
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Response/IpLocation/GeoCoordinatesType.php
+END

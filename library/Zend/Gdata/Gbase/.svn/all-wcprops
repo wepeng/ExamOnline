@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase
+END
+ItemEntry.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/ItemEntry.php
+END
+Entry.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/Entry.php
+END
+ItemFeed.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/ItemFeed.php
+END
+Feed.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/Feed.php
+END
+ItemQuery.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/ItemQuery.php
+END
+SnippetEntry.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/SnippetEntry.php
+END
+Query.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/Query.php
+END
+SnippetFeed.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/SnippetFeed.php
+END
+SnippetQuery.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Gdata/Gbase/SnippetQuery.php
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap
+END
+Wsdl.php
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Wsdl.php
+END
+Client.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Client.php
+END
+Server.php
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/Server.php
+END
+AutoDiscover.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Soap/AutoDiscover.php
+END

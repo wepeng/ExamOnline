@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/EnglishExam/!svn/ver/1/library/Zend/Paginator
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Paginator/Exception.php
+END
+SerializableLimitIterator.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/EnglishExam/!svn/ver/1/library/Zend/Paginator/SerializableLimitIterator.php
+END
+AdapterAggregate.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Paginator/AdapterAggregate.php
+END

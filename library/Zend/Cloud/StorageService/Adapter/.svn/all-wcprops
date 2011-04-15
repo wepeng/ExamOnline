@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/StorageService/Adapter
+END
+Nirvanix.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/StorageService/Adapter/Nirvanix.php
+END
+WindowsAzure.php
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/StorageService/Adapter/WindowsAzure.php
+END
+FileSystem.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/StorageService/Adapter/FileSystem.php
+END
+S3.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/StorageService/Adapter/S3.php
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc
+END
+Fault.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Fault.php
+END
+Value.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Value.php
+END
+Client.php
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Client.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Exception.php
+END
+Response.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Response.php
+END
+Server.php
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Server.php
+END
+Request.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/XmlRpc/Request.php
+END

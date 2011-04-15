@@ -119,7 +119,7 @@ class TeacherController extends Zend_Controller_Action
 				foreach($paperList as $value)
 				{
 					$i++;
-					echo "<li>".$i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a></li>";
+					echo $i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br/>";
 				}
 			}
 			exit;
@@ -138,7 +138,7 @@ class TeacherController extends Zend_Controller_Action
 				foreach($searchPaperList as $value) 
 				{
 					$i++;
-					echo "<li>".$i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a></li>";
+					echo $i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br>";
 				}
 			}
 			exit;
@@ -378,13 +378,9 @@ class TeacherController extends Zend_Controller_Action
 	
 		if(isset($_POST['pageIndex']))
 		{
-			$total_time = 0;//试卷总时间
-			foreach($_POST['partTime'] as $time)
-			{
-				$total_time += $time;
-			}
-			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId'], NULL, NULL, $total_time);
-			$i = 0;	
+			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId']);
+			$i = 0;
+			
 			foreach ($_POST['pageIndex'] as $value)
 			{
 				$this->examination->insertPart($value, $paper_id, $_POST['partName'][$i],$_POST['direction'][$i], $_POST['partTime'][$i]);
@@ -475,18 +471,7 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function managepaperAction()
 	{
-		if(isset($_POST['flag']))
-		{
-			if($_POST['flag'] == "delete")
-			{
-				$this->examination->deletePaper($_POST['paper_id']);
-			}
-			else if($_POST['flag'] == "edit")
-			{
-				$this->examination->alterPaper($_POST['paper_id'], $_POST['title'], $_POST['introduction'], $_POST['time']);
-			}
-			exit;
-		}
+		
 	}
 
 	/**
@@ -553,18 +538,7 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function manageexamAction()
 	{
-		if(isset($_POST['flag']))
-		{
-			if($_POST['flag'] == "delete")
-			{
-				$this->examination->deleteExam($_POST['examination_id']);
-			}
-			else if($_POST['flag'] == "edit")
-			{
-				$this->examination->alterExam($_POST['examination_id'], $_POST['name'], $_POST['startTime'], $_POST['endTime']);
-			}
-			exit;
-		}
+		
 	}
 	
 	/**
@@ -638,22 +612,32 @@ class TeacherController extends Zend_Controller_Action
 	function managestudentAction() 
 	{
 		$students = array();
-		if(!isset($this->examSession->level_id) && !isset($this->examSession->teacher_id)) 
+			if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
 		{
 			header('Loacation:../');
 			exit();
 		}
-		$classes = $this->teacher->getAllClass();
-		if(empty($classes)) {
+		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
+		$allclasses = $this->teacher->getAllClass();
+		if(empty($allclasses)) {
 			$this->view->allclassselect = '<br/>
 				<span style="color:#900;font-weight:bold">没有班级提供选择<br/>需要管理员或系主任创建班级后才能添加学生。</span>';
+		}else if(empty($controlclasses))
+		{
+			$this->view->allclassselect = '<br/>
+				<span style="color:#900;font-weight:bold">您没有可以控制的班级<br/>要获得控制班级请联系系主任，或者管理员。</span>';
+
 		}else{
-			$c = new Choice($classes);
+			$c = new Choice($controlclasses);
 			$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
 			$c->setShowType('select');
 			$this->view->allclassselect = $c->getHtml(); //生成select html
 		}
-		//$this->showstudenttablelistAction();//加载showstudenttablelist
 
 	}
 
@@ -1236,15 +1220,18 @@ class TeacherController extends Zend_Controller_Action
 		}
 	}
 	
-	/**
-	 * 试卷类别管理
-	 */
-	function managecategoryAction()
-	{
-	}
-	
+
+
+
+
+
+
+
 	//monyxie: begin
     //
+
+    
+
     /**
      * 此动作执行对某次考试的全部学生的改卷
      * @access public
@@ -1296,6 +1283,9 @@ class TeacherController extends Zend_Controller_Action
             }
         }
     }
+
+
+
     //
     //monyxie: end   
 }

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query
+END
+Wildcard.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Wildcard.php
+END
+Range.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Range.php
+END
+Empty.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Empty.php
+END
+Boolean.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Boolean.php
+END
+MultiTerm.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/MultiTerm.php
+END
+Phrase.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Phrase.php
+END
+Preprocessing.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Preprocessing.php
+END
+Insignificant.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Insignificant.php
+END
+Fuzzy.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Fuzzy.php
+END
+Term.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/Query/Term.php
+END

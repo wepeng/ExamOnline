@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/EnglishExam/!svn/ver/1/library/Zend/Amf/Value
+END
+MessageHeader.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Amf/Value/MessageHeader.php
+END
+ByteArray.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Amf/Value/ByteArray.php
+END
+MessageBody.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Amf/Value/MessageBody.php
+END
+TraitsInfo.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Amf/Value/TraitsInfo.php
+END

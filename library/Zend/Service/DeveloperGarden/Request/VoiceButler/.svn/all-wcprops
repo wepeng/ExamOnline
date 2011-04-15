@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler
+END
+CallStatus.php
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler/CallStatus.php
+END
+TearDownCall.php
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler/TearDownCall.php
+END
+NewCallSequenced.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler/NewCallSequenced.php
+END
+NewCall.php
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler/NewCall.php
+END
+VoiceButlerAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Request/VoiceButler/VoiceButlerAbstract.php
+END

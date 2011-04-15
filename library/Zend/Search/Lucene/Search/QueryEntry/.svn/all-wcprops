@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/QueryEntry
+END
+Subquery.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/QueryEntry/Subquery.php
+END
+Phrase.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/QueryEntry/Phrase.php
+END
+Term.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Search/Lucene/Search/QueryEntry/Term.php
+END

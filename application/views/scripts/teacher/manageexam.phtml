@@ -1,7 +1,33 @@
 <?php  include_once '_header.phtml';?>
 
-	<script type="text/javascript" src="../../public/js/flexigrid_with_checkbox.js"></script>
 	<table id="flex1" style="display:none"></table>
+	<div id="dialog">
+       <form id="dialog_form" name="dialog_form" action="#">
+			<input type="hidden" name="id" />
+	  		<div class="dia_mb"><span>ID </span> <input class="input_dis" type="text" disabled="disabled" name='dis_id' /></div>
+           <!-- <div class="dia_mb">学号  <input maxlength="11" class="input_text" type="text" name="username" /></div> -->
+            <div class="dia_mb">考试名  <input type="text" class="input_text" name="name" /></div>
+            <br/>
+            <span>班级 </span>
+			<?php echo $this->allclassselect;?>
+            <br/>
+		 <span class="notice"></span><br/>
+         <div class="dia_btn">
+             <span class="btns" id="okBtn">OK</span>
+             <span class="btns" id="cancelBtn">Cancel</span>
+         </div>
+       </form>
+	</div>
+	<div id="alert_msg"></div>
+	<div id="confirm_msg">
+		<span class="confirm_text"></span><br/><br/>
+		<span class="btns" id="confirm_yes" class="">Yes</span>
+		<span class="btns" id="confirm_cancel">Cansel</span>
+	</div>
+    <div id="chose_class">
+		<span>请选择班级：</span><br/><br/>
+		<span class="chose_class_btns"></span>
+    </div>
 	<script type="text/javascript" src="../../public/js/manage_exam.js"></script>
 	
 <?php include_once '_footer.phtml';?>

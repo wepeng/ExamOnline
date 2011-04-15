@@ -54,7 +54,10 @@ function alert_msg(msg){
 	});
 }
 
-
+(function(){
+ var _ftitle =  '学生管理 - 当前班级：'+$('#dialog_form select[name=class_id] option').eq(0).text();
+ $('div.ftitle').html(_ftitle);
+ })();
 
 
 /* 获得选取的信息 */
@@ -94,7 +97,7 @@ function showDialog(datas){
 		$('#dialog_form input[name=name]').val(datas['name']);
 		var sex = '#dialog_form input[name=sex][value='+datas['sex']+']';
 		$(sex).attr('checked','checked');
-		var class_name = '#dialog_form option[text='+datas['class_id']+']';
+		var class_name = '#dialog_form option[text='+datas['class_name']+']';
 		$(class_name).attr('selected','selected');
 		/** 编辑的 ok 按钮 **/
 		$('#okBtn').unbind('click').click(function(){
@@ -276,6 +279,7 @@ function goToDo(com,grid)
 					var cid = $(this).attr('id').substr(9);
 					$('#shade').remove();
 					$('#chose_class').hide();
+					$('div.ftitle').html('学生管理 - 当前班级：'+$(this).text());
 					//reload
 					jQuery('#flex1').flexOptions({newp:1, params:[{name:'class_id', value: cid},{name:'qtype',value:'class_id'}]});
 					jQuery("#flex1").flexReload(); 

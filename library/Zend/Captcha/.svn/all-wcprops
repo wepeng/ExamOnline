@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha
+END
+Base.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Base.php
+END
+Figlet.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Figlet.php
+END
+ReCaptcha.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/ReCaptcha.php
+END
+Word.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Word.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Exception.php
+END
+Adapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Adapter.php
+END
+Image.php
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Image.php
+END
+Dumb.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Captcha/Dumb.php
+END

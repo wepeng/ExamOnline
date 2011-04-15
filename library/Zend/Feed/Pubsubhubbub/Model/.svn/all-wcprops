@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Feed/Pubsubhubbub/Model
+END
+ModelAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Feed/Pubsubhubbub/Model/ModelAbstract.php
+END
+Subscription.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/EnglishExam/!svn/ver/1/library/Zend/Feed/Pubsubhubbub/Model/Subscription.php
+END
+SubscriptionInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/EnglishExam/!svn/ver/1/library/Zend/Feed/Pubsubhubbub/Model/SubscriptionInterface.php
+END

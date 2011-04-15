@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo
+END
+Oci.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Oci.php
+END
+Mssql.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Mssql.php
+END
+Sqlite.php
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Sqlite.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Abstract.php
+END
+Mysql.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Mysql.php
+END
+Pgsql.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Pgsql.php
+END
+Ibm.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Adapter/Pdo/Ibm.php
+END

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter
+END
+Json.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/Json.php
+END
+PythonPickle.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/PythonPickle.php
+END
+PhpSerialize.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/PhpSerialize.php
+END
+AdapterInterface.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/AdapterInterface.php
+END
+PhpCode.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/PhpCode.php
+END
+Amf0.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/Amf0.php
+END
+AdapterAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/AdapterAbstract.php
+END
+Igbinary.php
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/Igbinary.php
+END
+Amf3.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/Amf3.php
+END
+Wddx.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Serializer/Adapter/Wddx.php
+END

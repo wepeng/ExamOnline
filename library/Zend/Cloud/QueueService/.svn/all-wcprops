@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Exception.php
+END
+Adapter.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Adapter.php
+END
+MessageSet.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/MessageSet.php
+END
+Message.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Message.php
+END
+Factory.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/EnglishExam/!svn/ver/1/library/Zend/Cloud/QueueService/Factory.php
+END

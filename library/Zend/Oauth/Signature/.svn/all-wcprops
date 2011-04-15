@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Signature
+END
+Rsa.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Signature/Rsa.php
+END
+SignatureAbstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Signature/SignatureAbstract.php
+END
+Hmac.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Signature/Hmac.php
+END
+Plaintext.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Signature/Plaintext.php
+END

@@ -5,8 +5,13 @@ class ErrorController extends Zend_Controller_Action
 
     public function errorAction()
     {
-        $errors = $this->_getParam('error_handler');
-        
+		$errors = $this->_getParam('error_handler');
+		/*
+		 * show friendly page and forbidden err;
+		 */ 
+		echo $showerr = file_get_contents("../public/404.html");
+		die();
+
         if (!$errors) {
             $this->view->message = 'You have reached the error page';
             return;
@@ -42,13 +47,14 @@ class ErrorController extends Zend_Controller_Action
     }
 
     public function getLog()
-    {
+	{
         $bootstrap = $this->getInvokeArg('bootstrap');
         if (!$bootstrap->hasResource('Log')) {
             return false;
         }
         $log = $bootstrap->getResource('Log');
-        return $log;
+		return $log;
+	
     }
 
 

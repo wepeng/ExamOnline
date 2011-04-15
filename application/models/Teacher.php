@@ -155,7 +155,6 @@ class Teacher extends Zend_Db
 			return 1;
 			
 	}
-
 	//login-qin
 	public function getStudentByClassID($class_id)
 	{
@@ -309,7 +308,10 @@ class Teacher extends Zend_Db
 
 		$where = " WHERE `class_id` = $class_id";
 		$ifclass_student = $this->delete($where, 'class_student'); //Delete class and student mapping table data
-		if($ifclass && $ifstudent && $ifclass_student) return TRUE;
+
+		$where = "WHERE `class_id` = $class_id";
+		$ifexamination_class = $this->delete($where, 'examination_class'); //Delete examination class record
+		if($ifclass && $ifstudent && $ifclass_student && $ifexamination_class) return TRUE;
 		else return FALSE;
 	}
 

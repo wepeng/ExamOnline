@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden
+END
+BaseUserService.php
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/BaseUserService.php
+END
+Credential.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Credential.php
+END
+SendSms.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/SendSms.php
+END
+SmsValidation.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/SmsValidation.php
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/Exception.php
+END
+SecurityTokenServer.php
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/SecurityTokenServer.php
+END
+LocalSearch.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/LocalSearch.php
+END
+VoiceCall.php
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/VoiceCall.php
+END
+IpLocation.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/IpLocation.php
+END
+ConferenceCall.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/EnglishExam/!svn/ver/1/library/Zend/Service/DeveloperGarden/ConferenceCall.php
+END

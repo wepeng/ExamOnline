@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table
+END
+Exception.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Exception.php
+END
+Select.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Select.php
+END
+Abstract.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Abstract.php
+END
+Rowset.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Rowset.php
+END
+Row.php
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Row.php
+END
+Definition.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/EnglishExam/!svn/ver/1/library/Zend/Db/Table/Definition.php
+END

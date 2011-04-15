@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Http
+END
+RequestToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Http/RequestToken.php
+END
+UserAuthorization.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Http/UserAuthorization.php
+END
+AccessToken.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Http/AccessToken.php
+END
+Utility.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/EnglishExam/!svn/ver/1/library/Zend/Oauth/Http/Utility.php
+END
