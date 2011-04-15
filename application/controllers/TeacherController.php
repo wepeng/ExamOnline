@@ -612,22 +612,32 @@ class TeacherController extends Zend_Controller_Action
 	function managestudentAction() 
 	{
 		$students = array();
-		if(!isset($this->examSession->level_id) && !isset($this->examSession->teacher_id)) 
+			if(isset($this->examSession->level_id) && isset($this->examSession->teacher_id)) 
+		{ 
+			$level_id = $this->examSession->level_id;
+			$teacher_id = $this->examSession->teacher_id;
+		}
+		else 
 		{
 			header('Loacation:../');
 			exit();
 		}
-		$classes = $this->teacher->getAllClass();
-		if(empty($classes)) {
+		$controlclasses =  $this->teacher->getClass($teacher_id, $level_id); //根据等级获取教师可控班级
+		$allclasses = $this->teacher->getAllClass();
+		if(empty($allclasses)) {
 			$this->view->allclassselect = '<br/>
 				<span style="color:#900;font-weight:bold">没有班级提供选择<br/>需要管理员或系主任创建班级后才能添加学生。</span>';
+		}else if(empty($controlclasses))
+		{
+			$this->view->allclassselect = '<br/>
+				<span style="color:#900;font-weight:bold">您没有可以控制的班级<br/>要获得控制班级请联系系主任，或者管理员。</span>';
+
 		}else{
-			$c = new Choice($classes);
+			$c = new Choice($controlclasses);
 			$c->id('select_class')->valueByDataKey('id')->textByDataKey('class_name')->name('class_id');
 			$c->setShowType('select');
 			$this->view->allclassselect = $c->getHtml(); //生成select html
 		}
-		//$this->showstudenttablelistAction();//加载showstudenttablelist
 
 	}
 
@@ -1210,14 +1220,13 @@ class TeacherController extends Zend_Controller_Action
 		}
 	}
 	
-	/**
-	 * 试卷类别管理
-	 * Enter description here ...
-	 */
-	function managecategoryAction()
-	{
-	}
-	
+
+
+
+
+
+
+
 	//monyxie: begin
     //
 

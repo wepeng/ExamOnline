@@ -137,7 +137,7 @@
 						this.colresize = {startX: e.pageX, ol: parseInt(obj.style.left), ow: ow, n : n };
 						$('body').css('cursor','col-resize');
 					}
-				else if (dragtype=='vresize') //table resize
+				/*else if (dragtype=='vresize') //table resize
 					{
 						var hgo = false;
 						$('body').css('cursor','row-resize');
@@ -172,7 +172,7 @@
 						$('body').append(this.colCopy);
 						$(this.cDrag).hide();
 						
-					}
+					}*/
 														
 				$('body').noSelect();
 			
@@ -220,7 +220,7 @@
 							}
 						v = null;
 					}
-				else if (this.colCopy) {
+			/*	else if (this.colCopy) {
 					$(this.dcol).addClass('thMove').removeClass('thOver'); 
 					if (e.pageX > this.hset.right || e.pageX < this.hset.left || e.pageY > this.hset.bottom || e.pageY < this.hset.top)
 					{
@@ -230,7 +230,7 @@
 					else 
 					$('body').css('cursor','pointer');
 					$(this.colCopy).css({top:e.pageY + 10,left:e.pageX + 20, display: 'block'});
-				}													
+				}*/													
 			
 			},
 			dragEnd: function () {
@@ -260,7 +260,7 @@
 					{
 						this.vresize = false;
 					}
-				else if (this.colCopy)
+			/*	else if (this.colCopy)
 					{
 						$(this.colCopy).remove();
 						if (this.dcolt != null)
@@ -291,11 +291,11 @@
 						
 						$('.thMove',this.hDiv).removeClass('thMove');
 						$(this.cDrag).show();
-					}										
+					}	*/									
 				$('body').css('cursor','default');
 				$('body').noSelect(false);
 			},
-			toggleCol: function(cid,visible) {
+			/*toggleCol: function(cid,visible) {
 				
 				var ncol = $("th[axis='col"+cid+"']",this.hDiv)[0];
 				var n = $('thead th',g.hDiv).index(ncol);
@@ -367,7 +367,7 @@
 			scroll: function() {
 					this.hDiv.scrollLeft = this.bDiv.scrollLeft;
 					this.rePosDrag();
-			},
+			}, */
 			addData: function (data) { //parse data
 				
 				if (p.preProcess)
@@ -1346,7 +1346,7 @@
 		$(g.block).fadeTo(0,p.blockOpacity);				
 		
 		// add column control
-		if ($('th',g.hDiv).length)
+		/*if ($('th',g.hDiv).length)
 		{
 			
 			g.nDiv.className = 'nDiv';
@@ -1450,7 +1450,7 @@
 			
 			if (p.showToggleBtn) $(g.gDiv).prepend(g.nBtn);
 			
-		}
+		}*/
 		
 		// add date edit layer
 		$(g.iDiv)
