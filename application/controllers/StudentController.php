@@ -234,7 +234,8 @@ class StudentController extends Zend_Controller_Action
 	 * 进行重考  
 	 */
 	function doreexamAction()
-	{//bug
+	{
+		//bug
 		if(isset($_GET['paper_id']) )
 		{
 			if(!$this->examSession->examStep)

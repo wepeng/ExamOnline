@@ -12,10 +12,10 @@
 		}
 	}
 </script>
-<div style="float:left; margin-left:30px;">
+<div style="float:left; margin-left:30px; margin-top:20px;">
 <FORM action="editupexam" name="examform" method="post">
 	<h2>编辑将要上传的试卷</h2>
-	
+	<br/>
 	试卷名：<input type="text" name="title"><br/>
 	选择试卷类别：
 	<?php 
@@ -30,7 +30,7 @@
 	<br/>
 	试卷分为几页：<input type="text" id="pageNum" name="pageNum" /><input type="button" onClick="JavaScript:showPageFram();" value="确定"><br/>
 	<div id="pageFrame"></div><br/>
-	
+
 	<input type="button" onClick="examform.submit()" value="提交试卷" /> <br/><br/>
 	
 	<table border="1">

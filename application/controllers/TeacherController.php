@@ -378,9 +378,13 @@ class TeacherController extends Zend_Controller_Action
 	
 		if(isset($_POST['pageIndex']))
 		{
-			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId']);
-			$i = 0;
-			
+			$total_time = 0;//试卷总时间
+			foreach($_POST['partTime'] as $time)
+			{
+				$total_time += $time;
+			}
+			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId'], NULL, NULL, $total_time);
+			$i = 0;	
 			foreach ($_POST['pageIndex'] as $value)
 			{
 				$this->examination->insertPart($value, $paper_id, $_POST['partName'][$i],$_POST['direction'][$i], $_POST['partTime'][$i]);
@@ -471,7 +475,18 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function managepaperAction()
 	{
-		
+		if(isset($_POST['flag']))
+		{
+			if($_POST['flag'] == "delete")
+			{
+				$this->examination->deletePaper($_POST['paper_id']);
+			}
+			else if($_POST['flag'] == "edit")
+			{
+				$this->examination->alterPaper($_POST['paper_id'], $_POST['title'], $_POST['introduction'], $_POST['time']);
+			}
+			exit;
+		}
 	}
 
 	/**
@@ -538,7 +553,18 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function manageexamAction()
 	{
-		
+		if(isset($_POST['flag']))
+		{
+			if($_POST['flag'] == "delete")
+			{
+				$this->examination->deleteExam($_POST['examination_id']);
+			}
+			else if($_POST['flag'] == "edit")
+			{
+				$this->examination->alterExam($_POST['examination_id'], $_POST['name'], $_POST['startTime'], $_POST['endTime']);
+			}
+			exit;
+		}
 	}
 	
 	/**
@@ -1212,7 +1238,6 @@ class TeacherController extends Zend_Controller_Action
 	
 	/**
 	 * 试卷类别管理
-	 * Enter description here ...
 	 */
 	function managecategoryAction()
 	{
@@ -1220,9 +1245,6 @@ class TeacherController extends Zend_Controller_Action
 	
 	//monyxie: begin
     //
-
-    
-
     /**
      * 此动作执行对某次考试的全部学生的改卷
      * @access public
@@ -1274,9 +1296,6 @@ class TeacherController extends Zend_Controller_Action
             }
         }
     }
-
-
-
     //
     //monyxie: end   
 }
