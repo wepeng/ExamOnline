@@ -39,6 +39,10 @@ class System
 		return false;
 	}
 	
+	/**
+	 * 
+	 * 检测是否已登录
+	 */
 	public function checkLogined()
 	{
 		$examSession = new Zend_Session_Namespace('examSession');	
@@ -48,7 +52,14 @@ class System
 			header('Location: ../');
 		}
 	}
-
+	
+	/**
+	 * 
+	 * 修改密码
+	 * @param unknown_type $username
+	 * @param unknown_type $newpassword
+	 * @param unknown_type $key
+	 */
 	function resetPassword($username, $newpassword, $key)
 	{
 		$bind = array('password'=>$newpassword);
@@ -63,6 +74,7 @@ class System
 		}
 		
 	}
+	
 	function deleteperson($username, $table)
 	{
 		switch($table) 

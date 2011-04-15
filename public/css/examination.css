@@ -1,0 +1,127 @@
+@charset "utf-8";
+/* CSS Document */
+
+/** 公共 **/
+*{ padding:0; margin:0; border:none;}
+body{ font-family:"微软雅黑", Arial,Verdana, "MS Sans Serif", System; background:#E0E0E0;}
+h3{ margin:20px 0;}
+/** main **/
+#main{
+	width:950px;
+	margin:20px auto;
+	}
+.main_top,.main_bottom{
+	height:12px;
+	width:950px;	
+	overflow:hidden;
+	}
+.main_top{ background:url(../images/main_top.png); }
+.main_bottom{ background:url(../images/main_bottom.png); }
+#contens{
+	width:908px;
+	padding:20px;
+	background:#fff;
+	border-left:1px #cecbcb solid;
+	border-right:1px #cecbcb solid;
+	}
+#stuInfo{
+	margin:30px auto;
+	margin-top:0px;
+	color:#0080ff;
+	}
+#stuInfo span{
+	margin:0 20px;}
+/** 格式化文字 **/
+h3{ font-size:21px; line-height:26px;}
+#contens p.topic{ font-size:16px; color:#666; font-style:italic; margin:15px 0;}
+#contens p.title{ font-size:20px; margin-left:30px;}
+#contens p.section{ font-size:14px; line-height:25px; margin-bottom:20px;}
+#contens p.section span{ margin-left:30px;}
+#contens p.qus{ font-size:16px; color:#A80000;}
+#contens label{ margin-left:30px; line-height:25px;}
+#contens ul{ list-style:none;}
+#contens p.section ul li{ color:#069;}
+#contens input.Completion,#contens input.select{
+	border-bottom:1px solid #a80000;
+	color:#0080FF;
+	font-size:16px;
+	text-align:center;
+	width:135px;
+	font-family:'Comic Sans MS';
+	}
+#contens input.select{ border:none; background:#cecbcb;}
+#contens label input{
+	margin-right:20px;
+	}
+#contens textarea{ 
+	width:850px;
+	height:220px;
+	line-height:22px; 
+	font-size:16px; 
+	color:#0080FF;
+	overflow:hidden;
+	padding:0 25px;
+	margin:20px auto; 
+	overflow:hidden;
+	background:url(../images/textarea.png) repeat-y;
+	font-family:'Comic Sans MS','微软雅黑';
+}
+#wordTips{
+	font-size:17px;
+	margin-right:30px;
+	color:#0080ff;
+	float:right;
+	}
+#wordTips span{
+	color:#900;}
+.tips{
+	color:#0080ff;
+	font-size:18px;}
+.select_an{
+	color:#a80000;
+	cursor:move;
+	margin-left:20px;
+	}
+/** 时间显示 **/
+#timeShow{
+	height:30px;
+	width:100px;
+	color:#FFF;
+	text-align:center;
+	font-size:20px;
+	background:url(../images/timeShow.gif);
+	position:fixed;
+	_position:absolute;		/** ie6 hack **/
+	top:0;
+	left:10px;
+	}
+/** 完形填空下拉框 **/	
+#contens .list_select{
+	border:1px solid #00C;
+	background:#F5F8F7;
+	margin:2px;
+	padding:1px;
+	}
+#contens .list_select_num{
+	color:#00C;
+	font-size:14px;
+	}
+/** 翻译长输入框 **/	
+#contens input.completion_long{
+	border-bottom:1px solid #a80000;
+	color:#0080FF;
+	font-size:16px;
+	text-align:left;
+	width:300px;
+	padding-left:5px;
+	font-family:'Comic Sans MS';
+	}
+/** 提交按钮 **/		
+#submit_btn{
+	width:100px;
+	height:30px;
+	background:url(../images/next_btn.gif);
+	}
+#submit_btn:hover{
+	background:url(../images/next_btn_hover.gif);;
+	}	

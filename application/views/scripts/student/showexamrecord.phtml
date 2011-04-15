@@ -1,14 +1,19 @@
 <?php  include_once 'header.phtml';?>
-<div style="float:left; margin-left:30px;">
-<h2>已考记录</h2>
-<table border=1>
+
+<script type="text/javascript">	
+$(document).ready(function(){
+	$('#record').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
+})
+</script>
+<table>
+	<caption>您的已考记录</caption>
 	<tr>
-		<td>试卷名</td>
-		<td>分类</td>
-		<td>开始时间</td>
-		<td>结束时间</td>
-		<td>分数</td>
-		<td></td>
+		<th>试卷名</th>
+		<th>分类</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+		<th>分数</th>
+		<th>查看</th>
 	</tr>
 <?php 
 	if(is_array($this->result))
@@ -17,20 +22,17 @@
 		{
 ?>
 		<tr>
-		<td><?php echo $value['name']?></td>
-		<td><?php echo $value['category_id']?></td>
-		<td><?php echo $value['startTime']?></td>
-		<td><?php echo $value['endTime']?></td>
-		<td><?php echo '分数';?></td>
-		<td><?php echo '<a href="showpaperandanswer?paper_id='.$value['paper_id'].'&part=1">查看试题和答案</a>';?></td>
+		<td><?php echo $value['name'];?></td>
+		<td><?php echo $value['category_name'];?></td>
+		<td><?php echo $value['startTime'];?></td>
+		<td><?php echo $value['endTime'];?></td>
+		<td><?php echo $value['total_score'];?></td>
+		<td><?php echo '<a href="showpaperandanswer?examination_id='.$value['id'].'&paper_id='.$value['paper_id'].'&part=1">查看试题和答案</a>';?></td>
 		</tr>
 <?php
 		}
 	}
-	else {
-		echo $this->result;
-	}
 ?>
 </table>
-</div>
+
 <?php include_once 'footer.phtml';?>

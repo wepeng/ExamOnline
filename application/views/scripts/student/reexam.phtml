@@ -1,13 +1,17 @@
 <?php  include_once 'header.phtml';?>
 
-<div style="float:left; margin-left:30px;">
-<h2>重考</h2>
-<table border=1>
+<script type="text/javascript">	
+$(document).ready(function(){
+	$('#reexam').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
+})
+</script>
+<table>
+	<caption>重考列表</caption>
 	<tr>
-		<td>试卷名</td>
-		<td>重考部分</td>
-		<td>设置时间</td>
-		<td>状态</td>
+		<th>试卷名</th>
+		<th>重考部分</th>
+		<th>设置时间</th>
+		<th>状态</th>
 	</tr>
 <?php 
 	if(is_array($this->result))
@@ -19,17 +23,12 @@
 		<td><?php echo $value['name']?></td>
 		<td><?php echo $value['parts']?></td>
 		<td><?php echo $value['time']?></td>
-		<td><a href="doreexam?examination_id=<?php echo $value['examination_id'];?>&paper_id=<?php	echo $value['paper_id'];?>">进入考试</a></td>
+		<td><a style="color:#E00" href="doreexam?examination_id=<?php echo $value['examination_id'];?>&paper_id=<?php	echo $value['paper_id'];?>">进入考试</a></td>
 		</tr>
 <?php
 		}
 	}
-	else {
-		echo $this->result;
-	}
 ?>
 </table>
-</div>
-
 
 <?php include_once 'footer.phtml';?>

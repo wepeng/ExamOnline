@@ -1,0 +1,109 @@
+@charset "utf-8";
+/* CSS Document */
+
+*{ padding:0; margin:0;}
+a{ 
+	text-decoration:none;
+	color:#000;
+	}
+a:hover{
+	color:#00F;
+	}	
+#logo{ 
+	border:none; float:left;
+	margin-left:20px;margin-top:10px;}
+body{
+	font-family:"宋体", Arial, "MS Sans Serif", System;
+	background:#FAFAFA;
+	}
+#wraper{
+	min-width:900px;
+	}	
+/*#content{
+	margin:20px auto;	
+	width:900px;
+	}	*/
+#head{
+	height:70px;
+	width:100%;
+	background:url(../../public/images/head_bg.png) repeat-x;
+	}
+.fm{ float:right; margin-top:40px; margin-right:20px; color:#FFF; font-size:14px;}
+a.fm{ display:block; height:16px; width:80px; text-indent:20px;}
+a.fm:hover{ }
+a#exit{ background:url(../../public/images/exit.gif)  no-repeat;}
+a#changepwd{ background:url(../../public/images/key.gif) no-repeat;}
+a#exit:hover{ color:#e00; text-decoration:none;}
+a#changepwd:hover{ color:#ccc;}
+
+#menu{
+	height:25px;
+	width:100%;
+	padding-bottom:3px;
+	background:url(../../public/images/menu_bg.png) repeat-x;
+	list-style:none;
+	}
+#menu .fr{ float:right;}
+.search{
+	height:20px;
+	width:175px;
+	float:right;
+	padding-left:25px;
+	background:url(../../public/images/search.gif);
+	margin-right:20px;
+	margin-top:2px;
+	border:none;
+	}
+
+#menu li{float:left;}
+#menu .btn{
+	height:22px;
+	width:80px;
+	text-align:center;
+	margin-top:1px;
+	}
+#menu .btn a{ color:#000; font-size:14px;}
+#menu .s{
+	height:11px;
+	width:2px;
+	overflow:hidden;
+	margin:7px 10px;
+	background:#9e9e9e;
+	}
+.first{
+	margin-left:50px;
+	display:inline;}
+#showUsername{
+	color:#FFF;
+	}	
+/** 设置考试 **/
+#showExamList{
+	border:1px #CCC solid;
+	padding:10px;
+	max-height:400px; 
+	width:650px; 
+	overflow:scroll;
+	}
+input ,select{
+	padding:2px;
+	}
+select.time_in{
+	width:50px;
+	margin-right:5px;
+	}
+/** flexigrid **/	
+.flexigrid .select_all_checkbox{
+	margin-left:5px;
+	}
+.flexigrid div.fbutton .grid_add{
+	background: url(../../public/images/table/add.png) no-repeat center left;
+	}	
+.flexigrid div.fbutton .grid_delete{
+	background: url(../../public/images/table/close.png) no-repeat center left;
+	}
+.flexigrid div.fbutton .grid_edit{
+	background: url(../../public/images/table/edit.png) no-repeat center left;
+	}
+.flexigrid div.fbutton .grid_search{
+	background: url(../../public/images/table/search.png) no-repeat center left;
+	}	

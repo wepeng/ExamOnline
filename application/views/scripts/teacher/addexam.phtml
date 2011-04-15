@@ -1,4 +1,5 @@
 <?php  include_once '_header.phtml';?>
+
 <script type="text/javascript" language="javascript" src="../../public/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript">
 	//预览
@@ -113,12 +114,13 @@
 		<input id="preview" type="button" value="预览"><br/>
 			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center"></div>
 			<div id="editContent">
-				
+				<b>作文：</b><textarea class="ckeditor" id="writing" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
 			</div>
-			
+			本题总分：<input type="text" name="score" /><br/>
 			<input type="hidden" id="partType" name="partType" value="reading"><br>
 			<input type="button" name="" onClick="readingForm.submit()" style="color:#F00" value="提交" />
-			<br/><br/>
+			<br/><br/><br/>
+
 		</div>
 			
 	</form>

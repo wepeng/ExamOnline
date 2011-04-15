@@ -37,7 +37,7 @@ class Examination extends Zend_Db
 			AND ec.class_id=cs.class_id
 			AND e.category_id=pc.id
 			AND cs.student_id='".$student_id."'
-			AND e.id NOT IN (SELECT examination_id FROM examed) 
+			AND e.id NOT IN (SELECT examination_id FROM examed WHERE student_id='".$student_id."') 
 			AND e.id NOT IN (SELECT es2.examination_id FROM examination_student es2
 			WHERE es2.qualification='0') 
 		UNION
@@ -48,7 +48,7 @@ class Examination extends Zend_Db
 			AND es3.qualification='1' 
 			AND es3.student_id='".$student_id."' 
 			AND  UNIX_TIMESTAMP(e2.endTime) > UNIX_TIMESTAMP(NOW()) 
-			AND e2.id NOT IN (SELECT examination_id FROM examed) 
+			AND e2.id NOT IN (SELECT examination_id FROM examed WHERE student_id='".$student_id."') 
 			AND e2.category_id=pc2.id 
 		)";
 		$result = $this->db->query($sql)->fetchAll();
@@ -63,20 +63,57 @@ class Examination extends Zend_Db
 	 */
 	function showExamRecord($student_id) {
 		// 改掉time()函数，而使用数据库时间。
-		$sql = "SELECT DISTINCT  paper_id,name,startTime,endTime,category_id 
-			FROM examination e,class_student c ,examination_class ec,examed 
+//		$sql = "SELECT DISTINCT  id,paper_id,name,startTime,endTime,category_id 
+//			FROM examination e,class_student c ,examination_class ec,examed 
+//			WHERE (UNIX_TIMESTAMP(e.endTime) < UNIX_TIMESTAMP(NOW()) OR  (examed.examination_id=e.id 
+//			AND examed.student_id='".$student_id."'))
+//			AND e.id=ec.examination_id 
+//			AND ec.class_id=c.class_id 
+//			AND c.student_id='".$student_id."' 
+//			ORDER BY id DESC";
+		$sql = "SELECT DISTINCT  e.id,e.paper_id,e.name,e.startTime,e.endTime,pc.name as category_name,s.total_score 
+			FROM examination e,class_student c ,examination_class ec,examed ,papercategory pc, score s
 			WHERE (UNIX_TIMESTAMP(e.endTime) < UNIX_TIMESTAMP(NOW()) OR  (examed.examination_id=e.id 
 			AND examed.student_id='".$student_id."'))
 			AND e.id=ec.examination_id 
 			AND ec.class_id=c.class_id 
-			AND c.student_id='".$student_id."' ";
+			AND c.student_id='".$student_id."'
+			AND s.student_id='".$student_id."'
+			AND s.examination_id=e.id
+			AND category_id = pc.id 
+			ORDER BY id DESC";
 		$result = $this->db->query($sql)->fetchAll();
 		return $result;
 	}
 	
+//	/**
+//	 * 
+//	 * 保存学生的分数
+//	 * @param unknown_type $student_id
+//	 * @param unknown_type $examination_id
+//	 */
+//	public function insertScore($student_id, $examination_id)
+//	{
+//		$sql = "SELECT * FROM score WHERE student_id=$student_id AND examination_id=$examination_id";
+//		$result = $this->db->query($sql)->fetchAll();
+//		if(count($result)>0)
+//		{
+//			//bug
+//		}
+//		else
+//		{
+//			$data = array(
+//				'student_id' => $student_id,
+//				'examination_id' => $examination_id,
+//				'parts_score' => "#",	//bug
+//				'total_score' => '100');	//bug
+//			$this->db->insert('score', $data);
+//		}
+//	}
+	
 	/**
 	 * 
-	 * 获取该学生将要进行的重考
+	 * 获取该学生将要进行的重考考试
 	 * @param unknown_type $student_id
 	 */
 	public function getReExam($student_id)
@@ -103,8 +140,7 @@ class Examination extends Zend_Db
 		$sql = "select examination_id from examed 
 				where examination_id='".$examination_id."' and student_id='".$student_id."'";
 		if(count($this->db->query($sql)->fetchAll())>0)
-		{
-			
+		{		
 			return false;
 		}
 		$sql = "insert into examed values ('".$examination_id."','".$student_id."')";
@@ -112,11 +148,32 @@ class Examination extends Zend_Db
 		return true;
 	}
 	
+	/**
+	 * 
+	 * 获取需要重考的部分
+	 * @param unknown_type $examination_id
+	 * @param unknown_type $student_id
+	 */
 	public function getReExamParts($examination_id, $student_id)
 	{
 		$sql = "select parts from reexamination 
 				where examination_id='".$examination_id."' and student_id='".$student_id."'"; 
 		return $this->db->query($sql)->fetchAll();
+	}
+	
+	/**
+	 * 
+	 * 获取该部分在试卷中的索引号
+	 * @param unknown_type $paper_id
+	 * @param unknown_type $part_id
+	 */
+	public function getPartIndex($paper_id, $part_id)
+	{
+		$sql = "select * from paper_part where paper_id='".$paper_id."' and part_id='".$part_id."'";
+		$result = $this->db->query($sql)->fetchAll();
+		if(count($result)>0)
+			return $result[0]['index'];
+		else return NULL;
 	}
 	
 	public function saveReExamData($examination_id, $student_id)
@@ -192,7 +249,7 @@ class Examination extends Zend_Db
 	 */
 	public function searchPaper($title)
 	{
-		$sql = "select * from paper where title='".$title."'";
+		$sql = "select * from paper where title LIKE '%".$title."%'";
 		$result = $this->db->query($sql)->fetchAll();
 		if(count($result)>0)
 		{
@@ -210,7 +267,7 @@ class Examination extends Zend_Db
 	public function getPaperParts($exam_id)
 	{
 		$sql = "select id,name from part where id in(
-				select part_id from paper_part where paper_id in (
+					select part_id from paper_part where paper_id in (
 					select paper_id from examination where id='".$exam_id."'))";
 		$result = $this->db->query($sql)->fetchAll();
 		if(count($result)>0)
@@ -222,13 +279,26 @@ class Examination extends Zend_Db
 	
 	/**
 	 * 
-	 * 获取教师管理的班级
+	 * 获取教师、系主任或管理员管理的班级
 	 * @param unknown_type $teacher_id
 	 * @return Array|NULL
 	 */
 	public function getClassOfTeacher($teacher_id)
 	{
+		Zend_Loader::loadClass('Teacher',realpath(dirname(__FILE__) . '/../models'));
+		$teacher = new Teacher();
 		$sql = "select id,class_name from class where teacher_id='".$teacher_id."'";
+		if($teacher->isAdmin($teacher_id))
+		{
+			$sql = "select id,class_name from class";
+		}
+		else if($teacher->isLeader($teacher_id))	
+		{
+			$sql = "SELECT id,class_name FROM class
+					WHERE teacher_id IN(
+						SELECT teacher_id FROM leader_teacher
+						WHERE leader_id='".$teacher_id."')";
+		}
 		$result = $this->db->query($sql)->fetchAll();
 		if(count($result)>0)
 		{
@@ -236,7 +306,7 @@ class Examination extends Zend_Db
 		}
 		return NULL;
 	}
-	
+
 	/**
 	 * 保存考试设置数据
 	 */
@@ -269,9 +339,14 @@ class Examination extends Zend_Db
 			{
 				foreach($rejects as $value)
 				{
-					$sql = "insert into examination_student(examination_id,student_id,qualification)
-							values('".$lastExamId."', (select id from student where username='".$value."'), '0')";
-					$this->db->query($sql);
+					$sql = "select id from student where username='".$value."'";
+					$result = $this->db->query($sql)->fetchAll();
+					if(count($result)>0)
+					{
+						$sql = "insert into examination_student(examination_id,student_id,qualification)
+								values('".$lastExamId."', '".$result[0]['id']."', '0')";
+						$this->db->query($sql);
+					}
 				}
 			}
 		}
@@ -285,9 +360,14 @@ class Examination extends Zend_Db
 			{
 				foreach($others as $value)
 				{
-					$sql = "insert into examination_student(examination_id,student_id,qualification)
-							values('".$lastExamId."', (select id from student where username='".$value."'), '1')";
-					$this->db->query($sql);
+					$sql = "select id from student where username='".$value."'";
+					$result = $this->db->query($sql)->fetchAll();
+					if(count($result)>0)
+					{
+						$sql = "insert into examination_student(examination_id,student_id,qualification)
+								values('".$lastExamId."', '".$result[0]['id']."', '1')";
+						$this->db->query($sql);
+					}
 				}
 			}
 		}
@@ -310,7 +390,7 @@ class Examination extends Zend_Db
 		foreach($stuNums as $value)
 		{
 			$sql = "insert into reexamination(examination_id,student_id,parts,teacher_id) 
-					values ('".$exam_id."','".$value."','".$parts."','".$teacher_id."')";
+					values ('".$exam_id."',(select id from student where username='".$value."'),'".$parts."','".$teacher_id."')";
 			$this->db->query($sql);
 		}
 	}
@@ -503,14 +583,14 @@ class Examination extends Zend_Db
 	
 	/**
 	 * 
-	 * 插入选择题
+	 * 插入选择题或填空题
 	 * @param unknown_type $content
 	 * @param unknown_type $answer
 	 * @param unknown_type $hasAudio
 	 * @param unknown_type $name
 	 * @param unknown_type $teacher_id
 	 */
-	public function insertSelOrFill($type,$content,$answer,$hasAudio,$name,$teacher_id,$audio=NULL)
+	public function insertSelOrFill($type,$content,$answer,$hasAudio,$score,$name,$teacher_id,$audio=NULL)
 	{	
 		//查询某个部分已上传的题数
 		$sql = "SELECT count( * )+1 as num
@@ -522,7 +602,8 @@ class Examination extends Zend_Db
 			'content' => $content,
 			'answer' => $answer,
 			'hasAudio' => $hasAudio,
-			'category' => $name);
+			'category' => $name,
+			'score' => $score);
 		$this->db->insert($type,$data);
 		$lastId = $this->db->lastInsertId();
 		
@@ -648,22 +729,22 @@ class Examination extends Zend_Db
 		$pagehtml = "";
 		$ii = 0; 
 		foreach ($tempIds as $value)
-		{//一个页面中的几个部分的ID
-			$i++;
+		{//一个页面中的几个部分的临时表ID	
 			$sql = "select type,selorfill_id from temporary_part where id='".$value."'";
 			$result = $this->db->query($sql)->fetchAll();
 			$partType = $result[0]['type'];
 			$selorfill_id = $result[0]['selorfill_id'];
 			if(count($result)>0)
 			{
+				$i++;
 				$data = array(
 					'part_id' => $part_id,
-					$result[0]['type']."_id" => $value,
+					$result[0]['type']."_id" => $selorfill_id,
 					'index' => $i);
 				$this->db->insert("part_".$result[0]['type'], $data);
 				
 				$sql = "delete from temporary_part where id='".$value."'";
-				$this->db->query($sql);     //删除临时表
+				//$this->db->query($sql);     //删除临时表
 			}	
 			
 			$sql = "select content,answer,hasAudio from ".$partType." where id='".$selorfill_id."'";
@@ -741,20 +822,20 @@ class Examination extends Zend_Db
 		
 		$index_file = Zend_Registry::get('INDEX_FILE');
 		$html = file_get_contents($index_file."/temp/page.html");
-		$blank = '<input type="text"  value="" name="'.$selorfill_id.'<exam:id>" />';
+		$blank = '<input class="Completion" type="text"  value="" name="'.$selorfill_id.'<exam:id>" />';
 		switch($flag)
 		{
 			//写作
 			case 'writing':		
 				$html = str_replace("<exam:content>", $str,$html);
-				$html = str_replace("<exam:question>", '<textarea class="ckeditor" id="writing_answer" name="<exam:id>"></textarea>',$html);
+				$html = str_replace("<exam:question>", '<div id="wordTips"></div><textarea id="writing_answer" name="<exam:id>"></textarea>',$html);
 				$html = str_replace("<exam:paperId>",  $paper_id, $html);
 				break;
 				
 			//快速阅读
 			case 'fastReading':
 				$arr = $this->strtoarray($str);
-				$question = '<div> <exam:title> <exam:option></div>';
+				$question = '<div><exam:title><exam:option></div>';
 				
 				$first = true;
 				$option = array('A','B','C','D');
@@ -786,7 +867,7 @@ class Examination extends Zend_Db
 						$hidden = '';
 						if($i < 14)
 						{
-							$hidden = '<p style="display:none;"> <input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
+							$hidden = '<p style="display:none;"><input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
 						}
 						$html = str_replace("<exam:question>", $temp.$hidden."<exam:question>", $html);
 					}
@@ -807,7 +888,7 @@ class Examination extends Zend_Db
 			//听力短对话
 			case 'shortListening':
 				$arr = $this->strtoarray($str);
-				$question = '<div> <exam:title> <exam:option></div>';
+				$question = '<div><exam:title><exam:option></div>';
 				$first = true;
 				$option = array('A','B','C','D');		
 				for($i=0; $i<count($arr); $i= $i+2)
@@ -835,7 +916,7 @@ class Examination extends Zend_Db
 							}
 						}
 						$temp = str_replace('<exam:option>', "", $temp);
-						$hidden = '<p style="display:none;"> <input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
+						$hidden = '<p style="display:none;"><input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
 						$html = str_replace("<exam:question>", $temp.$hidden."<exam:question>", $html);
 					}
 				}		
@@ -846,7 +927,7 @@ class Examination extends Zend_Db
 			//听力长对话或短文	
 			case 'longListening':
 				$arr = $this->strtoarray($str);
-				$question = '<div> <exam:title> <exam:option></div>';
+				$question = '<div><exam:title><exam:option></div>';
 				$first = true;
 				$option = array('A','B','C','D');		
 				for($i=0; $i<count($arr); $i= $i+2)
@@ -874,7 +955,7 @@ class Examination extends Zend_Db
 							}
 						}
 						$temp = str_replace('<exam:option>', "", $temp);
-						$hidden = '<p style="display:none;"> <input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
+						$hidden = '<p style="display:none;"><input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
 						$html = str_replace("<exam:question>", $temp.$hidden."<exam:question>", $html);
 					}
 				}		
@@ -891,7 +972,7 @@ class Examination extends Zend_Db
 			//阅读
 			case 'reading':
 				$arr = $this->strtoarray($str);
-				$question = '<div> <exam:title> <exam:option></div>';
+				$question = '<div><exam:title><exam:option></div>';
 				$first = true;
 				$option = array('A','B','C','D');		
 				for($i=0; $i<count($arr); $i= $i+2)
@@ -919,7 +1000,7 @@ class Examination extends Zend_Db
 							}
 						}
 						$temp = str_replace('<exam:option>', "", $temp);
-						$hidden = '<p style="display:none;"> <input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
+						$hidden = '<p style="display:none;"><input type="radio" checked="checked" name="'.$selorfill_id.$i.'<exam:id>" value="NULL" /></p>';
 						$html = str_replace("<exam:question>", $temp.$hidden."<exam:question>", $html);
 					}
 				}		
@@ -933,15 +1014,16 @@ class Examination extends Zend_Db
 				$html = $arr[0][0];		
 				for($i=1; $i<count($arr); $i++)
 				{
-					$options = "<b>".$i."</b>.<select name='<exam:id>'><option>".$arr[$i][1]."</option><option>".$arr[$i][2]."</option>
-								<option>".$arr[$i][3]."</option><option>".$arr[$i][4]."</option></select>";
+					$options = " <span class='list_select_num'>".$i."</span>.<select class='list_select' name='<exam:id>'><option value='NULL'>请选择...</option><option value='A'>".$arr[$i][1]."</option><option value='B'>".$arr[$i][2]."</option>
+								<option value='C'>".$arr[$i][3]."</option><option value='D'>".$arr[$i][4]."</option></select>";
 					$html = substr_replace($html, $options, strpos($html,"<eo:blank>"), 10);
 				}	
 				break;
 				
 			//翻译
 			case 'translation':
-				$html = str_replace("<eo:blank>", $blank, $str);
+				$blank_long = '<input class="completion_long" type="text"  value="" name="'.$selorfill_id.'<exam:id>" />';
+				$html = str_replace("<eo:blank>", $blank_long, $str);
 				$html = str_replace("<exam:paperId>",  $paper_id, $html);
 				break;		
 		}
@@ -982,8 +1064,7 @@ class Examination extends Zend_Db
 				where student_id='".$student_id."' and examination_id='".$examination_id."'";
 		$result = $this->db->query($sql)->fetchAll();
 		if(count($result)>0)
-		{
-			//print_r($result);
+		{	
 			$sql = "update student_answer set answer='".$result[0]['answer'].$answer."' 
 					where student_id='".$student_id."' and examination_id='".$examination_id."'";
 			$this->db->query($sql);
@@ -1014,13 +1095,526 @@ class Examination extends Zend_Db
 	}
 	
 	/**
+	 * 
 	 * 获取试卷答案
+	 * @param unknown_type $paper_id
 	 */
 	public function getPaperAnswer($paper_id)
 	{
 		$sql = "select * from paper_answer where paper_id='".$paper_id."'";
+ 		$result = $this->db->query($sql)->fetchAll();
+ 		return $this->answerTidy($result[0]['answer']); 
+	}
+	
+	/**
+	 * 
+	 * 获取某场考试该学生的答案
+	 * @param unknown_type $student_id
+	 * @param unknown_type $examination_id
+	 */
+	public function getStudentAnswer($student_id, $examination_id)
+	{
+		$sql = "select answer from student_answer where student_id='".$student_id."' and examination_id='".$examination_id."'";
+		$result = $this->db->query($sql)->fetchAll();
+		return $this->answerTidy($result[0]['answer']);
+	}
+	
+	/**
+	 * 
+	 * 整理答案
+	 * @param unknown_type $answer
+	 */
+	public function answerTidy($answer)
+	{
+		$str = "";
+		$partAnswers = explode("</part>", $answer);
+		foreach($partAnswers as $key => $value)
+		{
+			if(($key+1) != count($partAnswers))
+			{		
+				$str .= "<br/>第".($key + 1)."部分答案：";
+				$str .= str_replace("#", ", ", $value);
+			}
+		}
+		return $str;
+	}
+	
+	/**
+	 * 
+	 * 获取试卷有几个部分
+	 * @param unknown_type $paper_id
+	 */
+	public function getPartNum($paper_id)
+	{
+		$sql = "select count(paper_id) as partNum
+				from paper_part where paper_id='".$paper_id."'";
 		return $this->db->query($sql)->fetchAll();
 	}
+	
+	/**
+	 * 
+	 * 获取学生成绩列表
+	 * @param unknown_type $where
+	 * @param unknown_type $sort
+	 * @param unknown_type $limit
+	 */
+	public function getScoreList($where="",$sort="",$limit="",$teacher_id)
+	{
+		//判断老师级别
+		$sql = "SELECT level_id FROM teacher WHERE id=$teacher_id";
+		$result = $this->db->query($sql)->fetchAll();
+		$teachers = "";	//管理员
+		if($result[0]['level_id'] == 2)  //系主任
+		{
+			$sql = "SELECT teacher_id FROM leader_teacher WHERE leader_id=$teacher_id";
+			$result = $this->db->query($sql)->fetchAll();	
+			if(count($result)>0)
+			{
+				$teachers = "AND c.teacher_id IN($teacher_id";
+				foreach($result as $key => $value)
+				{	
+					$teachers .= ",".$value['teacher_id'];
+				}
+				$teachers .= ") ";
+			}
+			else 
+			{
+				$teachers = "AND c.teacher_id=-1 ";
+			}
+		}
+		else if($result[0]['level_id'] == 1)	//普通教师
+		{
+			$teachers = "AND teacher_id=$teacher_id ";
+		}	
+		
+		//查找
+		$where = ($where=="") ? "" : $where." AND ";
+		$sql = "
+			SELECT st.id student_id, st.username, c.class_name, st.name, e.id examination_id, 
+				e.name examination_name, pc.name category_name, sc.parts_score, sc.total_score
+			FROM score sc, student st, examination e, papercategory pc, class_student cs, class c
+			WHERE $where sc.student_id = st.id 
+			AND sc.examination_id = e.id
+			AND e.category_id = pc.id 
+			AND cs.student_id = st.id 
+			AND c.id = cs.class_id 
+			$teachers 
+			$sort $limit";
+		$result = $this->db->query($sql)->fetchAll();
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * 修改成绩
+	 * @param unknown_type $student_id
+	 * @param unknown_type $examination_id
+	 * @param unknown_type $parts_score
+	 * @param unknown_type $total_score
+	 */
+	public function alterScore($student_id, $examination_id, $parts_score, $total_score)
+	{
+		$sql = "UPDATE score SET parts_score='".$parts_score."', total_score='".$total_score."' 
+				WHERE student_id=$student_id AND examination_id=$examination_id";
+		$this->db->query($sql);
+	}
+	
+	/**
+	 * 
+	 * 获取试卷详细列表
+	 */
+	public function getPaperList($where="",$sort="",$limit="")
+	{
+		$where = ($where=="") ? "" : "WHERE ".$where;
+		$sql = "SELECT * FROM paper $where $sort $limit";
+		$result = $this->db->query($sql)->fetchAll();
+		return $result;
+	}
+	
+	/**
+	 * 
+	 * 获取考试详细列表
+	 */
+	public function getExamList($where="",$sort="",$limit="")
+	{
+		$where = ($where=="") ? "" : " AND ".$where;
+		$sql = "SELECT e.id,e.name,e.startTime,e.endTime,pc.name category_name, c.class_name 
+				FROM examination e, papercategory pc, examination_class ec, class c
+				WHERE e.category_id = pc.id 
+				AND ec.examination_id = e.id 
+				AND c.id = ec.class_id 
+				$where $sort $limit";
+		$result = $this->db->query($sql)->fetchAll();
+		return $result;
+	}
+
+	//monyxie: begin
+    //
+    /**
+     * 根据考试id获取试卷id
+     * @param integer $exam_id 
+     * @access public
+     * @return integer
+     */
+    public function getPaperIdByExamId($exam_id)
+    {
+        $sql = "SELECT `paper_id` FROM `examination` WHERE `id`='$exam_id'";
+        $result = $this->db->query($sql)->fetchAll();
+
+        if (null == $result) return null;
+        else return $result[0]['paper_id'];
+    }
+    
+    /**
+     * 获取试卷答案
+     * @param integer $paper_id 
+     * @access public
+     * @return string
+     */
+    public function getPaperAnswer1($paper_id)
+    {
+        $sql = "SELECT `answer` FROM `paper_answer` WHERE `paper_id`='$paper_id'";
+        $result = $this->db->query($sql)->fetchAll();
+
+        if (null == $result) return null;
+        else return $result[0]['answer'];
+    }
+
+    public function getExamAnswer($exam_id)
+    {
+        return $this->getPaperAnswer1($this->getPaperIdByExamId($exam_id));
+    }
+    
+    
+    /**
+     * 获取某学生答案
+     * @param integer $examination_id 
+     * @param integer $student_id 
+     * @access public
+     * @return string|null
+     */
+    public function getStudentAnswer1($examination_id, $student_id) 
+    {
+        $sql = "SELECT `answer` FROM `student_answer` WHERE `examination_id`='$examination_id' AND `student_id`='$student_id'";
+        $result = $this->db->query($sql)->fetchAll();
+        if ($result == null) return null;
+        else return $result[0]['answer'];
+    }
+
+    /**
+     * 获取学生答案,可以指定获取的行数
+     * @param integer $exam_id 
+     * @param integer $limit 
+     * @param integer $offset 
+     * @access public
+     * @return array
+     */
+    public function getAllStudentAnswerByExamId($exam_id, $limit = false, $offset = null)
+    {
+        //TODO:
+        //添加对重复记录的处理(只取后一次)
+        //monyxie:
+        //需要另写函数,逐条记录读取
+        //放弃
+        static $l_offset;
+        if (null !== $offset) $l_offset = $offset;
+        $sql = "SELECT `student_id`,`answer` FROM `student_answer` WHERE `examination_id`='$exam_id'";
+        if (false !== $limit) $sql .= " LIMIT " . (int)$l_offset . ",$limit";
+        $result = $this->db->query($sql)->fetchAll();
+
+        $l_offset += count($result);
+        return $result;
+    }
+
+
+    /**
+     * 获取成绩
+     * @param integer $student_id 
+     * @param integer $examination_id 
+     * @access public
+     * @return array
+     */
+    public function getStudentScore($student_id, $examination_id)
+    {
+        $sql = "SELECT `parts_score`, `total_score` FROM `score` WHERE `student_id`='$student_id' AND `examination_id`='$examination_id'";
+        $result = $this->db->query($sql)->fetchAll();
+        return $result;
+    }
+
+    /**
+     * 添加/更新成绩
+     * @param integer $student_id 
+     * @param integer $examination_id 
+     * @param string $parts_score 
+     * @param integer $total_score 
+     * @access public
+     * @return mixed
+     */
+    public function updateStudentScore($student_id, $examination_id, $parts_score, $total_score)
+    {
+        if ($this->getStudentScore($student_id, $examination_id) == null)
+        {
+            //insert
+            $sql = "INSERT INTO `score` (`student_id`, `examination_id`, `parts_score`, `total_score`)";
+            $sql .= "VALUES ('$student_id', '$examination_id', '$parts_score', '$total_score')";
+
+            $result = $this->db->query($sql);
+        }
+        else
+        {
+            //update
+            $sql = "UPDATE `score` SET `parts_score`='$parts_score', `total_score`='$total_score' 
+                WHERE `student_id`='$student_id' AND `examination_id`='$examination_id'";
+            $result = $this->db->query($sql);
+        }
+        return $result;
+    }
+
+    /**
+     * 获取part结构
+     * 返回形式:
+     *     array(
+     *            [1] => array(
+     *                         type => 'selection'|'fillblank'
+     *                         selection_id|fillblank_id =>
+     *                         answer_count =>
+     *                         score =>
+     *                        )
+     *            [2] => ...
+     *            ...
+     *          )
+     * @param integer $part_id 
+     * @access public
+     * @return array
+     */
+    public function getPartStruct($part_id)
+    {
+        $part_struct = array();
+
+        //选择题
+        $sql = "SELECT `selection`.`answer`, `selection`.`score`, `part_selection`.`selection_id`, `part_selection`.`index` FROM `selection`, `part_selection` 
+            WHERE `part_selection`.`part_id`='$part_id' AND `part_selection`.`selection_id`=`selection`.`id`";
+        $result = $this->db->query($sql)->fetchAll();
+        if ($result != null)
+        {
+            if (!is_array($result)) $result = array($result);
+            foreach ($result as $row)
+            {
+                $selection_id = $row['selection_id'];
+                $index = $row['index'];
+                $answer = $row['answer'];
+                $score = $row['score'];
+                $answer_count = count(explode('#', $answer));
+                $part_struct[$index] = array('type' => 'selection', 'selection_id' => $selection_id, 'answer_count' => $answer_count, 'score' => $score);
+            }
+        }
+
+        //填空题
+        $sql = "SELECT `fillblank`.`answer`, `fillblank`.`score`, `part_fillblank`.`fillblank_id`, `part_fillblank`.`index` FROM `fillblank`, `part_fillblank` 
+            WHERE `part_fillblank`.`part_id`='$part_id' AND `part_fillblank`.`fillblank_id`=`fillblank`.`id`";
+        $result = $this->db->query($sql)->fetchAll();
+        if ($result != null)
+        {
+            if (!is_array($result)) $result = array($result);
+            foreach ($result as $row)
+            {
+                $fillblank_id = $row['fillblank_id'];
+                $index = $row['index'];
+                $answer = $row['answer'];
+                $score = $row['score'];
+                $answer_count = count(explode('#', $answer));
+                $part_struct[$index] = array('type' => 'fillblank', 'fillblank_id' => $fillblank_id, 'answer_count' => $answer_count, 'score' => $score);
+            }
+        }
+        return $part_struct;
+    }
+
+    /**
+     * 获取试卷结构
+     * @param integer $paper_id 
+     * @access public
+     * @return array|null
+     */
+    public function getPaperStruct($paper_id)
+    {
+        $sql = "SELECT `part_id`,`index` FROM `paper_part` WHERE `paper_id`='$paper_id'";
+        $result = $this->db->query($sql)->fetchAll();
+        if ($result == null) return null;
+        if (!is_array($result)) $result = array($result);
+        $paper_struct = array();
+        foreach ($result as $row)
+        {
+            $part_struct = array();
+            $part_id = $row['part_id'];
+            $index = $row['index'];
+            $part_struct = $this->getPartStruct($part_id);
+            $paper_struct[$index] = array('part_id' => $part_id, 'part_struct' => $part_struct);
+            
+        }
+        return $paper_struct;
+    }
+    
+/**
+     * 
+     * 解析答案
+     * @param string $answer 
+     * @access protected
+     * @return void
+     */
+    public function _resolveanswer(&$answer)
+    {
+        $str = $answer;
+        //debug
+        //$str = "<part:123:1>a#b#c#d#e</part><part:456:2>as#df</part>";
+        $resolved = array();
+        while($str != "")
+        {
+            $stpos = strpos($str, '<part:');
+            $gtpos = strpos($str, '>');
+            if ($stpos === false || $gtpos === false) return null;  //尖括号不配对
+            $token = substr($str, $stpos+6, $gtpos-$stpos-6);
+            $label = explode(':', $token);
+            $str = substr($str, $gtpos+1);
+            $clpos = strpos($str, '</part>');
+            $token = substr($str, 0, $clpos);
+            $answer = explode('#', $token);
+            $str = substr($str, $clpos+7);
+            $resolved[$label[0]] = $answer;
+        }
+        return $resolved;
+    }
+
+    /**
+     * 改卷
+     * @param array $paper_struct
+     * @param integer $exam_answer 
+     * @param integer $student_answer 
+     * @param integer $out_total_score output
+     * @access protected
+     * @return string
+     */
+    public function _checkanswer(&$paper_struct, &$exam_answer, &$student_answer, &$out_total_score)
+    {
+        $str_score = "";
+        $total_score = 0;
+
+        foreach ($paper_struct as $paper_index => $part)
+        {
+            $part_id = $part['part_id'];
+            $part_struct = $part['part_struct'];
+            $part_ptr = 0;
+            $part_score = 0;
+            $jump_to_next_part = 0;
+            //print_r($part_struct);exit;
+            foreach($part_struct as $part_index => $sof_struct)
+            {
+                //$sof_ptr = 0;
+                $sof_correct_count = 0;
+                $type = $sof_struct['type'];
+                if ($type === 'selection')
+                {
+                    $answer_count = $sof_struct['answer_count'];
+                    $score = $sof_struct['score'];
+                    //echo $answer_count.":$score";
+                    for ($it = 0; $it < $answer_count; $it++)
+                    {
+                        if (isset($exam_answer[$part_id][$part_ptr]) && isset($student_answer[$part_id][$part_ptr]))
+                        {
+                            if ($exam_answer[$part_id][$part_ptr] == $student_answer[$part_id][$part_ptr])
+                            {
+                            	//echo "$sof_correct_count:";
+                                $sof_correct_count++;
+                                
+                            }
+                        }
+                        else
+                        {
+                            $jump_to_next_part = 1;
+                            break;
+                        }
+                        $part_ptr++;
+                    }
+                    $sof_score = $score * ($sof_correct_count / $answer_count);
+                    $part_score += $sof_score;
+                    if ($jump_to_next_part === 1) break;
+                }
+                else //fillblank
+                {
+                    $part_ptr += $sof_struct['answer_count'];
+                }
+            } //foreach2
+
+            if ($str_score != "") $str_score .= '#';
+            //note
+            $part_score = (int)$part_score; 
+            $str_score .= $part_score;
+            $total_score += $part_score;
+        } //foreach1
+        //echo "e:$exam_answer";exit;
+        $out_total_score = $total_score;
+        return $str_score;
+    }
+    
+     /**
+     * 此函数执行改卷动作(只对客观题改卷)
+     * @param integer $examination_id 
+     * @access protected
+     * @return bool
+     */
+    public function _checkexamanswer($examination_id)
+    {
+        $limit = 50;  //限制每次请求获取的行数
+        $examAnswer = $this->getExamAnswer($examination_id);
+        if (null == $examAnswer) return false;  //标准答案不存在
+        $examAnswer = $this->_resolveanswer($examAnswer);
+        $paperStruct = $this->getPaperStruct($this->getPaperIdByExamId($examination_id));
+
+        $allStudentsAnswer = $this->getAllStudentAnswerByExamId($examination_id, $limit);
+        while (0 != count($allStudentsAnswer))
+        {
+            if (null == $allStudentsAnswer) return true;  //学生答案不存在
+            if (!is_array($allStudentsAnswer)) $allStudentsAnswer = array($allStudentsAnswer);
+            //处理一次请求获取的全部学生答案
+            $arrAllStudent = array();
+            foreach($allStudentsAnswer as $studentAnswer)
+            {
+                //处理单个学生的答案
+                $tmp = $this->_resolveanswer($studentAnswer['answer']);
+                $totalScore = 0;
+                $strScore = $this->_checkanswer($paperStruct, $examAnswer, $tmp, $totalScore);
+                //更新学生成绩
+                $this->updateStudentScore($studentAnswer['student_id'], $examination_id, $strScore, $totalScore);
+            }
+            $allStudentsAnswer = $this->getAllStudentAnswerByExamId($examination_id, $limit);
+        }  //while
+
+        return true;
+    }  //function
+        /**
+     * 单个学生的改卷
+     * @param integer $examination_id 
+     * @param integer $student_id 
+     * @access protected
+     * @return bool
+     */
+    public function _checkoneanswer($examination_id, $student_id)
+    {
+        $examAnswer = $this->getExamAnswer($examination_id);
+        if ($examAnswer == null) return false;
+        $examAnswer = $this->_resolveanswer($examAnswer);
+        $paperStruct = $this->getPaperStruct($this->getPaperIdByExamId($examination_id));
+        $studentAnswer = $this->getStudentAnswer1($examination_id, $student_id);
+        if ($studentAnswer == null) return false;
+
+        $studentAnswer = $this->_resolveanswer($studentAnswer);
+        if ($studentAnswer == null) return false;
+        $totalScore = 0;
+        $strScore = $this->_checkanswer($paperStruct, $examAnswer, $studentAnswer, $totalScore);
+        $this->updateStudentScore($student_id, $examination_id, $strScore, $totalScore);
+    } //function
+    //
+    //monyxie: end
+	
 }
 
 

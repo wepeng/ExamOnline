@@ -1,4 +1,6 @@
+
 <?php  include_once '_header.phtml';?>
+
 <script type="text/javascript">
 	var xmlHttpRequest;  
 	//XmlHttpRequest对象 
@@ -7,6 +9,13 @@
 					return new ActiveXObject("Microsoft.XMLHTTP"); 
 			}else if(window.XMLHttpRequest){ //非IE浏览器 
 					return new XMLHttpRequest(); 
+			} 
+	}
+	//回调函数 
+	function HuiDiaoFun(){ 
+			if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
+					var valueReturned = xmlHttpRequest.responseText;
+					document.getElementById("paperParts").innerHTML = valueReturned;
 			} 
 	} 
 	
@@ -17,39 +26,36 @@
 		document.getElementById("examId").value = exam_id;		
 
 		var url = "setreexam?exam_id="+exam_id;
-		
-		//1.创建XMLHttpRequest组建 
-		xmlHttpRequest = createXmlHttpRequest(); 
-			 
-		//2.设置回调函数 
-		xmlHttpRequest.onreadystatechange = HuiDiaoFun; 
-			 
-		//3.初始化XMLHttpRequest组建 
-		xmlHttpRequest.open("post",url,true); 
-			 
-		//4.发送请求 
+
+		xmlHttpRequest = createXmlHttpRequest();  
+		xmlHttpRequest.onreadystatechange = HuiDiaoFun;  
+		xmlHttpRequest.open("post",url,true)
 		xmlHttpRequest.send(null);   
-	}       
-	//回调函数 
-	function HuiDiaoFun(){ 
-			if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
-					var valueReturned = xmlHttpRequest.responseText;
-					document.getElementById("paperParts").innerHTML = valueReturned;
-			} 
 	}
+	//检查学号是否存在
+	$(document).ready(function(){
+		$('#checkStu').click(function(){
+			$.post('checkstudents', {'checkStuNums': $('#studentNums').val()}, function(data){
+				$('#checkResult').html(data);
+			});
+		});
+	})       
+
 </script>
-<div style="float:left; margin-left:30px;">
+<div style="margin-left:30px; margin-top:20px;">
 	<form name="reexamForm" action="setreexam" method="post">
-	选择重考试卷：<span id="examName"></span><br/>
+	<b>选择重考考试：</b><span id="examName" style="color:#F00;"></span><br/><br/>
 	<input type="hidden" id="examId" name="examId"/>
-	<div id="paperList" style="border:1px #CCC solid; padding:10px">
-	<b>最近进行的考试</b><br>
+	<div id="showExamList" style="width:600px; height:300px; border:1px #CCC solid; padding:10px">
+		<b>最近进行的考试</b><br><br/>
 		<?php
 			if(is_array($this->getRecentlyExamList))
 			{
+				$i = 0;
 				foreach($this->getRecentlyExamList as $value)
 				{
-					echo "<a id='".$value['id']."' href=\"JavaScript:setExamName('".$value['name']."','".$value['id']."')\">".$value['name']."</a><br/>";
+					$i++;
+					echo $i.". <a id='".$value['id']."' href=\"JavaScript:setExamName('".$value['name']."','".$value['id']."')\">".$value['name']."</a><br/>";
 				}
 			}else
 			{
@@ -57,13 +63,17 @@
 			}
 
 		?>
-	</div>
+
+	</div><br/>
 	选择重考部分：<br/>
-	<div id="paperParts" style="border:1px #CCC solid; padding:5px;"></div><br/>
+	<div id="paperParts" style="width:610px; min-height:20px; border:1px #CCC solid; padding:5px;"></div><br/>
 	
-	输入考生学号（考生间用逗号（，）区分）：<input name="studentNums" type="text" value="" />(考生是否存在)<br/>
-	<input type="button" onClick="reexamForm.submit()" value="确定" />
+	输入重考学号（多个用逗号隔开，如: 111,112,113）：<br/>
+	<input id="studentNums" name="studentNums" type="text" style="width:550px;" value="" />
+	<input type="button" id="checkStu" value="检查考生" /> <span id="checkResult"></span><br/><br/>
+	<input type="button" style="width:60px;" onClick="reexamForm.submit()" value="确定" />
 	</form>
+	<br/><div style="color:#F00;"><?php echo $this->msg; ?></div>
 </div>
 
 <?php include_once '_footer.phtml';?>

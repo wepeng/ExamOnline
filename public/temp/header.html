@@ -5,7 +5,18 @@
 <title>无标题文档</title>
 <script type="text/javascript" language="javascript" src="../../public/js/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" language="javascript" src="../../public/js/jquery-1.4.2.js"></script>
+<script type="text/javascript" language="javascript" src="../../public/js/jquery_ui.js"></script>
+<script type="text/javascript" language="javascript" src="../../public/js/examination.js"></script>
+<link rel="stylesheet" href="../../public/css/examination.css" type="text/css" />
 </head>
 <body>
-<form action="doexam?paper_id=<exam:paperId>" method="post">
-<exam:audio>
+<div id="main">
+	<div class="main_top"></div> 
+    <div id="contens">
+    	<div id="stuInfo">
+        	<span id="stuName">姓名：kaiser</span>
+            <span id="StuNo">考试号：0807100125</span>
+      </div>
+
+		<form action="doexam?paper_id=<exam:paperId>" method="post">
+		<exam:audio>

@@ -2,6 +2,7 @@
 require_once 'Zend/Controller/Action.php';
 require_once 'Zend/Json.php';
 require_once 'lib/choice.class.php';
+
 /**
  * 
  * 教师控制类,包含普通教师、系主任和管理员
@@ -14,15 +15,17 @@ class TeacherController extends Zend_Controller_Action
 	function init()
 	{
 		Zend_Loader::loadClass('Teacher',realpath(dirname(__FILE__) . '/../models'));
+		Zend_Loader::loadClass('Student',realpath(dirname(__FILE__) . '/../models'));
 		Zend_Loader::loadClass('System',realpath(dirname(__FILE__) . '/../models'));
 		Zend_Loader::loadClass('Examination',realpath(dirname(__FILE__) . '/../models'));
 		$this->sys = new System();
+		$this->student = new Student();
 		$this->teacher = new Teacher();
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
 		$showlist = file_get_contents("../application/views/scripts/teacher/teacher".$this->examSession->level_id.".phtml");
-		$this->quickmenuAction($showlist);
 
+		$this->quickmenuAction($showlist);
 	}
 	
 	function indexAction()
@@ -30,6 +33,10 @@ class TeacherController extends Zend_Controller_Action
 		$this->sys->checkLogined();
 	}
 	
+	/**
+	 * 
+	 * 教师或管理员登录
+	 */
 	function loginAction()
 	{
 		if(!($this->examSession->username && $this->examSession->password))
@@ -54,6 +61,40 @@ class TeacherController extends Zend_Controller_Action
 	
 	/**
 	 * 
+	 * 退出
+	 */
+	function quitAction()
+	{
+		$this->examSession->unsetAll();
+		header('Location: ../');
+	}
+	
+	/**
+	 * 
+	 * 修改密码
+	 */
+	function resetpasswordAction()
+	{
+		$this->sys->checkLogined();
+					
+		$this->view->username = $this->examSession->username;
+		if(isset($_POST['newpassword']) && !empty($_POST['newpassword']))
+		{
+			if($this->examSession->password == $_POST['password'])
+			{			
+				$this->sys->resetPassword($this->examSession->username, $_POST['newpassword'], 'teacher');
+				$this->view->text = '您的密码已修改。';
+				$this->examSession->password = $_POST['newpassword'];
+			}
+			else 
+			{
+				$this->view->text = '您的旧密码不正确！';
+			}
+		}
+	}
+	
+	/**
+	 * 
 	 * 设置考试
 	 */
 	function setexamAction()
@@ -68,20 +109,22 @@ class TeacherController extends Zend_Controller_Action
 		{
 			$this->view->categoryList = $result;
 		}
-		//查看试卷分类
+		//查看分类试卷ajax
 		if(isset($_POST['category_id']))
 		{
 			$paperList = $this->examination->getPaperListByCategory($_POST['category_id']);
 			if(is_array($paperList))
 			{
+				$i = 0;
 				foreach($paperList as $value)
 				{
-					echo "<a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br/>";
+					$i++;
+					echo $i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br/>";
 				}
 			}
 			exit;
 		}
-		//搜索试卷
+		//搜索试卷ajax
 		if(isset($_POST['searchByName']))
 		{
 			$searchPaperList = $this->examination->searchPaper($_POST['searchByName']);
@@ -91,9 +134,11 @@ class TeacherController extends Zend_Controller_Action
 			}
 			else 
 			{
+				$i = 0;
 				foreach($searchPaperList as $value) 
 				{
-					echo "<a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br/>";
+					$i++;
+					echo $i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br>";
 				}
 			}
 			exit;
@@ -115,40 +160,48 @@ class TeacherController extends Zend_Controller_Action
 			$otherStus = "";
 			if(isset($_POST['otherStus']))
 				$otherStus = $_POST['otherStus'];
-			$startTime = $_POST['startTime'];
-			$endTime = $_POST['endTime'];
+			$startTime = $_POST['startDate']." ".$_POST['startHour'].":".$_POST['startMinute'].":".$_POST['startSecond'];
+			$endTime = $_POST['endDate']." ".$_POST['endHour'].":".$_POST['endMinute'].":".$_POST['endSecond'];
 			$class_ids = "";
 			if(isset($_POST['class_id']))
 			{
 				$class_ids = $_POST['class_id'];
 			}
-			echo "<div>";
-			echo "试卷名：".$paper_name."<br/>";
-			echo "类别：".$category_id."<br/>";
-			if(isset($_POST['class_id']))
-			{
-				foreach ($_POST['class_id'] as $value)
-				{
-					echo "班级：".$value."<br/>";
-				}
-			}
-			echo "排除的学生：".$rejectStus."<br/>";
-			echo "另外允许的学生：".$otherStus."<br/>";
-			echo "开始时间：".$startTime."<br/>";
-			echo "结束时间：".$endTime."<br/>";
-			echo "</div>";
-			
 			$this->examination->saveExamSetData($paper_id, $paper_name, $category_id, $startTime, $endTime, $class_ids, $rejectStus, $otherStus);
-			
+			$this->view->msg = "已成功添加一场考试：".$paper_name;
 		}
 	}
-	
+
+	/**
+	 * 
+	 * 异步检查学号正确性
+	 */
+	function checkstudentsAction()
+	{	
+		if(isset($_POST['checkStuNums']))
+		{
+			$stuNums = str_replace('，', ',', $_POST['checkStuNums']);
+			$stuNum = explode(',',$stuNums);
+			$checkFlag = true;
+			foreach($stuNum as $key => $username)
+			{
+				if(!$this->student->checkStudent($username))
+					$checkFlag = false;
+			}
+			if($checkFlag)
+				echo "学号正确。";
+			else 
+				echo "学号不存在或格式不正确！";		
+		}
+		exit;
+	}
+
 	/**
 	 * 
 	 * 设置重考
 	 */
 	function setreexamAction()
-	{	
+	{		
 		$this->sys->checkLogined();
 		
 		$result = $this->examination->getRecentlyExam();
@@ -159,9 +212,11 @@ class TeacherController extends Zend_Controller_Action
 			$paperParts = $this->examination->getPaperParts($_GET['exam_id']);
 			if(is_array($paperParts))
 			{
+				$i = 0;
 				foreach($paperParts as $value)
 				{
-					echo "&nbsp;&nbsp;<input name='parts[]' type=\"checkbox\" value='".$value['id']."' />".$value['name'];
+					$i++;
+					echo "&nbsp;&nbsp;$i. <input name='parts[]' type=\"checkbox\" value='".$value['id']."' />".$value['name'];
 				}
 			}
 			exit;
@@ -179,48 +234,8 @@ class TeacherController extends Zend_Controller_Action
 			$studentNums = $_POST['studentNums'];
 			$this->examination->saveReExamSetData($exam_id, $parts, $studentNums, $this->examSession->teacher_id);
 			
-			echo "添加成功。";
+			$this->view->msg = "设置成功";
 		}
-
-		print_r($_POST);
-	}
-	
-	/**
-	 * 
-	 * 管理系主任
-	 */
-	function manageleaderAction()
-	{
-		if(isset($_POST['leaderName']))
-		{
-			$result = $this->teacher->searchLeader($_POST['leaderName']);
-			
-			if(count($result)>0)
-			{
-				$this->view->leaderList = $result;
-			}
-			else
-			{
-				$this->view->leaderList = "没有找到。";
-			}
-		}
-		/*elseif(isset($_POST['addLeader'])){
-			
-		}*/
-		else 
-		{
-			$result = $this->teacher->getLeaderList();
-			if(count($result)>0)
-			{
-				$this->view->leaderList = $result;
-			}
-			else
-			{
-				$this->view->leaderList = "没有系主任！";
-			}
-		}
-		
-		
 	}
 	
 	/**
@@ -238,7 +253,7 @@ class TeacherController extends Zend_Controller_Action
 					if(isset($_POST['writing']) && isset($_POST['writing_answer']) )
 					{				
 						$this->examination->insertSelOrFill('fillblank', $this->examination->addFlag('writing', 
-						$_POST['writing']), $_POST['writing_answer'], false, 'writing', $this->examSession->teacher_id);
+							$_POST['writing']), $_POST['writing_answer'], false, $_POST['score'], 'writing', $this->examSession->teacher_id);
 					}
 					break;
 				
@@ -250,19 +265,8 @@ class TeacherController extends Zend_Controller_Action
 						$content = $this->examination->readingPaper($_POST['editor1'], $_POST['fendNum'], $_POST['startNum']);
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('fastReading', $content), $answers, false, 'fastReading', $this->examSession->teacher_id);
-					}
-					break;
-
-				//听力听写
-				case 'dictation':
-					if(isset($_POST['editor1']) && isset($_POST['startNum']) && isset($_POST['endNum']) 
-						&& isset($_POST['answers']))
-					{		
-						$content = $this->examination->fillblankPaper($_POST['editor1']);
-						$content = addslashes($content);  //转义
-						$answers = $this->examination->linkAnswer($_POST['answers']);
-						$this->examination->insertSelOrFill('fillblank', $this->examination->addFlag('dictation', $content), $answers, false, 'dictation', $this->examSession->teacher_id);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('fastReading', $content), $answers, false, 
+							$_POST['score'], 'fastReading', $this->examSession->teacher_id);
 					}
 					break;
 				
@@ -275,7 +279,8 @@ class TeacherController extends Zend_Controller_Action
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
 						$newAudioName = $this->examination->saveAudioFile($_FILES['audio'], $this->examSession->teacher_id);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('shortListening', $content), $answers, TRUE, 'shortListening', $this->examSession->teacher_id,$newAudioName);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('shortListening', $content), $answers, TRUE, 
+							$_POST['score'], 'shortListening', $this->examSession->teacher_id,$newAudioName);
 					}
 					break;
 					
@@ -288,7 +293,20 @@ class TeacherController extends Zend_Controller_Action
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
 						$newAudioName = $this->examination->saveAudioFile($_FILES['audio'], $this->examSession->teacher_id);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('longListening', $content), $answers, TRUE, 'longListening', $this->examSession->teacher_id,$newAudioName);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('longListening', $content), $answers, TRUE, $_POST['score'], 'longListening', $this->examSession->teacher_id,$newAudioName);
+					}
+					break;
+					
+				//听力听写
+				case 'dictation':
+					if(isset($_POST['editor1']) && isset($_POST['startNum']) && isset($_POST['endNum']) 
+						&& isset($_POST['answers']))
+					{		
+						$content = $this->examination->fillblankPaper($_POST['editor1']);
+						$content = addslashes($content);  //转义
+						$answers = $this->examination->linkAnswer($_POST['answers']);
+						$newAudioName = $this->examination->saveAudioFile($_FILES['audio'], $this->examSession->teacher_id);
+						$this->examination->insertSelOrFill('fillblank', $this->examination->addFlag('dictation', $content), $answers, TRUE, $_POST['score'], 'dictation', $this->examSession->teacher_id, $newAudioName);
 					}
 					break;
 				
@@ -300,7 +318,7 @@ class TeacherController extends Zend_Controller_Action
 						$content = $this->examination->readingPaper($_POST['editor1'], $_POST['endNum'], $_POST['startNum']);		
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('reading', $content), $answers, false, 'reading', $this->examSession->teacher_id);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('reading', $content), $answers, false, $_POST['score'], 'reading', $this->examSession->teacher_id);
 					}
 					break;
 					
@@ -312,7 +330,7 @@ class TeacherController extends Zend_Controller_Action
 						$content = $this->examination->clozePaper($_POST['editor1'], $_POST['endNum'], $_POST['startNum']);
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('cloze', $content), $answers, false, 'cloze', $this->examSession->teacher_id);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('cloze', $content), $answers, false, $_POST['score'], 'cloze', $this->examSession->teacher_id);
 					}
 					break;
 
@@ -324,7 +342,7 @@ class TeacherController extends Zend_Controller_Action
 						$content = $this->examination->fillblankPaper($_POST['editor1']);
 						$content = addslashes($content);  //转义
 						$answers = $this->examination->linkAnswer($_POST['answers']);
-						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('translation', $content), $answers, false, 'translation', $this->examSession->teacher_id);
+						$this->examination->insertSelOrFill('selection', $this->examination->addFlag('translation', $content), $answers, false, $_POST['score'], 'translation', $this->examSession->teacher_id);
 					}
 					break;
 			}
@@ -349,7 +367,7 @@ class TeacherController extends Zend_Controller_Action
 	
 	/**
 	 * 
-	 * 编辑上传的试题分页
+	 * 生成试卷
 	 */
 	function editupexamAction()
 	{
@@ -357,13 +375,16 @@ class TeacherController extends Zend_Controller_Action
 		
 		$temporaryPart = $this->examination->getTemporaryRart($this->examSession->teacher_id);
 		$this->view->temporaryPartList = $temporaryPart;
-		
+	
 		if(isset($_POST['pageIndex']))
 		{
 			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId']);
+			$i = 0;
+			
 			foreach ($_POST['pageIndex'] as $value)
 			{
-				$this->examination->insertPart($value, $paper_id, NULL,NULL, NULL);
+				$this->examination->insertPart($value, $paper_id, $_POST['partName'][$i],$_POST['direction'][$i], $_POST['partTime'][$i]);
+				$i++;
 			}
 			echo "上传试卷成功";
 		}
@@ -371,62 +392,214 @@ class TeacherController extends Zend_Controller_Action
 	
 	/**
 	 * 
-	 * 搜索学生
+	 * 学生成绩管理
 	 */
-	function searchstudentAction()
+	function managescoreAction()
 	{
-		if(isset($_POST['value']) && isset($_POST['key']))
+		if(isset($_POST['total_score']))
 		{
-			$result = $this->teacher->searchStudentInfo($_POST['value'], $_POST['key']);
-			if (!$result)
-			{
-				echo "没有搜索到您输入的关键字,请确认关键字是有效的";
-			}
-			else
-			{
-			//	foreach($result as $value){
-			//	 	echo "学号：".$value['username']." 姓名：".$value['name']." 性别："
-			//	 		.$value['sex']." 密码：".$value['password'];
-			//		}
-				$this->view->result = $result;
-				$this->view->allclass = $this->teacher->getAllClass();
-				echo $this->view->render('teacher/showstudenttablelist.phtml');
-				
-			}
-			exit;
-		}
-	}
-	
-	/**
-	 * 
-	 * 添加学生
-	 */
-	function addstudentAction()
-	{
-			
-		if(isset($_POST['username']) && isset($_POST['name']) 
-				&& isset($_POST['sex']) && isset($_POST['password']))
-		{
-			$result = $this->teacher->addstudent
-									($_POST['username'], $_POST['name'], $_POST['sex'], $_POST['password']);
-			if(!$result)
-			{
-				echo $_POST['name']."添加失败";
-			}
-			else echo $_POST['name']."添加成功";
-		exit;
+			$this->examination->alterScore($_POST['student_id'], $_POST['examination_id'], $_POST['parts_score'], $_POST['total_score']);	
 		}	
 	}
 	
 	/**
 	 * 
-	 * 退出
+	 * 学生成绩列表（jQuery插件获取）
 	 */
-	function quitAction()
+	function scorelistAction()
 	{
-		$this->examSession->unsetAll();
-		header('Location: ../');
+		$page = $_POST['page'];
+		$rp = $_POST['rp'];
+		$sortname = $_POST['sortname'];
+		$sortorder = $_POST['sortorder'];
+		if (!$sortname) $sortname = 'name';
+		if (!$sortorder) $sortorder = 'desc';
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 10;	
+		$start = (($page-1) * $rp);	
+		$limit = "LIMIT $start, $rp";	
+		$query = $_POST['query'];
+		$qtype = ($_POST['qtype'] == "class_name") ? "c.class_name" : "st.".$_POST['qtype'];  //搜索
+		$where = "";
+		if ($query) $where = " $qtype LIKE '%$query%' ";
+		
+		$result = $this->examination->getScoreList($where,"","",$this->examSession->teacher_id);
+		$total = count($result);
+		$result = $this->examination->getScoreList($where,$sort,$limit,$this->examSession->teacher_id);	
+		
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); 
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" ); 
+		header("Cache-Control: no-cache, must-revalidate" ); 
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		if(count($result)>0)
+		{
+			foreach($result as $value)
+			{
+				$value['parts_score'] = str_replace("#", ",", $value['parts_score']);
+				if ($rc) $json .= ",";
+				$json .= "\n{";
+				$json .= "student_id:'".$value['student_id']."',";
+				$json .= "username:'".$value['username']."',";
+				$json .= "name:'".$value['name']."',";
+				$json .= "class_name:'".$value['class_name']."',";
+				$json .= "examination_id:'".$value['examination_id']."',";
+				$json .= "examination_name:'".$value['examination_name']."',";
+				$json .= "category_name:'".$value['category_name']."',";
+				$json .= "parts_score:'".$value['parts_score']."',";
+				$json .= "total_score:'".$value['total_score']."'";
+				$json .= "}";
+				$rc = true;		
+			}
+		}
+		$json .= "\n]";
+		$json .= "}";
+		echo $json;
+		exit;
 	}
+	
+	/**
+	 * 
+	 * 试卷管理
+	 */
+	function managepaperAction()
+	{
+		
+	}
+
+	/**
+	 * 
+	 * 试卷列表（jQuery插件获取）
+	 */
+	function paperlistAction()
+	{
+		$page = $_POST['page'];
+		$rp = $_POST['rp'];
+		$sortname = $_POST['sortname'];
+		$sortorder = $_POST['sortorder'];
+		if (!$sortname) $sortname = 'name';
+		if (!$sortorder) $sortorder = 'desc';
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 10;	
+		$start = (($page-1) * $rp);	
+		$limit = "LIMIT $start, $rp";	
+		$query = $_POST['query'];
+		$qtype = $_POST['qtype'];  //搜索
+		$where = "";
+		if ($query) $where = " $qtype LIKE '%$query%' ";
+		
+		$result = $this->examination->getPaperList($where);
+		$total = count($result);
+		$result = $this->examination->getPaperList($where,$sort,$limit);	
+		
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); 
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" ); 
+		header("Cache-Control: no-cache, must-revalidate" ); 
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		if(count($result)>0)
+		{
+			foreach($result as $value)
+			{
+				if ($rc) $json .= ",";
+				$json .= "\n{";
+				$json .= "id:'".$value['id']."',";
+				$json .= "title:'".$value['title']."',";
+				$json .= "introduction:'".$value['introduction']."',";
+				$json .= "listening_test:'".$value['listening_test']."',";
+				$json .= "time:'".$value['time']."'";
+				$json .= "}";
+				$rc = true;		
+			}
+		}
+		$json .= "\n]";
+		$json .= "}";
+		echo $json;
+		exit;
+	}
+	
+	/**
+	 * 
+	 * 考试管理
+	 */
+	function manageexamAction()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 * 考试列表（jQuery插件获取）
+	 */
+	function examlistAction()
+	{
+		$page = $_POST['page'];
+		$rp = $_POST['rp'];
+		$sortname = $_POST['sortname'];
+		$sortorder = $_POST['sortorder'];
+		if (!$sortname) $sortname = 'name';
+		if (!$sortorder) $sortorder = 'desc';
+		$sort = "ORDER BY $sortname $sortorder";
+		if (!$page) $page = 1;
+		if (!$rp) $rp = 10;	
+		$start = (($page-1) * $rp);	
+		$limit = "LIMIT $start, $rp";	
+		$query = $_POST['query'];
+		$qtype = ($_POST['qtype']=="class_name") ? "c.".$_POST['qtype'] : "e.".$_POST['qtype'];  //搜索
+		$where = "";
+		if ($query) $where = " $qtype LIKE '%$query%' ";
+		
+		$result = $this->examination->getExamList($where);
+		$total = count($result);
+		$result = $this->examination->getExamList($where,$sort,$limit);	
+		
+		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); 
+		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" ); 
+		header("Cache-Control: no-cache, must-revalidate" ); 
+		header("Pragma: no-cache" );
+		header("Content-type: text/x-json");
+		$json = "";
+		$json .= "{\n";
+		$json .= "page: $page,\n";
+		$json .= "total: $total,\n";
+		$json .= "rows: [";
+		$rc = false;
+		if(count($result)>0)
+		{
+			foreach($result as $value)
+			{
+				if ($rc) $json .= ",";
+				$json .= "\n{";
+				$json .= "id:'".$value['id']."',";
+				$json .= "name:'".$value['name']."',";
+				$json .= "class_name:'".$value['class_name']."',";
+				$json .= "startTime:'".$value['startTime']."',";
+				$json .= "endTime:'".$value['endTime']."',";
+				$json .= "category_name:'".$value['category_name']."'";
+				$json .= "}";
+				$rc = true;		
+			}
+		}
+		$json .= "\n]";
+		$json .= "}";
+		echo $json;
+		exit;
+	}
+
 	/*
 	 *	编辑教师
 	 * login-qin
@@ -563,6 +736,14 @@ class TeacherController extends Zend_Controller_Action
 		}
 	}
 
+	/**
+	 * 
+	 * 管理系主任
+	 */
+	function manageleaderAction()
+	{
+	}
+	
 	function addorupdateleaderAction()
 	{
 		$table = 'teacher';
@@ -671,6 +852,8 @@ class TeacherController extends Zend_Controller_Action
 	 * HTML head frame
 	 */
 	function headerAction() {
+		$this->view->username = ($this->examSession->username) ? $this->examSession->username : "请先登录...";
+		$this->view->message_num = "0";
 	}
 	/**
 	 * HTML footer frame
@@ -1026,5 +1209,74 @@ class TeacherController extends Zend_Controller_Action
 			echo 'no';
 		}
 	}
+	
+	/**
+	 * 试卷类别管理
+	 * Enter description here ...
+	 */
+	function managecategoryAction()
+	{
+	}
+	
+	//monyxie: begin
+    //
 
+    
+
+    /**
+     * 此动作执行对某次考试的全部学生的改卷
+     * @access public
+     * @return void
+     */
+    public function checkexamanswerAction()
+    {
+		$this->sys->checkLogined();
+		$recent_exam = $this->examination->getRecentlyExam();
+		$this->view->getRecentlyExamList = $recent_exam;
+        if (isset($_POST['examId']))
+        {
+            $examination_id = $_POST['examId'];
+            echo "<p id='beginInfo'>正在改卷...</p>\n";
+            if ($this->examination->_checkexamanswer($examination_id) === true)
+                echo "<p id='doneInfo'>完成.<a href='managescore'>查看成绩</a></p>\n";
+            else
+                echo "<p id='errorInfo'>有错误发生,操作未完成.<a href='managescore'>查看成绩</a></p>\n";
+        }
+    }
+
+   
+
+    /**
+     * 此动作执行单个学生的改卷
+     * @access public
+     * @return void
+     */
+    public function checkoneanswerAction()
+    {
+		$this->sys->checkLogined();
+		$recent_exam = $this->examination->getRecentlyExam();
+		$this->view->getRecentlyExamList = $recent_exam;
+        if (isset($_POST['examId']))
+        {
+            if (isset($_POST['studentNums']))
+            {
+                $students = explode(',', $_POST['studentNums']);
+                if (!is_array($students)) $students = array($students);
+                $examination_id = $_POST['examId'];
+                echo "<p id='beginInfo'>正在改卷...</p>\n";
+                foreach ($students as $value)
+                {
+                    $student_id = $this->student->getStudentIdByUsername($value);
+                    if ($student_id == null) continue;
+                    $this->examination->_checkoneanswer($examination_id, $student_id);
+                }
+                echo "<p id='doneInfo'>完成.<a href='managescore'>查看成绩</a></p>\n";
+            }
+        }
+    }
+
+
+
+    //
+    //monyxie: end   
 }

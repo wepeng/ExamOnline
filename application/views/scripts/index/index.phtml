@@ -1,68 +1,92 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<HTML>
-	<HEAD>
-		<title>登录</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta http-equiv="Content-Language" content="utf-8">
-		<link rel="stylesheet" href="css/index_jw.css" type="text/css" media="all">
-		<link rel="stylesheet" href="css/index_jw2.css" type="text/css" media="all"> 
-		<!--[if lte IE 6]>
-		<SCRIPT language=javascript src="include/pngbug.js"></SCRIPT>
-		<![endif]-->
-		<style>
-			.fangshua { FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: red }
-		</style>
-	</HEAD>
-	<body class="login_bg">
-		<form name="form1" method="post" action="#" id="form1">	
-			<div class="login_main">
-				<div class="login_logo"><img src="images/index_login_jw.png" alt=""></div>
-				<div class="login_left"><img class="login_pic" src="images/index_login_pic.png"></div>
-				<div class="login_right">
-					<dl>
-						<dt class="uesr">
-							<label>用户名：</label></dt>
-						<dd>
-							<input name="username" type="text" id="TextBox1" tabindex="1" class="text_nor" style="width:100px;" /></dd>
-						<dt class="passw">
-							<label>密&nbsp&nbsp&nbsp码：</label></dt>
-						<dd class="yzm">
-							<input name="password" type="password" id="TextBox2" tabindex="2" class="text_nor" style="width:100px;" /></dd>
-						<dt></dt>
-						<dd>
-							<table id="RadioButtonList1" border="0">
-	<tr>
-		<td><input type="radio" id="RadioButton1" name="level" value="student" checked="checked"/></td><td><label for="RadioButton1">学生</label></td>
-		<td><input type="radio" id="RadioButton2" name="level" value="teacher" /></td><td><label for="RadioButton2">教师或管理员</label></td>
-	</tr>
-</table></dd>
-						<dt></dt>
-						<dd>
-							<input type="submit" name="Button1" value="" id="Button1" class="btn_dl" onclick="check()"/>
-							<input type="reset" name="Button2" value="" id="Button2" class="btn_cz" />
-							<p>				
-							</p>
-							<script type="text/javascript">
-								function check(){
-									if(document.getElementById("RadioButton1").checked == true)
-									{										
-										document.form1.action="Student/login";
-									    document.form1.submit();	 
-									}
-									else if(document.getElementById("RadioButton2").checked == true)
-									{
-										document.form1.action="Teacher/login";
-									    document.form1.submit();
-									}
-									
-								}
-							</script>							
-						</dd>
-						
-					</dl>
-				</div>
-				<div class="login_copyright">Copyright &copy; 2009 </div>
-			</div>
-		</form>
-	</body>
-</HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>英语在线考试系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Language" content="utf-8">
+<script type="text/javascript" language="javascript" src="js/jquery-1.2.3.js"></script>
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+body{ 
+	font-family:"微软雅黑", Arial, "MS Sans Serif", System;
+	background:#fff;}
+
+#loginArea{
+	height:350px;
+	width:560px;
+	padding-top:150px;
+	padding-left:240px;
+	background:url(images/loginArea.png);
+	margin:0 auto;
+	margin-top:30px;
+	font-size:14px;
+	font-weight:bold;
+	color:#eee;
+}
+label{
+	margin-right:20px;}
+.input{
+	height:20px;
+	width:170px;
+	padding-left:10px;
+	padding-top:2px;
+	border:none;
+	background:url(images/input.gif);
+	}
+span{
+	margin-left:14px;}
+#login{
+	color:#494949;
+	height:22px;
+	width:100px;
+	border:none;
+	background:url(images/login_Btn.gif);
+	text-align:center;
+	font-weight:bold;
+	margin-left:150px;
+	margin-top:50px;}
+#loginArea div{
+	margin:10px 0 5px 130px;
+	}
+-->
+</style>
+</head>
+<script type="text/javascript">
+$(function(){
+$('#login').hover(function(){
+		$(this).css({
+			'background':'url(images/login_Btn_hover.gif)',
+			color:'#fff'
+		});
+	},function(){
+		$(this).css({
+			'background':'url(images/login_Btn.gif)',
+			color:'#494949'
+		});
+	});
+$('#login').click(function(){
+	if(document.getElementById("sd").checked == true){
+		document.getElementById("form1").action="Student/login";
+		}else if(document.getElementById("tc").checked == true){
+		document.getElementById("form1").action="Teacher/login";
+	}
+	document.form1.submit();
+	});	
+})
+</script>
+<body>
+	<div id="loginArea">
+    <form name="form1" method="post" action="#" id="form1">
+    <br/>
+    	用户名：<input class="input" name="username" type="text" />        <br/><br/>
+        <span>密码：</span><input class="input" name="password" type="password" />        <br/>
+        <div>
+        <label for="sd"><input checked="checked" id="sd" type="radio" name="c">学生</label>
+        <label for="tc"><input id="tc" type="radio" name="c">教师</label><br/>
+        </div>
+        <button id="login" type="submit">登&nbsp;录</button>
+    </form>
+    </div>
+</body>
+</html>

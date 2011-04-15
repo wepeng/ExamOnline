@@ -1,13 +1,14 @@
 <?php  include_once '_header.phtml';?>
+
 <script type="text/javascript">
 	//显示页面框
 	function showPageFram()
 	{
 		pageNum = document.getElementById("pageNum").value;
-		document.getElementById("pageFrame").innerHTML = "填入各部分的ID：<br>";
+		document.getElementById("pageFrame").innerHTML = "";
 		for(var i=1; i<=pageNum; i++)
 		{
-			document.getElementById("pageFrame").innerHTML += "第" + i + "页：<input type='text' name='pageIndex[]'/> Direction:<input name='direction[]'/><br/>";
+			document.getElementById("pageFrame").innerHTML += "第" + i + "页：ID:<input type='text' name='pageIndex[]'/> Name:<input name='partName[]' value=''/> Direction:<input name='direction[]' value=''/> Time:<input name='partTime[]' value=''/><br/>";
 		}
 	}
 </script>
@@ -53,4 +54,5 @@
 	
 </FORM>	
 </div>
+
 <?php include_once '_footer.phtml';?>

@@ -1,0 +1,27 @@
+<?php  include_once '_header.phtml';?>
+
+	<script type="text/javascript" src="../../public/js/flexigrid_with_checkbox.js"></script>
+	<table id="flex1" style="display:none"></table>
+	<script type="text/javascript" src="../../public/js/manage_score.js"></script>
+	
+	<div id="alterScore" style="text-align:center; display:none;">
+	<form action="managescore" method="post">
+		<input type="hidden" name="student_id" id="student_id" />
+		<input type="hidden" name="examination_id" id="examination_id" />
+		学号：<span id="username"></span><br>
+		姓名：<span id="name"></span><br>
+		考试名：<span id="examination_name"></span><br>
+		各部分成绩：<input type="text" id="parts_score" name="parts_score" /><br>
+		总成绩：<input type="text" id="total_score" name="total_score" /><br>
+		<input type="submit" name="sb" value="提交" />
+	</form>	
+	</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".grid_edit").click(function(){
+		$('#alterScore').slideToggle('show');
+		})
+	})
+</script>
+
+<?php include_once '_footer.phtml';?>

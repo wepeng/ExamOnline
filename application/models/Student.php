@@ -9,29 +9,29 @@
  */
 class Student extends Zend_Db
 {
-	//protected $_name = 'student';
-	
-	//public $number;
-	//public $password;
-	//public $name;
-	//public $sex;
+	protected $db;
 	
 	/**
 	 * 
 	 * 构造函数
-	 * @param string $t_number
-	 * @param string $t_password
-	 * @param string $t_name
-	 * @param string $t_sex
 	 */
-	/*function __construct($t_number = 'test', $t_password = 'test', $t_name = 'test', $t_sex = 'test')
+	function __construct()
 	{
-		$number = $t_number;
-		$password = $t_password;
-		$name = $t_name;
-		$sex = $t_sex;
-	}*/
+		$this->db = Zend_Registry::get('db');
+	}
 	
-	
+	/**
+	 * 
+	 * 检查用户名（学号）是否存在
+	 * @param unknown_type $username
+	 */
+	public function checkStudent($username)
+	{
+		$sql = "select id from student where username='".$username."'";
+		$resutl = $this->db->query($sql)->fetchAll();
+		if(count($resutl)>0)
+			return true;
+		else return false;
+	}
 	
 }

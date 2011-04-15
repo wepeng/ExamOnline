@@ -16,6 +16,11 @@ class Teacher extends Zend_Db
 		$this->db = Zend_Registry::get('db');
 	}
 	
+	/**
+	 * 
+	 * 判断是否为系主任
+	 * @param unknown_type $id
+	 */
 	public function isLeader($id)
 	{
 		$sql = "select level_id from teacher where id='".$id."'";
@@ -30,6 +35,11 @@ class Teacher extends Zend_Db
 		}
 	}
 	
+	/**
+	 * 
+	 * 判断是否为管理员
+	 * @param unknown_type $id
+	 */
 	public function isAdmin($id)
 	{
 		$sql = "select level_id from teacher where id='".$id."'";
@@ -44,6 +54,67 @@ class Teacher extends Zend_Db
 		}
 	}
 	
+//<<<<<<< HEAD
+//	/**
+//	 * 
+//	 * 按用户名或真名搜索系主任
+//	 * @param unknown_type $searchName
+//	 */
+//	public function searchLeader($searchName)
+//	{
+//		$sql = "select * from teacher where level_id='2' 
+//				and (username='".$searchName."' or name='".$searchName."')";
+//		$result = $this->db->query($sql)->fetchAll();
+//		return $result;
+//	}
+//	
+//	/**
+//	 * 
+//	 * 获取系主任列表
+//	 */
+//	public function getLeaderList($where="",$sort="",$limit="")
+//	{
+//		$where = ($where=="") ? "" : $where." AND ";
+//		$sql = "SELECT * FROM teacher WHERE $where level_id='2' $sort $limit";
+//		$result = $this->db->query($sql)->fetchAll();
+//		return $result;
+//	}
+//	
+//	/**
+//	 * 
+//	 * 添加系主任
+//	 * @param unknown_type $username
+//	 * @param unknown_type $password
+//	 * @param unknown_type $name
+//	 * @param unknown_type $sex
+//	 * @return true/false
+//	 */
+//	public function addLeader($username, $password, $name, $sex)
+//	{
+//		$sql = "select * from teacher where username='".$username."'";
+//		$result = $this->db->query($sql)->fetchAll();
+//		if(count($result)>0)
+//			return false;
+//		$data = array(
+//			'username' => $username,
+//			'password' => $password,
+//			'name' => $name,
+//		    'sex' => $sex,
+//			'level_id' => '2');
+//		$this->db->insert('teacher', $data);
+//		return true;
+//	}
+//	
+//	/**
+//	 * 
+//	 * 删除一名教师用户
+//	 * @param unknown_type $username
+//	 */
+//	public function deleteTeacher($id)
+//	{
+//		$sql = "delete from teacher where id='".$id."'";
+//		$this->db->query($sql);
+//=======
 	public function searchLeader($name)
 	{
 		$sql = "select id,username,password,name,sex  from teacher where level_id='2' and name='".$name."'";
@@ -84,7 +155,7 @@ class Teacher extends Zend_Db
 			return 1;
 			
 	}
-//login-qin
+	//login-qin
 	public function getStudentByClassID($class_id)
 	{
 		$result = array();

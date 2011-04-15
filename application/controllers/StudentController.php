@@ -20,6 +20,7 @@ class StudentController extends Zend_Controller_Action
 		$this->sys = new System();
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
+		$this->view->username = ($this->examSession->username) ? $this->examSession->username : "请先登录...";
 	}
 	
 	
@@ -34,7 +35,7 @@ class StudentController extends Zend_Controller_Action
 	
 	/**
 	 * 
-	 * 学生登录函数
+	 * 学生登录
 	 */
 	function loginAction()
 	{
@@ -69,9 +70,10 @@ class StudentController extends Zend_Controller_Action
 		if(isset($_POST['newpassword']) && !empty($_POST['newpassword']))
 		{
 			if($this->examSession->password == $_POST['password'])
-			{			
+			{		
 				$this->sys->resetPassword($this->examSession->username, $_POST['newpassword'], 'student');
-				$this->view->text = '修改密码成功。';
+				$this->view->text = '您的密码已修改。';
+				$this->examSession->password = $_POST['newpassword'];
 			}
 			else 
 			{
@@ -87,6 +89,7 @@ class StudentController extends Zend_Controller_Action
 	 */
 	function showexamtimeAction()
 	{
+		$this->sys->checkLogined();
 		$result = $this->examination->showExamTime($this->examSession->student_id); 
 		if(count($result)>0)
 			$this->view->result = $result;
@@ -112,13 +115,14 @@ class StudentController extends Zend_Controller_Action
 	 * 进行考试
 	 */
 	function doexamAction()
-	{	
+	{
+		$this->sys->checkLogined();	
 		if(!$this->examSession->examStep)
 		{
 			$this->examSession->examStep = 1;
 			$temp = array(1,2,3,4);
 			shuffle($temp);
-			$this->view->examfile = Zend_Registry::get('INDEX_FILE')."\\exam\\".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";	
+			$this->view->examfile = Zend_Registry::get('INDEX_FILE')."/exam/".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";	
 
 			$this->examSession->examination_id = $_GET['examination_id'];
 			if(!$this->examination->canDoExamOnce($this->examSession->examination_id, $this->examSession->student_id)){
@@ -170,16 +174,17 @@ class StudentController extends Zend_Controller_Action
 				}
 				$answer = substr($answer, 0, strlen($answer)-1).'</part>';
 				$this->examination->saveStuAnswers($this->examSession->student_id, $this->examSession->examination_id, $answer);
-
+				
 				$this->examSession->examStep++;
 				$temp = array(1,2,3,4);
 				shuffle($temp);
-				$this->view->examfile = Zend_Registry::get('INDEX_FILE')."\\exam\\".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";
+				$this->view->examfile = Zend_Registry::get('INDEX_FILE')."/exam/".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";
 				if(!file_exists($this->view->examfile))
 				{
+					$exam_id = $this->examSession->examination_id;
 					unset($this->examSession->examStep);
 					unset($this->examSession->examination_id);
-					header("Location: ./doexamend");	
+					header("Location: ./doexamend?examination_id=".$exam_id);	
 				}
 			}
 			else 
@@ -196,14 +201,25 @@ class StudentController extends Zend_Controller_Action
 		}
 	}
 	
+	/**
+	 * 
+	 * 考试结束
+	 */
 	function doexamendAction()
 	{
-		if(isset($_GET['paper_id']))
+		$this->sys->checkLogined();
+		if(isset($_GET['examination_id']))
 		{
-			
+			$this->examination->_checkoneanswer($_GET['examination_id'], $this->examSession->student_id);
 		}
+		$result = $this->examination->getStudentScore($this->examSession->student_id, $_GET['examination_id']);
+		echo "<br/>得分：".$result[0]['total_score'];
 	}
 	
+	/**
+	 * 
+	 * 显示重考
+	 */
 	function reexamAction()
 	{
 		$result = $this->examination->getReExam($this->examSession->student_id);
@@ -213,8 +229,12 @@ class StudentController extends Zend_Controller_Action
 			$this->view->result = "您没有需要重考的试卷";
 	}
 	
+	/**
+	 * 
+	 * 进行重考  
+	 */
 	function doreexamAction()
-	{
+	{//bug
 		if(isset($_GET['paper_id']) )
 		{
 			if(!$this->examSession->examStep)
@@ -232,7 +252,8 @@ class StudentController extends Zend_Controller_Action
 					}
 					$temp = array(1,2,3,4);
 					shuffle($temp);
-					$this->view->examfile = Zend_Registry::get('INDEX_FILE')."\\exam\\".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";
+					$part_index = $this->examination->getPartIndex($_GET['paper_id'], $this->examSession->examStep);
+					$this->view->examfile = Zend_Registry::get('INDEX_FILE')."/exam/".$_GET['paper_id']."_".$part_index."_".$temp[0].".html";
 					$this->examination->saveReExamData($_GET['examination_id'], $this->examSession->student_id);
 				}
 				else
@@ -258,7 +279,8 @@ class StudentController extends Zend_Controller_Action
 				}
 				$temp = array(1,2,3,4);
 				shuffle($temp);
-				$this->view->examfile = Zend_Registry::get('INDEX_FILE')."\\exam\\".$_GET['paper_id']."_".$this->examSession->examStep."_".$temp[0].".html";
+				$part_index = $this->examination->getPartIndex($_GET['paper_id'], $this->examSession->examStep);
+				$this->view->examfile = Zend_Registry::get('INDEX_FILE')."/exam/".$_GET['paper_id']."_".$part_index."_".$temp[0].".html";
 			}
 		}
 	}
@@ -269,12 +291,18 @@ class StudentController extends Zend_Controller_Action
 	 */
 	function showpaperandanswerAction()
 	{
-		if(isset($_GET['paper_id']) && isset($_GET['part']))
+		if(isset($_GET['paper_id']) && isset($_GET['part']) && isset($_GET['examination_id']))
 		{
 			$this->view->tpaper = $_GET['paper_id']."_".$_GET['part']."_1.html";
 			$answer = $this->examination->getPaperAnswer($_GET['paper_id']);
-			if(count($answer)>0)
-				$this->view->paperAnswer = $answer[0]['answer'];
+			$this->view->paperAnswer = $answer;
+			$stuAnswer = $this->examination->getStudentAnswer($this->examSession->student_id, $_GET['examination_id']);
+			$this->view->stuAnswer = $stuAnswer;
+			$partNum = $this->examination->getPartNum($_GET['paper_id']);
+			if(count($partNum)>0)
+				$this->view->partNum = $partNum[0]['partNum'];
+			$this->view->examinationId = $_GET['examination_id'];
+			$this->view->paperId = $_GET['paper_id'];
 		}
 	}
 	
