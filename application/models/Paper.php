@@ -21,11 +21,16 @@ class Paper extends Zend_db
 	 * Get  Paper Category
 	 */ 
 	public function getpapercategory($where, $sort, $limit)
-   	{
+	{
 		$sql = "SELECT id, name FROM papercategory $where $sort $limit";
 		$result = $this->db->query($sql);
 		if($result) return $result->fetchAll();
 		else return FALSE;
+	}
+
+	public function runSQL($sql) 
+	{
+		return $this->db->query($sql);
 	}
 
 }

@@ -117,14 +117,45 @@ class PaperController extends Zend_Controller_Action
 	}
 
 	/*
-	 * Delete Paper Category
+	 * Delete paper category and move the paper to the default category
+	 * And if not have dafault category creat it.
 	 */
 	function deletepapercategoryAction()
 	{
+		$postid = trim($_POST['id']);
+		$defaultid = '';
+		$sql = "SELECT id FROM `papercategory` WHERE  name='默认'";
+		$result = $this->paper->runSQL($sql);
+		$result  = $result->fetchAll();
+		if(count($result) > 0) {
+			$defaultid = $result[0]['id'];
+			if($defaultid == $postid) {
+				echo 'no';
+				die();
+			}
+		}
+		else 
+		{
+			$data = array( 'name'=> '默认');	
+			$defaultid =  $this->teacher->insert($data, 'papercategory');
+		}
+		$data = array('category_id' => $defaultid);
+		$whereupdate = 'WHERE `category_id` = '.$postid.'';
+		$ifupdatepaper = $this->teacher->update($data, $whereupdate ,'paper');
+		$ifupdateexam  = $this->teacher->update($data, $whereupdate ,'examination');
+		$wheredel = "WHERE `id` = $postid" ;
+		$ifdelete = $this->teacher->delete($wheredel,'papercategory');
+		if($ifupdateexam && $ifupdatepaper && $ifdelete) {
+			echo 'yes';
+		}
+		else 
+		{
+			echo 'no';
+		}
+		die();
 		if(!empty($_POST['id'])) {
-			$where = "WHERE `id` = ".$_POST['id']." ";
-			$table = 'papercategory';
-			$result = $this->teacher->delete($where, $table);
+			$post_id = $_POST['id'];
+			$result = $this->paper->deletecategory($post_id);
 			if($result) echo 'yes';
 			else echo 'no';
 		}else {

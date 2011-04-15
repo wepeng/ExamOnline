@@ -151,8 +151,7 @@ function goToDo(com,grid)
 					width:winW
 			});
 			$('body').append(html);
-			$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length
-				+'分类？');
+			$('#confirm_msg').show().find('span.confirm_text').html("确定删除分该试卷分类？<br/><br/>删除后该分类下原有试卷将被转移到<br/>系统自动生成的默认分类下，并且<br/>您不能删除默认分类");
 			$('#confirm_yes').unbind('click').click(function(){
 				$('#shade').remove();
 				var delete_id = $('.trSelected td:nth-child(1)',grid).text();
@@ -225,8 +224,8 @@ function goToDo(com,grid)
 	</div>
 	<div id="alert_msg"></div>
 	<div id="confirm_msg">
-		<span class="confirm_text"></span><br/><br/>
-		<span class="warning_text"></span><br/><br/>
+		<span class="confirm_text"></span><br/>
+		<span class="warning_text"></span><br/>
 		<span class="btns" id="confirm_yes" class="">Yes</span>
 		<span class="btns" id="confirm_cancel">Cancel</span>
 	</div>
