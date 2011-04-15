@@ -1181,9 +1181,24 @@ class Examination extends Zend_Db
 	 */
 	public function alterScore($student_id, $examination_id, $parts_score, $total_score)
 	{
-		$sql = "UPDATE score SET parts_score='".$parts_score."', total_score='".$total_score."' 
-				WHERE student_id=$student_id AND examination_id=$examination_id";
-		$this->db->query($sql);
+		//判断parts_score中成绩个数是否相等
+		$sql = "SELECT * FROM `score` WHERE `student_id`='".$student_id."' AND examination_id='".$examination_id."'";
+		$result = $this->db->query($sql)->fetchAll();
+		$old_num = substr_count($result[0]['parts_score'], "#");
+		$new_num = substr_count($parts_score, "#");
+		if($old_num == $new_num)
+		{
+			$sql = "UPDATE score SET parts_score='".$parts_score."', total_score='".$total_score."' 
+					WHERE student_id=$student_id AND examination_id=$examination_id";
+			return $this->db->query($sql);
+		}
+		else return false;
+	}
+	
+	public function deleteScore($student_id, $examination_id)
+	{
+		$sql = "DELETE FROM `score` WHERE `student_id`='".$student_id."' AND examination_id='".$examination_id."' LIMIT 1";
+    	return $this->db->query($sql);
 	}
 	
 	/**
@@ -1590,7 +1605,7 @@ class Examination extends Zend_Db
      */
     public function deleteExam($examination_id)
     {
-    	$sql = "DELETE FROM `examination` WHERE `id`=$examination_id LIMIT 1";
+    	$sql = "DELETE FROM `examination` WHERE `id`='".$examination_id."' LIMIT 1";
     	return $this->db->query($sql);
     }
     
@@ -1604,8 +1619,9 @@ class Examination extends Zend_Db
      */
     public function alterExam($examination_id,$name,$startTime,$endTime)
     {
-		$sql = "UPDATE `examination` SET `name`=$name, `startTime`=$startTime, `endTime`=$endTime 
-				WHERE `id`=$examination_id";
+		$sql = "UPDATE `examination` SET `name`='".$name."', `startTime`='".$startTime."', 
+				`endTime`='".$endTime."'  
+				WHERE `id`='".$examination_id."'";
 		return $this->db->query($sql);
     }
     
@@ -1616,7 +1632,7 @@ class Examination extends Zend_Db
      */
     public function deletePaper($paper_id)
     {
-    	$sql = "DELETE FROM `paper` WHERE `id`=$paper_id LIMIT 1";
+    	$sql = "DELETE FROM `paper` WHERE `id`='".$paper_id."' LIMIT 1";
     	return $this->db->query($sql);
     }
 
@@ -1630,8 +1646,8 @@ class Examination extends Zend_Db
      */
     public function alterPaper($paper_id, $title, $introduction, $time)
     {
-    	$sql = "UPDATE `paper` SET `title`=$title, `introduction`=$introduction, `time`=$time 
-				WHERE `id`=$paper_id";
+    	$sql = "UPDATE `paper` SET `title`='".$title."', `introduction`='".$introduction."', `time`='".$time."'  
+				WHERE `id`='".$paper_id."'";
 		return $this->db->query($sql);
     }
 }

@@ -396,10 +396,27 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function managescoreAction()
 	{
-		if(isset($_POST['total_score']))
+		if(isset($_POST['student_id']) && isset($_POST['examination_id']) && isset($_POST['parts_score']))
 		{
-			$this->examination->alterScore($_POST['student_id'], $_POST['examination_id'], $_POST['parts_score'], $_POST['total_score']);	
-		}	
+			$parts_score = str_replace("，", ",", $_POST['parts_score']);
+			$parts_score = str_replace(",", "#", $parts_score);
+			$scores = explode("#", $parts_score);
+			$total_score = 0;
+			foreach($scores as $value)
+			{
+				$total_score += $value; 
+			}
+			$result = $this->examination->alterScore($_POST['student_id'], $_POST['examination_id'], $parts_score, $total_score);	
+			if($result)	
+			{
+				echo "yes";
+			}
+			exit;			
+		}
+		else if(isset($_POST['student_id']) && isset($_POST['examination_id']))
+		{
+			$this->examination->deleteScore($_POST['student_id'], $_POST['examination_id']);
+		}		
 	}
 	
 	/**
@@ -471,7 +488,17 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function managepaperAction()
 	{
-		
+		if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['introduction']) && isset($_POST['time']))
+		{
+			$this->examination->alterPaper($_POST['id'], $_POST['title'], $_POST['introduction'], $_POST['time']);
+			echo "yes";
+			exit;
+		}
+		else if(isset($_POST['paper_id']))
+		{
+			$this->examination->deletePaper($_POST['paper_id']);
+			exit;
+		}
 	}
 
 	/**
@@ -538,7 +565,17 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function manageexamAction()
 	{
-		
+		if(isset($_POST['id']) && isset($_POST['name']) && isset($_POST['startTime']) && isset($_POST['endTime']))
+		{
+			$this->examination->alterExam($_POST['id'], $_POST['name'], $_POST['startTime'], $_POST['endTime']);
+			echo "yes";
+			exit;
+		}
+		else if(isset($_POST['examination_id']))
+		{
+			$this->examination->deleteExam($_POST['examination_id']);
+			exit;
+		}
 	}
 	
 	/**

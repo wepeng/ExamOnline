@@ -8,10 +8,10 @@ $(document).ready(function(){
 					dataType: 'json',
 					colModel : [
 				{display: 'ID', name : 'id', width : 50, sortable : true, align: 'center', hide: false},
-				{display: '试 卷 名', name : 'title', width : 200, sortable : true, align: 'center'},
-				{display: '说  明', name : 'introduction', width : 200, sortable : true, align: 'center'},
-				{display: '试听页面', name : 'listening_test', width : 200, sortable : true, align: 'center'},
-				{display: '试卷时长', name : 'time', width : 100, sortable : true, align: 'center'}
+				{display: '试 卷 名', name : 'title', width : 200, sortable : true, align: 'left'},
+				{display: '试 卷 说  明', name : 'introduction', width : 200, sortable : true, align: 'left'},
+				{display: '试听页面', name : 'listening_test', width : 200, sortable : true, align: 'left', hide: true},
+				{display: '试卷时长(分钟)', name : 'time', width : 100, sortable : true, align: 'left'}
 				],
 					buttons : [
 					{name: '编 辑', bclass: 'edit', onpress: goToDo},
@@ -22,15 +22,15 @@ $(document).ready(function(){
 					{separator: true},
 					],
 					searchitems : [
-					{display: '试卷名', name : 'name',isdefault: true}
+					{display: '试卷名', name : 'title',isdefault: true}
 					],
 					sortname: "id",
 					sortorder: "asc",
 					usepager: true,
 					title: '<big>试卷管理<big>',
 					useRp: true,
-					rp: 60,
-					rpOptions :[30,50,60],
+					rp: 50,
+					rpOptions :[10,20,30,50,100],
 					pagestat:'显示第{from}条到{to}条，共{total}条数据。',
 					procmsg:'正在处理，请稍后...',
 					showTableToggleBtn: true,
@@ -43,22 +43,18 @@ $(document).ready(function(){
 $('div.pSearch').click();
 /* 显示提示信 息*/
 function alert_msg(msg){			
-	$('#alert_msg').text(msg).css('opacity','0.8').show(200,function(){
-		var alert_timer = setTimeout( function(){$('#alert_msg').hide();	},1000);
+	$('#alert_msg').text(msg).css('opacity','0.9').show(200,function(){
+		var alert_timer = setTimeout( function(){$('#alert_msg').hide();	},2000);
 	});
 }
-
-
-
 
 /* 获得选取的信息 */
 function get_selectInfo(grid){
 	var dataArray = new Array();
 	dataArray['id'] = $('.trSelected td:nth-child(1)',grid).text();
-	dataArray['username'] = $('.trSelected td:nth-child(2)',grid).text();
-	dataArray['name'] = $('.trSelected td:nth-child(3)',grid).text();
-	dataArray['sex'] = $('.trSelected td:nth-child(4)',grid).text();
-	dataArray['class_name'] = $('.trSelected td:nth-child(5)',grid).text();
+	dataArray['title'] = $('.trSelected td:nth-child(2)',grid).text();
+	dataArray['introduction'] = $('.trSelected td:nth-child(3)',grid).text();
+	dataArray['time'] = $('.trSelected td:nth-child(5)',grid).text();
 	return dataArray;
 }
 function checkForm(type,str){
@@ -83,84 +79,25 @@ function showDialog(datas){
 	
 	if(datas){					/* 编辑 */
 		$('#dialog_form input[name=id]').val(datas['id']);
-		$('#dialog_form input[name=dis_id]').val(datas['id']);
-		$('#dialog_form input[name=username]').val(datas['username']);
-		$('#dialog_form input[name=name]').val(datas['name']);
-		var sex = '#dialog_form input[name=sex][value='+datas['sex']+']';
-		$(sex).attr('checked','checked');
-		var class_name = '#dialog_form option[text='+datas['class_id']+']';
-		$(class_name).attr('selected','selected');
+		$('#dialog_form input[name=title]').val(datas['title']);
+		$('#dialog_form input[name=introduction]').val(datas['introduction']);
+		$('#dialog_form input[name=time]').val(datas['time']);
 		/** 编辑的 ok 按钮 **/
 		$('#okBtn').unbind('click').click(function(){
-			var ifUsername = $('#dialog_form input[name=username]').val()==datas['username']?false:true;
-			var ifName = $('#dialog_form input[name=name]').val()==datas['name']?false:true;
-			var ifSex = $('#dialog_form input[name=sex]:checked').val()==datas['sex']?false:true;
-			var ifClassname = $('#dialog_form select[name=class_id] option:selected').text()==datas['class_name']?false:true;
-			//alert($('#dialog_form select[name=class_name]').val()+'   '+datas['class_name']);
-			var ckusername = checkForm('username',$('#dialog_form input[name=username]').val());
-			var ckname = checkForm('name',$('#dialog_form input[name=name]').val());
-			if(ckusername ){
-				if(ckname){
-					if(ifUsername || ifName || ifSex || ifClassname){
-					/** 修改了 **/
-						$.post('######insertOrupdate#######',$('form#dialog_form').serialize(),function(data){
-							if(data == 'yes') {
-								msg = '修改成功!';
-								$('#flex1').flexReload();//表格重载  
-							}else {
-								msg = '修改失败!';
-							}
-							alert_msg(msg);
-						});
-						$('#cancelBtn').click();
-					}else{
-						$('#cancelBtn').click();			
-						//alert('not');
-						alert_msg('没有修改任何信息');
+				$.post('managepaper',$('form#dialog_form').serialize(),function(data){
+					if(data == 'yes') {
+						msg = '修改成功!';
+						$('#flex1').flexReload();//表格重载  
+					}else {
+						msg = '修改失败!';
 					}
-				}else{
-					$('span.notice').text('姓名格式不对（只支持中英文）');
-				}	
-			}else{
-				$('span.notice').text('学号格式不对（只能是数字 并且不大于11个）');
-			}
-			
-		});
-		
-	}else{						/** 添加 **/
-		/** 添加的 ok 按钮 **/
-		$('#okBtn').unbind('click').click(function(){
-			var ckusername = checkForm('username',$('#dialog_form input[name=username]').val());
-			var ckname = checkForm('name',$('#dialog_form input[name=name]').val());
-			//var cksex = $('#dialog_form input[name=sex]').val()==null?false:true;
-			if(ckusername ){
-				if(ckname){
-						$.post('###########addorupdata########',$('form#dialog_form').serialize(),function(data){
-							if(data == 'yes') {
-								msg = '添加成功!';
-								$('#flex1').flexReload();//表格重载  
-							}else {
-								msg = '添加失败!';
-							}
-							alert_msg(msg);
-						
-						});
-						$('#cancelBtn').click();
-				}else{
-					$('span.notice').text('姓名格式不对（只支持中英文）');
-				}	
-			}else{
-				$('span.notice').text('学号格式不对（只能是数字 并且小于11位）');
-			}
-			
+					alert_msg(msg);
+				});
+				$('#cancelBtn').click();	
 		});
 	}
 	/**** cancel 按钮 ****/
 	$('#cancelBtn').click(function(){
-	    $('#dialog_form input[name=id]').val('');
-		$('#dialog_form input[name=dis_id]').val('');
-		$('#dialog_form input[name=username]').val('');
-		$('#dialog_form input[name=name]').val('');
 		$('span.notice').text('');
 		$('#shade').remove();
 		$('#dialog').hide();
@@ -180,14 +117,13 @@ function goToDo(com,grid)
 				width:winW
 			});
 			$('body').append(html);
-			$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length+'个试卷？');
+			var datas = get_selectInfo(grid);
+			$('#confirm_msg').show().find('span.confirm_text').text('确定删除试卷：'+datas['title']+' ？');
 			$('#confirm_yes').unbind('click').click(function(){
 				$('#shade').remove();
-				var delete_username = $('.trSelected td:nth-child(2)',grid).text();
-				$.post('#######delete########',{ username : delete_username, type : 's'},function(data){
+				$.post('managepaper',{ 'paper_id' : datas['id']},function(data){
 					alert_msg('删除成功~');
 					$('#flex1').flexReload();//表格重载  
-
 				});
 				$('#confirm_msg').hide();
 			});
@@ -196,21 +132,20 @@ function goToDo(com,grid)
 				$('#shade').remove();
 			});
 		} else if($('.trSelected',grid).length > 1){
-			alert_msg('为了避免操作错误，一次只能删除一个试卷。');
+			alert_msg('为了避免操作错误，一次只能删除一个试卷...');
 		}else{
-			alert_msg('请选择试卷');
+			alert_msg('请选择试卷...');
 		} 
 		break;
 	case '添 加':
-		//showDialog();  
-
+		location.href="addexam";   
 		break;	
 	case '编 辑':
 		var itemsLen = $('.trSelected',grid).length;
 		if(itemsLen==0){
-			alert_msg('请选择要编辑的试卷');
+			alert_msg('请选择要编辑的试卷...');
 		}else if(itemsLen>1){
-			alert_msg('一次只能编辑一行信息');
+			alert_msg('一次只能编辑一行信息...');
 		}else if(itemsLen==1){
 			var datas = get_selectInfo(grid);
 			showDialog(datas);

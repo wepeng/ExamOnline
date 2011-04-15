@@ -2,39 +2,15 @@
 
 	<table id="flex1" style="display:none"></table>
 	<script type="text/javascript" src="../../public/js/manage_score.js"></script>
-<!--	
-	<div id="alterScore" style="text-align:center; display:none;">
-	<form action="managescore" method="post">
-		<input type="hidden" name="student_id" id="student_id" />
-		<input type="hidden" name="examination_id" id="examination_id" />
-		学号：<span id="username"></span><br>
-		姓名：<span id="name"></span><br>
-		考试名：<span id="examination_name"></span><br>
-		各部分成绩：<input type="text" id="parts_score" name="parts_score" /><br>
-		总成绩：<input type="text" id="total_score" name="total_score" /><br>
-		<input type="submit" name="sb" value="提交" />
-	</form>	
-	</div>
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".grid_edit").click(function(){
-		$('#alterScore').slideToggle('show');
-		})
-	})
-</script>
--->
 <div id="dialog">
        <form id="dialog_form" name="dialog_form" action="#">
 			<input type="hidden" name="id" />
-	  		<div class="dia_mb"><span>ID </span> <input class="input_dis" type="text" disabled="disabled" name='dis_id' /></div>
-            <div class="dia_mb">学号  <input maxlength="11" class="input_text" type="text" name="username" /></div>
-            <div class="dia_mb">姓名  <input type="text" class="input_text" name="name" /></div>
-            <span>性别  </span>
-            <input type="radio" name="sex" checked="checked" value="男">男
-            <input type="radio" name="sex" value="女">女
-            <br/>
-            <span>班级 </span>
-			<?php echo $this->allclassselect;?>
+	  		<input class="input_dis" type="hidden" name='student_id' />
+				<input class="input_dis" type="hidden" name='examination_id' />
+					<div class="dia_mb"><span>&nbsp;&nbsp;学 生</span> <input class="input_dis" type="text" disabled="disabled" name='name' /></div>
+					<div class="dia_mb"><span>&nbsp;考试名</span> <input class="input_dis" type="text" disabled="disabled" name='examination_name' /></div>
+          <div class="dia_mb">各部分成绩<input type="text" class="input_text" name="parts_score" /></div>
+
             <br/>
 		 <span class="notice"></span><br/>
          <div class="dia_btn">
@@ -46,8 +22,8 @@ $(document).ready(function(){
 	<div id="alert_msg"></div>
 	<div id="confirm_msg">
 		<span class="confirm_text"></span><br/><br/>
-		<span class="btns" id="confirm_yes" class="">Yes</span>
-		<span class="btns" id="confirm_cancel">Cansel</span>
+		<span class="btns" id="confirm_yes">Yes</span>
+		<span class="btns" id="confirm_cancel">Cancel</span>
 	</div>
     <div id="chose_class">
 		<span>请选择班级：</span><br/><br/>
