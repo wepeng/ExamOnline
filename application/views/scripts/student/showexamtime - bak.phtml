@@ -1,10 +1,11 @@
+<?php  include_once 'header.phtml';?>
 
-
-<?php 
-	if(is_array($this->result))
-	{
-?>
-		<table>
+<script type="text/javascript">	
+$(document).ready(function(){
+	$('#showexam').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
+})
+</script>
+<table>
 	<caption>您将要进行的考试</caption>
 	<tr>
 		<th>试卷名</th>
@@ -13,7 +14,9 @@
 		<th>考试结束时间</th>
 		<th>状态</th>
 	</tr>
-<?php
+<?php 
+	if(is_array($this->result))
+	{
 		foreach ($this->result as $value)
 		{
 ?>
@@ -49,9 +52,8 @@
 		</tr>
 <?php
 		}
-	}else{
-		echo '<br/><br/><br/><br/><center>'.$this->result.'</center>'; //没有将要进行的考试
 	}
 ?>
 </table>
 
+<?php include_once 'footer.phtml';?>

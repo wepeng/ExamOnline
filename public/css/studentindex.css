@@ -1,0 +1,103 @@
+@charset "utf-8";
+*{ padding:0; margin:0;}
+body{ font-size:15px; background:#efefef;}
+a{ text-decoration:none; color:#000;}
+#header{
+	width:90%;
+	height:80px;
+	margin:0 auto;
+	background:#0769d0;
+	padding:15px;
+	margin-bottom:20px;
+	margin-top:5px;}
+#logo{ margin-left:10px;float:left;}
+#menu{ float:left; list-style:none; margin-top:50px; margin-left:50px;}
+#menu li{
+	text-align:center;
+	float:left;
+	margin-right:10px;
+	background:#FFF;
+	cursor:pointer;
+	height:18px;
+	padding:5px;
+	width:100px;}
+#main{
+	width:85%;
+	padding:10px;
+	margin:0 auto;
+	min-height:300px;
+	background:#fff;}
+#control{
+	float:right;
+	height:20px;
+	padding:2px 10px;
+	background:#fff;}
+.fm{
+	color:##0080FF;}
+/***************表格****************/
+span.fm{ margin-right:20px;}
+a.fm{ margin-right:10px; color:#900; cursor:pointer;}
+a.fm:hover{ text-decoration:underline;}
+caption{ font-size:22px; font-weight:bold;}
+table, td{	font:100% Arial, Helvetica, sans-serif;}
+table{width:80%;border-collapse:collapse;margin:0 auto;}
+th, td{text-align:left;padding:.5em;border:1px solid #fff;}
+th{background:#0078F0 url(../../public/images/stuindex/tr_back.png) repeat-x;color:#fff;}
+td{background:#e5f1f4;}
+tr.odd td{background:#f8fbfc;}
+td.over, tr.even td.over, tr.odd td.over{background:#ecfbd4;}
+td a {
+	color:#066;
+	font-size:16px;
+}
+td a:hover{
+	color:#900;
+}
+/**************修改密码******************/
+h2{ font-size:22px; color:#000;}
+#resetPwd{
+	position:absolute;
+	top:160px;
+	padding:20px;
+	width:300px;
+	background:#A6D2FF;
+	border:2px solid #096;
+	display:none;
+	overflow:visible;
+	}
+#resetPwd span{
+	font-size:16px;
+	color:#000;}
+input{
+	height:20px;
+	width:160px;
+	margin-right:30px;
+	border:none;
+	background:none;
+	padding-left:20px;
+	border-bottom:1px solid #000;}
+.btn_sub{
+	width:100px;
+	height:25px;
+	border:none;
+	padding:0;
+	margin:30px 0 0 50px;
+	font-size:16px;
+	background:#0078f0;
+	color:#fff;
+	cursor:pointer;}
+#close{
+	cursor:pointer;
+	float:right;
+	position:absolute;
+	top:145px;
+	right:200px;
+	z-index:100;
+	display:none;}
+#close img {
+	height:35px;
+	width:35px;
+	}
+#notice{
+	color:#900;}
+-->

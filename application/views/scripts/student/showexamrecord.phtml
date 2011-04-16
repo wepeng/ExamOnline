@@ -1,10 +1,4 @@
-<?php  include_once 'header.phtml';?>
 
-<script type="text/javascript">	
-$(document).ready(function(){
-	$('#record').css('background','url(../../public/images/menu_btn.gif)').find('a').css('color','#fff');
-})
-</script>
 <table>
 	<caption>您的已考记录</caption>
 	<tr>
@@ -27,7 +21,7 @@ $(document).ready(function(){
 		<td><?php echo $value['startTime'];?></td>
 		<td><?php echo $value['endTime'];?></td>
 		<td><?php echo $value['total_score'];?></td>
-		<td><?php echo '<a href="showpaperandanswer?examination_id='.$value['id'].'&paper_id='.$value['paper_id'].'&part=1">查看试题和答案</a>';?></td>
+		<td><?php echo '<a href="showpaperandanswer?examination_id='.$value['id'].'&paper_id='.$value['paper_id'].'&part=1">>>查看试题和答案 </a>';?></td>
 		</tr>
 <?php
 		}
@@ -35,4 +29,3 @@ $(document).ready(function(){
 ?>
 </table>
 
-<?php include_once 'footer.phtml';?>

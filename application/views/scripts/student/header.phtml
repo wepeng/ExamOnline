@@ -2,42 +2,68 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Insert title here</title>
-<script type="text/javascript" language="javascript" src="../../public/js/jquery-1.2.3.js"></script>
-<link rel="stylesheet" type="text/css" href="../../public/css/student.css">
+<title>EnglishExamOnline-Student</title>
+<link rel="stylesheet" type="text/css" href="../../public/css/studentindex.css">
+<script type="text/javascript" src="../../public/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../../public/js/jquery_corner.js"></script>
+<script type="text/javascript" src="../../public/js/studentindex.js"></script>
+<style type="text/css">
+.parts{
+	padding: 10px 0;
+	background: #c4e1ff;
+	float:left;
+	width:100%;
+	list-style:none;
+	margin-bottom:10px;
+}
+.parts li {
+	float:left;
+	margin-left:10px;
+}
+.parts a:hover{
+	text-decoration:underline;
+	color:#900;
+}
 
-<script type="text/javascript">
-<!--
-//表格
-$(function(){
-	$('table tr:not(:has(th)):odd').addClass('table_odd');
-	$('table tr:not(:has(th)):even').addClass('table_even');
-})
--->
-</script>
+#paper_frame{
+	width:100%;
+	height:500px;
+	border:3px solid #c4e1ff;
+	}
+#answer_show{
+	border:1px solid #c4e1ff;
+	height:auto;
+	padding:10px;
+	}
+#right_answer{
+	float: left;
+	width:50%;
+	border-right:1px dotted #039;
+	}
+#your_answer{
+	float:left;
+	width:49%;
+}
+
+</style>
+
+
 </head>
 <body>
-<div id="wraper">
-	<div id="head">
-		<img id="logo" src="../../public/images/logo.png" />
-			<a id="exit" class="fm" href="quit">退出</a>
-			<a id="changepwd" class="fm" href="resetpassword">修改密码</a>
-			<span class="fm">欢迎您：<span id="showUsername"><?php echo $this->username; ?></span></span>
+	<div id="header" class="corner">
+		<div id="logo"><img src="../../public/images/stuindex/logo2.png" /></div>
+            <ul id="menu">
+                <li id="showexamtime" class="corner">考试查询</li>					
+                <li id="reexam" class="corner">重考查询</li>		
+                <li id="showexamrecord" class="corner">考试记录</li>			
+            </ul>
+            <div id="control" class="corner">
+				<span class="fm">欢迎您：<span id="showUsername"><?php echo $this->username; ?></span></span>
+                <a id="changepwd" class="fm">[修改密码]</a>
+                <a id="exit" class="fm" href="quit">退出</a>
+            </div>
 	</div>
-	<ul id="menu">
-		<li class="btn first" id="showexam"><a href='showexamtime'>考试查询</a></li>
-			
-			<li class="s"></li>
-			
-			<li class="btn" id="reexam"><a href='reexam'>重考查询</a></li>
-			
-			<li class="s"></li>
-			
-			<li class="btn" id="record"><a href='showexamrecord'>考试记录</a></li>
-			
-			<li class="s"></li>
-			
-			<li class="fr"><input class='search' type="text" /><li>
-	</ul>
-	
-	<div id="content">
+    <div id="main" class="corner">
+		<!-- 加载的内容 -->
+    
+   
