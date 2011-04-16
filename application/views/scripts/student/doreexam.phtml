@@ -1,1 +1,8 @@
-<?php echo file_get_contents($this->examfile);?>
+<?php 
+	$html = file_get_contents($this->examfile);
+	$html = str_replace("<exam:true_name>", $this->true_name, $html);
+	$html = str_replace("<exam:username>", $this->username, $html);
+	$html = str_replace("<exam:part_time>", $this->part_time, $html);
+	$html = str_replace('action="doexam', 'action="doreexam', $html);
+	echo $html;
+?>

@@ -246,17 +246,22 @@ class StudentController extends Zend_Controller_Action
 	 */
 	function doreexamAction()
 	{
+		$this->sys->checkLogined();	
+		$this->view->true_name = $this->examSession->name;
+		$this->view->username = $this->examSession->username;	
+		
 		//bug
 		if(isset($_GET['paper_id']) )
 		{
 			if(!$this->examSession->examStep)
 			{
+				$this->examSession->exam_id = $_GET['examination_id'];
 				$result = $this->examination->getReExamParts($_GET['examination_id'], $this->examSession->student_id);
 				if(is_array($result))
 				{
-					if(strpos($result[0]['parts'], ',')){
-						$this->examSession->examStep = substr($result[0]['parts'], 0, strpos($result[0]['parts'], ','));
-						$this->examSession->examSteps = substr($result[0]['parts'], strpos($result[0]['parts'], ','));
+					if(strpos($result[0]['parts'], '#')){
+						$this->examSession->examStep = substr($result[0]['parts'], 0, strpos($result[0]['parts'], '#'));
+						$this->examSession->examSteps = substr($result[0]['parts'], strpos($result[0]['parts'], '#')+1);
 					}
 					else 
 					{
@@ -275,25 +280,79 @@ class StudentController extends Zend_Controller_Action
 			}
 			else 
 			{
+				if(isset($_POST['submit']))
+				{//存储答案
+					if(isset($_GET['paper_id']))
+					{
+						$post_flag = true;
+						$answer = '<part:';
+						foreach($_POST as $key => $value )
+						{
+							if(strpos( $key, ':exam:')!== false)
+							{
+								if($post_flag)
+								{
+									$answer = $answer.substr($key, strpos( $key, ':exam:')+6, strlen($key)-strpos($key, ':exam:')).'>';
+									if(is_array($value))
+									{
+										foreach ($value as $key2 => $value2)
+										{
+											$answer = $answer.$value2."#";
+										}
+									}
+									else 
+									{
+										$answer = $answer.$value;
+									}
+									$post_flag = false;
+								}
+								else 
+								{
+									if(is_array($value))
+									{
+										foreach ($value as $key2 => $value2)
+										{
+											$answer = $answer.$value2."#";
+										}
+									}
+									else 
+									{
+										$answer = $answer.$value.'#';
+									}
+								}
+							}
+						}
+						$answer = substr($answer, 0, strlen($answer)-1).'</part>';
+						$this->examination->saveStuAnswers($this->examSession->student_id, $this->examSession->exam_id, $answer);
+					}
+				}
+				
 				if(!$this->examSession->examSteps)
 				{
+					
 					unset($this->examSession->examStep);
-					header("Location: ./doexamend");
+					header("Location: ./doexamend?examination_id=".$this->examSession->exam_id );
 				}
-				$this->examSession->examStep = substr($this->examSession->examSteps, 0, strpos($this->examSession->examSteps, ','));
-				if(strpos($examSession->examSteps, ','))
-				{
-					$this->examSession->examSteps = substr($this->examSession->examSteps, strpos($this->examSession->examSteps, ','));
-				}
+					
+				if(strpos($this->examSession->examSteps, '#'))
+				{	
+					$this->examSession->examStep = substr($this->examSession->examSteps, 0, strpos($this->examSession->examSteps, '#'));
+					$this->examSession->examSteps = substr($this->examSession->examSteps, strpos($this->examSession->examSteps, '#')+1);		
+				}		
 				else
 				{
+					$this->examSession->examStep = $this->examSession->examSteps;
 					unset($this->examSession->examSteps);
 				}
+				
 				$temp = array(1,2,3,4);
 				shuffle($temp);
 				$part_index = $this->examination->getPartIndex($_GET['paper_id'], $this->examSession->examStep);
 				$this->view->examfile = Zend_Registry::get('INDEX_FILE')."/exam/".$_GET['paper_id']."_".$part_index."_".$temp[0].".html";
 			}
+			//获取Part的考试时间
+			$part_time = $this->examination->getPartTime($_GET['paper_id'],$part_index);	
+			$this->view->part_time = $part_time;
 		}
 	}
 	
