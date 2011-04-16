@@ -251,7 +251,7 @@ class TeacherController extends Zend_Controller_Action
 				//写作
 				case 'writing':
 					if(isset($_POST['writing']) && isset($_POST['writing_answer']) )
-					{				
+					{		
 						$this->examination->insertSelOrFill('fillblank', $this->examination->addFlag('writing', 
 							$_POST['writing']), $_POST['writing_answer'], false, $_POST['score'], 'writing', $this->examSession->teacher_id);
 					}
@@ -346,7 +346,6 @@ class TeacherController extends Zend_Controller_Action
 					}
 					break;
 			}
-			echo "上传成功";
 		}
 		//更新显示已上传部分的名称
 		$temporaryRart = $this->examination->getTemporaryRart($this->examSession->teacher_id); 			
@@ -386,7 +385,7 @@ class TeacherController extends Zend_Controller_Action
 				$this->examination->insertPart($value, $paper_id, $_POST['partName'][$i],$_POST['direction'][$i], $_POST['partTime'][$i]);
 				$i++;
 			}
-			echo "上传试卷成功";
+			$this->view->msg = "试卷\"".$_POST['title']."\"上传成功";
 		}
 	}
 	

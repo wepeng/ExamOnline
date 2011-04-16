@@ -1,22 +1,66 @@
-<?php  include_once '_header.phtml';?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>管理</title>
+<script type="text/javascript" language="javascript" src="../../public/js/jquery-1.3.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../public/css/flexigrid.css">
+<link rel="stylesheet" type="text/css" href="../../public/css/teacher.css">
+<script type="text/javascript" src="../../public/js/flexigrid_with_checkbox.js"></script>
+<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery_corner.js"></script>
+</head>
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+body{ background:#efefef; font-family:"微软雅黑", Arial, "MS Sans Serif", System; font-size:14px;}
 
+#main{
+	width:90%;
+	background:#fff;
+	padding:15px;
+	margin:10px auto;}
+	
+
+table, td{	font:100% Arial, Helvetica, sans-serif;}
+table{width:60%;border-collapse:collapse;}
+th, td{text-align:left;padding:.5em;border:1px solid #fff;}
+th{background:#0078F0 url(images/tr_back.png) repeat-x;color:#fff;}
+td{background:#e5f1f4;}
+tr.odd td{background:#f8fbfc;}
+
+#sub,#preview{
+	height:22px;
+	width:100px;
+	text-align:center;
+	border:none;
+	}
+#preview{
+	background:url(../images/login_Btn.gif);}
+#sub{background:url(../images/login_Btn_hover.gif); color:#fff;}
+-->
+</style>
+<body>
 <script type="text/javascript">
 	//显示页面框
 	function showPageFram()
 	{
 		pageNum = document.getElementById("pageNum").value;
-		document.getElementById("pageFrame").innerHTML = "";
+		document.getElementById("pageFrame").innerHTML = "说明：每页中的ID为下面表格中的ID，多个在一页用逗号隔开.<br/>";
 		for(var i=1; i<=pageNum; i++)
 		{
-			document.getElementById("pageFrame").innerHTML += "第" + i + "页：ID:<input type='text' name='pageIndex[]'/> Name:<input name='partName[]' value=''/> Direction:<input name='direction[]' value=''/> Time:<input name='partTime[]' value=''/><br/>";
+			document.getElementById("pageFrame").innerHTML += "第" + i + "页：ID:<input type='text' name='pageIndex[]'/> 标题:<input name='partName[]' value=''/> 说明:<input name='direction[]' value=''/> 时长（分）:<input name='partTime[]' value=''/><br/>";
 		}
 	}
+	$(function(){
+		$('.corner').corner('10px');
+	})
 </script>
-<div style="float:left; margin-left:30px; margin-top:20px;">
+<div id="main" class="corner">
 <FORM action="editupexam" name="examform" method="post">
 	<h2>编辑将要上传的试卷</h2>
 	<br/>
-	试卷名：<input type="text" name="title"><br/>
+	试卷名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="title"><br/><br/>
 	选择试卷类别：
 	<?php 
 	if($this->showPaperCategory && count($this->showPaperCategory)>0)
@@ -26,13 +70,12 @@
 			echo "<input type='radio' name='paperCategoryId' value='".$value['id']."'>".$value['name'];
 		}
 	}
-	?>
-	<br/>
-	试卷分为几页：<input type="text" id="pageNum" name="pageNum" /><input type="button" onClick="JavaScript:showPageFram();" value="确定"><br/>
+	?><br/>
+	试卷分为几页：<input type="text" id="pageNum" name="pageNum" /><input type="button" onClick="JavaScript:showPageFram();" value="添加"><br/>
 	<div id="pageFrame"></div><br/>
-
-	<input type="button" onClick="examform.submit()" value="提交试卷" /> <br/><br/>
-	
+	<input type="button" onClick="examform.submit()" value="提交试卷" id="sub" /> 
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#F00"><?php echo $this->msg; ?></span>
+	<br/><br/>
 	<table border="1">
 	<tr>
 		<td>ID</td><td>名称</td><td>概要</td>
@@ -51,8 +94,9 @@
 		}
 	?>
 	</table>
-	
 </FORM>	
+
 </div>
 
-<?php include_once '_footer.phtml';?>
+</body>
+</html>
