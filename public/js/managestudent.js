@@ -264,26 +264,28 @@ function goToDo(com,grid)
 				var class_info = new Array();
 				class_info = data;
 				if(class_info.length > 0) {
-				var opt='';
-				for(o=0;o<class_info.length;o++){
-				opt += '<span class="btns" id=\"class_id_'+ class_info[o].id +'\">'+ class_info[o].class_name +'</span>';
-				}
-				$('#chose_class span.chose_class_btns').html(opt);
-				var html = $('<div id="shade"></div>');
-				html.css({
-					'opacity':'0.5',
-					height:winH,
-					width:winW
-					});
-				$('body').append(html);
-				$('#chose_class').show().find('span.btns').click(function(){
-					var cid = $(this).attr('id').substr(9);
-					$('#shade').remove();
-					$('#chose_class').hide();
-					$('div.ftitle').html('学生管理 - 当前班级：'+$(this).text());
-					//reload
-					jQuery('#flex1').flexOptions({newp:1, params:[{name:'class_id', value: cid},{name:'qtype',value:'class_id'}]});
-					jQuery("#flex1").flexReload(); 
+					var opt='';
+					for(o=0;o<class_info.length;o++){
+						opt += '<span class="btns" id=\"class_id_'+ class_info[o].id +'\">'+ class_info[o].class_name +'</span>';
+					}
+					$('#chose_class span.chose_class_btns').html(opt);
+					var html = $('<div id="shade"></div>');
+					html.css({
+						'opacity':'0.5',
+						height:winH,
+						width:winW
+						});
+					$('body').append(html);
+					$('#chose_class').show().find('span.btns').click(function(){
+						var cid = $(this).attr('id').substr(9);
+						$('#shade').remove();
+						$('#chose_class').hide();
+						$('div.ftitle').html('学生管理 - 当前班级：'+$(this).text());
+						var class_name = '#dialog_form option[text='+$(this).text()+']';
+						$(class_name).attr('selected','selected');
+						//reload
+						jQuery('#flex1').flexOptions({newp:1, params:[{name:'class_id', value: cid},{name:'qtype',value:'class_id'}]});
+						jQuery("#flex1").flexReload(); 
 					});	
 				} else {
 					alert_msg('您目前没有可操作的班级.');

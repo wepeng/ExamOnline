@@ -9,8 +9,9 @@
             <div class="dia_mb">&nbsp;&nbsp;试卷名<input maxlength="11" class="input_text" type="text" name="title" /></div>
             <div class="dia_mb">试卷说明<input type="text" class="input_text" name="introduction" /></div>
             <div class="dia_mb">试卷时长<input type="text" class="input_text" name="time" /></div>
+			<div class="dia_mb">试卷分类：<?php echo $this->paperselect ?></div>
             <br/>
-		 <span class="notice"></span><br/>
+		 <span class="notice"></span>
          <div class="dia_btn">
              <span class="btns" id="okBtn">OK</span>
              <span class="btns" id="cancelBtn">Cancel</span>
@@ -18,7 +19,7 @@
        </form>
 	</div>
 	<div id="alert_msg"></div>
-	<div id="confirm_msg">
+	<div id="confirm_msg"><br/>
 		<span class="confirm_text"></span><br/><br/>
 		<span class="btns" id="confirm_yes">Yes</span>
 		<span class="btns" id="confirm_cancel">Cancel</span>
