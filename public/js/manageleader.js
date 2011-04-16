@@ -165,7 +165,8 @@ function goToDo(com,grid)
 						width:winW
 						});
 				$('body').append(html);
-				$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length+'个教师？');
+				var datas = get_selectInfo(grid);
+				$('#confirm_msg').show().find('span.confirm_text').text('确定删除教师"'+datas['name']+'"？');
 				$('#confirm_yes').unbind('click').click(function(){
 						$('#shade').remove();
 						var delete_username = $('.trSelected td:nth-child(2)',grid).text();

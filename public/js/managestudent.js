@@ -188,8 +188,9 @@ function goToDo(com,grid)
 				height:winH,
 				width:winW
 			});
+			var datas = get_selectInfo(grid);
 			$('body').append(html);
-			$('#confirm_msg').show().find('span.confirm_text').text('确定删除'+$('.trSelected',grid).length+'个学生？');
+			$('#confirm_msg').show().find('span.confirm_text').text('确定删除学生 "'+datas['name']+'"？');
 			$('#confirm_yes').unbind('click').click(function(){
 				$('#shade').remove();
 				var delete_username = $('.trSelected td:nth-child(2)',grid).text();

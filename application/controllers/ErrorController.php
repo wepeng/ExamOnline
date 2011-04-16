@@ -9,7 +9,7 @@ class ErrorController extends Zend_Controller_Action
 		/*
 		 * show friendly page and forbidden err;
 		 */ 
-		echo $showerr = file_get_contents("../public/404.html");
+		echo $showerr = file_get_contents("../public/error.html");
 		die();
 
         if (!$errors) {

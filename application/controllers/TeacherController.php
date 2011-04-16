@@ -119,7 +119,7 @@ class TeacherController extends Zend_Controller_Action
 				foreach($paperList as $value)
 				{
 					$i++;
-					echo $i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><br/>";
+					echo '<li>'.$i.". <a href=\"JavaScript:setPaperName('".$value['title']."','".$value['id']."')\">".$value['title']."</a><li/>";
 				}
 			}
 			exit;
