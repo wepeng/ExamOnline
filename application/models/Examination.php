@@ -63,14 +63,6 @@ class Examination extends Zend_Db
 	 */
 	function showExamRecord($student_id) {
 		// 改掉time()函数，而使用数据库时间。
-//		$sql = "SELECT DISTINCT  id,paper_id,name,startTime,endTime,category_id 
-//			FROM examination e,class_student c ,examination_class ec,examed 
-//			WHERE (UNIX_TIMESTAMP(e.endTime) < UNIX_TIMESTAMP(NOW()) OR  (examed.examination_id=e.id 
-//			AND examed.student_id='".$student_id."'))
-//			AND e.id=ec.examination_id 
-//			AND ec.class_id=c.class_id 
-//			AND c.student_id='".$student_id."' 
-//			ORDER BY id DESC";
 		$sql = "SELECT DISTINCT  e.id,e.paper_id,e.name,e.startTime,e.endTime,pc.name as category_name,s.total_score 
 			FROM examination e,class_student c ,examination_class ec,examed ,papercategory pc, score s
 			WHERE (UNIX_TIMESTAMP(e.endTime) < UNIX_TIMESTAMP(NOW()) OR  (examed.examination_id=e.id 
@@ -85,31 +77,6 @@ class Examination extends Zend_Db
 		$result = $this->db->query($sql)->fetchAll();
 		return $result;
 	}
-	
-//	/**
-//	 * 
-//	 * 保存学生的分数
-//	 * @param unknown_type $student_id
-//	 * @param unknown_type $examination_id
-//	 */
-//	public function insertScore($student_id, $examination_id)
-//	{
-//		$sql = "SELECT * FROM score WHERE student_id=$student_id AND examination_id=$examination_id";
-//		$result = $this->db->query($sql)->fetchAll();
-//		if(count($result)>0)
-//		{
-//			//bug
-//		}
-//		else
-//		{
-//			$data = array(
-//				'student_id' => $student_id,
-//				'examination_id' => $examination_id,
-//				'parts_score' => "#",	//bug
-//				'total_score' => '100');	//bug
-//			$this->db->insert('score', $data);
-//		}
-//	}
 	
 	/**
 	 * 
@@ -1214,9 +1181,24 @@ class Examination extends Zend_Db
 	 */
 	public function alterScore($student_id, $examination_id, $parts_score, $total_score)
 	{
-		$sql = "UPDATE score SET parts_score='".$parts_score."', total_score='".$total_score."' 
-				WHERE student_id=$student_id AND examination_id=$examination_id";
-		$this->db->query($sql);
+		//判断parts_score中成绩个数是否相等
+		$sql = "SELECT * FROM `score` WHERE `student_id`='".$student_id."' AND examination_id='".$examination_id."'";
+		$result = $this->db->query($sql)->fetchAll();
+		$old_num = substr_count($result[0]['parts_score'], "#");
+		$new_num = substr_count($parts_score, "#");
+		if($old_num == $new_num)
+		{
+			$sql = "UPDATE score SET parts_score='".$parts_score."', total_score='".$total_score."' 
+					WHERE student_id=$student_id AND examination_id=$examination_id";
+			return $this->db->query($sql);
+		}
+		else return false;
+	}
+	
+	public function deleteScore($student_id, $examination_id)
+	{
+		$sql = "DELETE FROM `score` WHERE `student_id`='".$student_id."' AND examination_id='".$examination_id."' LIMIT 1";
+    	return $this->db->query($sql);
 	}
 	
 	/**
@@ -1225,8 +1207,11 @@ class Examination extends Zend_Db
 	 */
 	public function getPaperList($where="",$sort="",$limit="")
 	{
-		$where = ($where=="") ? "" : "WHERE ".$where;
-		$sql = "SELECT * FROM paper $where $sort $limit";
+		$where = ($where=="") ? "" : " AND ".$where;
+		$sql = "SELECT p.id, p.introduction, p.listening_test, p.title, p.time, pc.name category_name  
+				FROM paper p, papercategory pc  
+				WHERE pc.id = p.category_id 		
+				$where $sort $limit";
 		$result = $this->db->query($sql)->fetchAll();
 		return $result;
 	}
@@ -1454,7 +1439,7 @@ class Examination extends Zend_Db
         return $paper_struct;
     }
     
-/**
+	/**
      * 
      * 解析答案
      * @param string $answer 
@@ -1615,6 +1600,59 @@ class Examination extends Zend_Db
     //
     //monyxie: end
 	
+    /**
+     * 
+     * 删除考试
+     * @param unknown_type $examination_id
+     * @return TRUE | FALSE
+     */
+    public function deleteExam($examination_id)
+    {
+    	$sql = "DELETE FROM `examination` WHERE `id`='".$examination_id."' LIMIT 1";
+    	return $this->db->query($sql);
+    }
+    
+    /**
+     * 
+     * 修改考试
+     * @param unknown_type $examination_id
+     * @param unknown_type $name
+     * @param unknown_type $startTime
+     * @param unknown_type $endTime
+     */
+    public function alterExam($examination_id,$name,$startTime,$endTime)
+    {
+		$sql = "UPDATE `examination` SET `name`='".$name."', `startTime`='".$startTime."', 
+				`endTime`='".$endTime."'  
+				WHERE `id`='".$examination_id."'";
+		return $this->db->query($sql);
+    }
+    
+    /**
+     * 
+     * 删除试卷	
+     * @param unknown_type $paper_id
+     */
+    public function deletePaper($paper_id)
+    {
+    	$sql = "DELETE FROM `paper` WHERE `id`='".$paper_id."' LIMIT 1";
+    	return $this->db->query($sql);
+    }
+
+    /**
+     * 
+     * 修改试卷
+     * @param unknown_type $paper_id
+     * @param unknown_type $title
+     * @param unknown_type $introduction
+     * @param unknown_type $time
+     */
+    public function alterPaper($paper_id, $title, $introduction, $time)
+    {
+    	$sql = "UPDATE `paper` SET `title`='".$title."', `introduction`='".$introduction."', `time`='".$time."'  
+				WHERE `id`='".$paper_id."'";
+		return $this->db->query($sql);
+    }
 }
 
 

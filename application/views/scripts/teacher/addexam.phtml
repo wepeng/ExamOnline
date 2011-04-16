@@ -1,40 +1,106 @@
-<?php  include_once '_header.phtml';?>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>管理</title>
+<script type="text/javascript" language="javascript" src="../../public/js/jquery-1.3.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="../../public/css/flexigrid/flexigrid.css">
+<script type="text/javascript" src="../../public/js/flexigrid_with_checkbox.js"></script>
 <script type="text/javascript" language="javascript" src="../../public/js/ckeditor/ckeditor.js"></script>
-<script type="text/javascript">
-	//预览
-	/*$(document).ready(function(){
-		$('#preview').click(function(){
-			var str = CKEDITOR.instances.editor1.getData();
-			var maxTopic = document.getElementById('maxTopic').value;
-			var minTopic = document.getElementById('minTopic').value;
-			$.post('preview',{'editor': str,'maxTopic': maxTopic,'minTopic': minTopic}, function (data){
-				$('#showPreview').html(data);
-			})
-			return false;
-		})
-	})*/
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+body{ background:#efefef; font-family:"微软雅黑", Arial, "MS Sans Serif", System; font-size:14px;}
+h1{ color:#06C; font-size:22px;}
+html{ overflow-x:hidden;}
+a{ text-decoration:none; color:#000;}
+a:hover{ color:#900; text-decoration:underline;}
 
+#main{
+	margin:10px auto;
+	width:90%;
+	padding:15px;
+	background:#fff;}
+#show_parts{
+	width:170px;
+	padding:10px;
+	background:#C4E1FF;
+	float:right;
+	}
+#showSummarize{
+	width:150px;
+	background:#fff;
+	padding:10px;}
+#preview{
+	height:22px;
+	width:100px;
+	text-align:center;
+	border:none;
+	cursor:pointer;
+	background:url(../images/login_Btn.gif);
+	margin-left:100px; 
+	color:#000;
+	}
+#sub{	
+	height:22px;
+	width:100px;
+	text-align:center;
+	border:none;
+	cursor:pointer;
+	background:url(../images/login_Btn_hover.gif);
+	margin-left:200px; 
+	margin-top:20px; 
+	color:#fff;
+	}
+#shade{
+	height:100%;
+	width:100%;
+	background:#000;
+	z-index:90;
+	position:absolute;
+	top:0;
+	left:0;
+	}
+#exam_preview{
+	width:90%;
+	padding:10px;
+	background:#999;
+	color:#000;
+	position:absolute;
+	top:20px;
+	left:0;
+	z-index:100;
+	display:none;
+	}
+#close{
+	height:22px;
+	width:100px;
+	float:left;
+	margin-left:20px;
+	text-align:center;
+	color:#fff;
+	margin-top:30px;
+	cursor:pointer;
+	background:url(../images/login_Btn_hover.gif);}
+-->
+</style>
+</head>
+<script type="text/javascript" src="../js/jquery_corner.js"></script>
+<script type="text/javascript">
 	//替换提交标识
 	function replaceContent(flag,title)
 	{		
 		document.getElementById("showTitle").textContent = title;
 		document.getElementById("partType").value = flag;	
-		
-		if (CKEDITOR.instances['writing']) {
-				CKEDITOR.instances['writing'].destroy();
-		}
 		if (CKEDITOR.instances['writing_answer']) {
 				CKEDITOR.instances['writing_answer'].destroy();
 		}
 		if (CKEDITOR.instances['editor1']) {
-				CKEDITOR.instances['editor1'].destroy();
+			CKEDITOR.instances['editor1'].destroy();
 		}
-		
 		if(flag == 'writing')
 		{
-			document.getElementById("editContent").innerHTML = '<textarea class="ckeditor" id="writing" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>';
-			CKEDITOR.replace( 'writing' );
+			document.getElementById("editContent").innerHTML = '<textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>';
 			CKEDITOR.replace( 'writing_answer' );
 		}else{
 			if(flag == 'fastReading'){
@@ -46,44 +112,65 @@
 			else{
 				document.getElementById("editContent").innerHTML = '<textarea class="ckeditor" id="editor1" name="editor1" rows="15"></textarea>开始题号：<input type="text" id="startNum" name="startNum"/>结束题号：<input type="text" id="endNum" name="endNum"/><input id="addBtn" type="button" onclick="add_answer()" value="添加选择题答案" /><div id="answers"></div><div id="fanswers"></div><div id="audioFile"></div>';
 			}
-			CKEDITOR.replace( 'editor1' );
-			
 			document.getElementById('audioFile').innerHTML = "";
 			if((flag == 'shortListening') || (flag =='longListening') || (flag =='dictation'))
 			{
 				document.getElementById('audioFile').innerHTML = '添加音频：<input type="file" id="audio" name="audio" />';
 			}
 		}
-		
+		CKEDITOR.replace( 'editor1' );
 	}
 	//添加答案选框
 	function add_answer(){
+
 			var str = '<select name="answers[]"><option value="">请选择</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>';
+
 			var startNum = parseInt(document.getElementById('startNum').value);
+
 			var endNum = parseInt(document.getElementById('endNum').value);
+
 			document.getElementById("answers").innerHTML = "";
+
 			for(var i=startNum; i<=endNum; i++)
 			{ 
 				document.getElementById("answers").innerHTML += " " + i + "." + str;
 			}
 	}
+
 	function add_fill_answer(){
 			var str = '<input type="text" name="answers[]" />';
 			var fstartNum = parseInt(document.getElementById('fstartNum').value);
 			var fendNum = parseInt(document.getElementById('fendNum').value);
+
 		  document.getElementById("fanswers").innerHTML = "";
 			for(var ii=fstartNum; ii<= fendNum; ii++)
 			{ 
 				document.getElementById("fanswers").innerHTML += " " + ii + "." + str;
 			}
 	}
+	$(function(){
+		$('.corner').corner('10px');
+		var winW = document.documentElement.clientWidth ;	
+		$('#preview').click(function(){
+			var con =  CKEDITOR.instances.editor1.getData();  /***** 显示的数据 CKEDITOR.instances.editor1.getData();*************/
+			$('#exam_preview').css(	'left',(winW*0.1/2-10)).corner('10px').show().find('#view_con').html(con);
+		});
+		$('#close').live('click',function(){
+			$('#exam_preview').hide();
+		});
+	});
 	
 </script>
-<div style="float:left; margin-left:30px;">
+<body>
 
+<div id="main" class="corner">
+<div id="exam_preview"> 
+    <div id="view_con">fds</div> 
+    <div id="close">Close</div> 
+</div>
 	<form name="readingForm" action="" enctype="multipart/form-data" method="post">
-		<h2>上传试卷</h2>
-		<div style="border:1px #CCC solid; width:150px; top:150px; right:30px;position:absolute; padding:10px;">
+		<h1>上传试卷</h1>
+		<div id="show_parts" class="corner">
 		<a href="JavaScript:replaceContent('writing','写作')">写作</a><br>
 		<a href="JavaScript:replaceContent('fastReading','快速阅读')">快速阅读</a><br>
 		<a href="JavaScript:replaceContent('shortListening','听力短对话')">听力短对话</a><br>
@@ -92,39 +179,39 @@
 		<a href="JavaScript:replaceContent('reading','阅读')">阅读</a><br>
 		<a href="JavaScript:replaceContent('cloze','完形填空')">完形填空</a><br>
 		<a href="JavaScript:replaceContent('translation','翻译')">翻译</a><br><br/>
-		<a style="color:#F00" href="editupexam">完成上传试题</a><br>
-		
-		<div id="showSummarize" style="float:right; margin-top:20px; width:150px; border:#CCC 1px solid;">
-		已上传的试题部分：
-		<?php
-			if($this->temporaryRartList)
-			{
-				$i=0;
-				foreach($this->temporaryRartList as $value)
-				{
-					$i++;
-					echo $i.".".$value['name']."<br/>";
-				}
-			}
-		?>
+		<a style="color:#F00" href="editupexam"><big>完成上传试题</big></a><br>	
+			<div id="showSummarize" class="corner">
+				<span>已上传的试题部分：</span>
+				<?php
+					if($this->temporaryRartList)
+					{
+						$i=0;
+						foreach($this->temporaryRartList as $value)
+						{
+							$i++;
+							echo $i.".".$value['name']."<br/>";
+						}
+					}
+				?>		
+			</div>
 		</div>
-		</div>
-
 		<div id="" style="width:700px;">
 		<input id="preview" type="button" value="预览"><br/>
 			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center"></div>
 			<div id="editContent">
-				<b>作文：</b><textarea class="ckeditor" id="writing" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
-			</div>
+				<strong>作文：</strong><br/>
+                <textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>
+                <strong>答案：</strong><br/>
+                <textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
+			</div><br/>
 			本题总分：<input type="text" name="score" /><br/>
 			<input type="hidden" id="partType" name="partType" value="reading"><br>
-			<input type="button" name="" onClick="readingForm.submit()" style="color:#F00" value="提交" />
+			<input type="button" name="" onClick="readingForm.submit()" id="sub" value="提交" />
 			<br/><br/><br/>
-
 		</div>
-			
 	</form>
 	<div id="showPreview"></div>
 </div>
+</body>
 
-<?php include_once '_footer.phtml';?>
+</html>

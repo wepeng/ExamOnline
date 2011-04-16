@@ -22,7 +22,7 @@ html{ overflow-x:hidden;}
 	width:400px;
 	padding:10px;
 	background:#C4E1FF;
-	margin-bottom:15px;}
+	margin-bottom:5px;}
 #paperTitle{ color:#900;}
 #searchBtn,#sub{
 	height:22px;
@@ -33,12 +33,51 @@ html{ overflow-x:hidden;}
 #searchBtn{
 	background:url(../images/login_Btn.gif);}
 	#sub{background:url(../images/login_Btn_hover.gif); margin-left:200px; margin-top:20px; color:#fff;}
+#paperList{
+	width:400px;
+	list-style:none;}
+#paperList li{ display:none;}
+#tip span{
+	padding:0px 5px;
+	background:#C4E1FF;
+	margin-left:10px;
+	cursor:pointer;
+	color:#FFF;}
+#tip{
+	margin-bottom:5px;}		
 -->
 </style>
 <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery_corner.js"></script>
 <script type="text/javascript" src="../../public/js/Calendar.js"></script>
 <script language="javascript">
+//试卷列表分页
+function paging(){
+	var len = $('#paperList li').length;
+	var no = 10;  //一页显示的条数
+	$('#tip span').remove();
+	(function(){
+		var papers = Math.ceil(len/no);
+		if(papers>1){
+			for(i=1;i<=papers;i++){
+				var btns = "<span>"+i+"</span>";
+				$('#tip').append(btns);
+			}
+			var show_li = '#paperList li:lt('+ no +')';
+			$(show_li).show();
+		}else{
+			$('#paperList li').show();
+		}
+	})();	
+	$('#tip span').live('click',function(){		
+			var p = $(this).text();
+			$('#paperList li').hide();
+			var show_li_l = '#paperList li:lt('+  (p*no)  +')';
+			var hide_li_l = '#paperList li:lt('+  (p-1)*no  +')';
+			$(show_li_l).show();
+			$(hide_li_l).hide();
+	});
+}
 	//日历
   var cdr = new Calendar("cdr");
   document.write(cdr);
@@ -54,6 +93,7 @@ html{ overflow-x:hidden;}
 		url = "setexam";
 		$.post(url,{'category_id': category_id}, function (data){
 			$('#paperList').html(data);
+			paging();
 		});
 	}
 	//设置已选择的试卷名和试卷ID
@@ -69,7 +109,8 @@ html{ overflow-x:hidden;}
 		title = document.getElementById("getSearchName").value;
 		$.post('setexam',{'searchByName':title},function(data){
 			$('#paperList').html(data);
-			});
+			paging();	
+			});	
 	}
 
 	//检查学号是否存在
@@ -96,8 +137,10 @@ html{ overflow-x:hidden;}
          <!-- 试卷显示列表 -->
         <b>试卷列表</b>
         <div id="showExamList" class="corner">
-            <div id="paperList">None</div><br>
+            <ul id="paperList">请先选择试卷类别...</ul><br>
         </div>
+				<div id="tip">
+				</div>
         <input type="text" id="getSearchName" name="getSearchName" />
         <input type="button" id='searchBtn' onClick="JavaScript:searchPaper()" value="搜索试卷" /><br/><br/>
         <span>试卷名：</span><span id="paperTitle">未选择试卷</span><br/><br/>
