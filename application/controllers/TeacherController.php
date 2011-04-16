@@ -377,7 +377,12 @@ class TeacherController extends Zend_Controller_Action
 	
 		if(isset($_POST['pageIndex']))
 		{
-			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId']);
+			$total_time = 0;
+			foreach($_POST['partTime'] as $value)
+			{
+				$total_time += $value;
+			}
+			$paper_id = $this->examination->insertPaper($_POST['title'], $_POST['paperCategoryId'], NULL, NULL, $total_time);
 			$i = 0;
 			
 			foreach ($_POST['pageIndex'] as $value)
