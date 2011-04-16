@@ -1209,6 +1209,7 @@ class Examination extends Zend_Db
 	{
 		$where = ($where=="") ? "" : " AND ".$where;
 		$sql = "SELECT p.id, p.introduction, p.listening_test, p.title, p.time, pc.name category_name  
+				,p.category_id
 				FROM paper p, papercategory pc  
 				WHERE pc.id = p.category_id 		
 				$where $sort $limit";
@@ -1645,12 +1646,14 @@ class Examination extends Zend_Db
      * @param unknown_type $paper_id
      * @param unknown_type $title
      * @param unknown_type $introduction
-     * @param unknown_type $time
+	 * @param unknown_type $time
+	 * @param unknoew_type $category_id
      */
-    public function alterPaper($paper_id, $title, $introduction, $time)
+    public function alterPaper($paper_id, $title, $introduction, $time, $category_id)
     {
-    	$sql = "UPDATE `paper` SET `title`='".$title."', `introduction`='".$introduction."', `time`='".$time."'  
-				WHERE `id`='".$paper_id."'";
+    	$sql = "UPDATE `paper` SET `title`='".$title."', `introduction`='".$introduction."', `time`='".$time."' 
+				, `category_id`='".$category_id."'
+			WHERE `id`='".$paper_id."'";
 		return $this->db->query($sql);
     }
 }

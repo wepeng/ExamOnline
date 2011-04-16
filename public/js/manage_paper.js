@@ -9,6 +9,7 @@ $(document).ready(function(){
 					colModel : [
 				{display: 'ID', name : 'id', width : 50, sortable : true, align: 'center', hide: false},
 				{display: '试 卷 名', name : 'title', width : 200, sortable : true, align: 'left'},
+				{display: '类别ID', name : 'category_id',hide:true },
 				{display: '类 别', name : 'category_name', width : 100, sortable : true, align: 'left'},
 				{display: '试 卷 说  明', name : 'introduction', width : 200, sortable : true, align: 'left'},
 				{display: '试听页面', name : 'listening_test', width : 200, sortable : true, align: 'left', hide: true},
@@ -54,8 +55,9 @@ function get_selectInfo(grid){
 	var dataArray = new Array();
 	dataArray['id'] = $('.trSelected td:nth-child(1)',grid).text();
 	dataArray['title'] = $('.trSelected td:nth-child(2)',grid).text();
-	dataArray['introduction'] = $('.trSelected td:nth-child(4)',grid).text();
-	dataArray['time'] = $('.trSelected td:nth-child(6)',grid).text();
+	dataArray['category_id'] = $('.trSelected td:nth-child(3)',grid).text();
+	dataArray['introduction'] = $('.trSelected td:nth-child(5)',grid).text();
+	dataArray['time'] = $('.trSelected td:nth-child(7)',grid).text();
 	return dataArray;
 }
 function checkForm(type,str){
@@ -83,6 +85,8 @@ function showDialog(datas){
 		$('#dialog_form input[name=title]').val(datas['title']);
 		$('#dialog_form input[name=introduction]').val(datas['introduction']);
 		$('#dialog_form input[name=time]').val(datas['time']);
+		var category = '#dialog_form option[value='+datas['category_id']+']';
+		$(category).attr('selected','selected');
 		/** 编辑的 ok 按钮 **/
 		$('#okBtn').unbind('click').click(function(){
 				$.post('managepaper',$('form#dialog_form').serialize(),function(data){

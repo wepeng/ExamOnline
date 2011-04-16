@@ -488,9 +488,25 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function managepaperAction()
 	{
-		if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['introduction']) && isset($_POST['time']))
+		//Get the PaperCategory generate
+		$papercate  = $this->examination->getPaperCategory();
+		if(!$papercate) 
 		{
-			$this->examination->alterPaper($_POST['id'], $_POST['title'], $_POST['introduction'], $_POST['time']);
+			$this->view->paperselect = "请先添加试卷分类吧，方便管理试卷..否则无法添加。";
+		} 
+		else 
+		{
+			$html_choice = new choice($papercate);
+			$html_choice->name('papercategory')->valueByDataKey('id')->textByDataKey('name');
+			$html_choice->setShowType('select');
+			$this->view->paperselect = $html_choice->getHtml();
+
+		}
+		if(isset($_POST['id']) && isset($_POST['title']) 
+			&& isset($_POST['introduction']) && isset($_POST['time']) && isset($_POST['papercategory']))
+		{
+			$this->examination->alterPaper($_POST['id'], $_POST['title'], $_POST['introduction'],
+			   	$_POST['time'], $_POST['papercategory']);
 			echo "yes";
 			exit;
 		}
@@ -546,6 +562,7 @@ class TeacherController extends Zend_Controller_Action
 				$json .= "\n{";
 				$json .= "id:'".$value['id']."',";
 				$json .= "title:'".$value['title']."',";
+				$json .= "category_id:'".$value['category_id']."',";
 				$json .= "category_name:'".$value['category_name']."',";
 				$json .= "introduction:'".$value['introduction']."',";
 				$json .= "listening_test:'".$value['listening_test']."',";
