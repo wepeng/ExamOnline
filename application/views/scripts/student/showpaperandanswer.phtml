@@ -1,18 +1,17 @@
 <?php  include_once 'header.phtml';?>
 
-	<div style="border:1px #CCC solid; line-height:30px; width:100px; top:150px; position:fixed; right:30px; padding:10px;">
+	<ul class="parts corner">
 		<?php
 			//显示试卷有几部分
 			if($this->partNum)
 			{
 				for($i=1; $i<=$this->partNum; $i++)
 				{
-					echo '<a href="showpaperandanswer?examination_id='.$this->examinationId.'&paper_id='.$this->paperId.'&part='.$i.'">第'.$i.'部分</a><br/>';
+					echo '<li><a href="showpaperandanswer?examination_id='.$this->examinationId.'&paper_id='.$this->paperId.'&part='.$i.'">第'.$i.'部分</a></li>';
 				}
 			}
 		?>
-	</div>
-		
+	</ul>
 	<h3>试题</h3>
 	<iframe id="paper_frame" src="../../public/exam/<?php echo $this->tpaper; ?>"></iframe>
 	<br/><br/>

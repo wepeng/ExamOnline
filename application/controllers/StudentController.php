@@ -20,7 +20,7 @@ class StudentController extends Zend_Controller_Action
 		$this->sys = new System();
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
-		$this->view->username = ($this->examSession->username) ? $this->examSession->username : "请先登录...";
+		$this->view->username = ($this->examSession->username) ? $this->examSession->username.' '.$this->examSession->name : "请先登录...";
 	}
 	
 	
@@ -31,6 +31,7 @@ class StudentController extends Zend_Controller_Action
 	function indexAction()
 	{
 		$this->sys->checkLogined();
+		$this->showexamtimeAction();
 	}
 	
 	/**
@@ -65,19 +66,23 @@ class StudentController extends Zend_Controller_Action
 	function resetpasswordAction()
 	{
 		$this->sys->checkLogined();
-					
-		$this->view->username = $this->examSession->username;
+
 		if(isset($_POST['newpassword']) && !empty($_POST['newpassword']))
 		{
-			if($this->examSession->password == $_POST['password'])
+			if($this->examSession->password != trim($_POST['password']) )
 			{		
+				$this->view->text = 'passworderror';
+
+			}
+			else if ($this->examSession->password == trim($_POST['password']) ){
 				$this->sys->resetPassword($this->examSession->username, $_POST['newpassword'], 'student');
-				$this->view->text = '您的密码已修改。';
+				$this->view->text = 'yes';
 				$this->examSession->password = $_POST['newpassword'];
+			
 			}
 			else 
 			{
-				$this->view->text = '您的旧密码不正确！';
+				$this->view->text = 'no';
 			}
 		}
 	}
@@ -94,7 +99,7 @@ class StudentController extends Zend_Controller_Action
 		if(count($result)>0)
 			$this->view->result = $result;
 		else 
-			$this->view->result = '没有将要进行的考试';
+			$this->view->result = '<h3>没有将要进行的考试</h3>';
 	}
 	
 	/**
