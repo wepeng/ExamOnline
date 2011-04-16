@@ -197,15 +197,12 @@ a:hover{ color:#900; text-decoration:underline;}
 		</div>
 		<div id="" style="width:700px;">
 		<input id="preview" type="button" value="预览"><br/>
-			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center"></div>
+			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center">写作</div>
 			<div id="editContent">
-				<strong>作文：</strong><br/>
-                <textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>
-                <strong>答案：</strong><br/>
-                <textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
+          <textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
 			</div><br/>
 			本题总分：<input type="text" name="score" /><br/>
-			<input type="hidden" id="partType" name="partType" value="reading"><br>
+			<input type="hidden" id="partType" name="partType" value="writing"><br>
 			<input type="button" name="" onClick="readingForm.submit()" id="sub" value="提交" />
 			<br/><br/><br/>
 		</div>

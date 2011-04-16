@@ -1656,6 +1656,27 @@ class Examination extends Zend_Db
 			WHERE `id`='".$paper_id."'";
 		return $this->db->query($sql);
     }
+    
+    /**
+     * 
+     * 根据试卷ID和索引号获取Part的时间
+     * @param unknown_type $paper_id
+     * @param unknown_type $index
+     * @return string || NULL
+     */
+    public function getPartTime($paper_id, $index)
+    {
+    	$sql = "SELECT part.time 
+    			FROM part, paper_part pp
+    			WHERE pp.paper_id='".$paper_id."' 
+    			AND pp.index='".$index."' 
+    			AND pp.part_id = part.id";
+    	$result = $this->db->query($sql)->fetchAll();
+    	if(count($result)>0)
+    		return $result[0]['time'];
+    	else
+    		return NULL;	
+    }
 }
 
 

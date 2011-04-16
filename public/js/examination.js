@@ -46,12 +46,21 @@ $(function(){
 	});
 	
 	/** time **/
-	var time = 6005;
+	var time;
+	if($('#part_time').val() == "<exam:part_time>"){
+		time = 2*60*60;
+	}else{
+		time = $('#part_time').val()*60;
+	}
 	function addZero(m){ return (m<10?('0'+m):m) }
 	function timeShow(){
 		var h = addZero(parseInt(time/3600));
 		var m = addZero(parseInt(time%3600/60));
 		var s = addZero(time%3600%60);
+		if(time == 0)
+		{//提交
+			$('#submit_btn').click(); 
+		}
 		$('#timeShow').text(h+':'+m+':'+s);
 		time -= 1;
 		if(time == -1){

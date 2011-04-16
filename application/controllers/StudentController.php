@@ -122,6 +122,9 @@ class StudentController extends Zend_Controller_Action
 	function doexamAction()
 	{
 		$this->sys->checkLogined();	
+		$this->view->true_name = $this->examSession->name;
+		$this->view->username = $this->examSession->username;
+		
 		if(!$this->examSession->examStep)
 		{
 			$this->examSession->examStep = 1;
@@ -191,19 +194,22 @@ class StudentController extends Zend_Controller_Action
 					unset($this->examSession->examination_id);
 					header("Location: ./doexamend?examination_id=".$exam_id);	
 				}
-			}
+			}		
 			else 
 			{
 				unset($this->examSession->examStep);
 				header("Location: ./");
 			}
-			
 		}
 		else 
 		{
 			unset($this->examSession->examStep);
 			header("Location: ./");
 		}
+		
+		//获取Part的考试时间
+		$part_time = $this->examination->getPartTime($_GET['paper_id'],$this->examSession->examStep);	
+		$this->view->part_time = $part_time;
 	}
 	
 	/**
