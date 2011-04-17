@@ -429,6 +429,7 @@ class TeacherController extends Zend_Controller_Action
 	 */
 	function scorelistAction()
 	{
+		error_reporting(0);
 		$page = $_POST['page'];
 		$rp = $_POST['rp'];
 		$sortname = $_POST['sortname'];

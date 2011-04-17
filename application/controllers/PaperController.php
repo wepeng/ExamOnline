@@ -51,9 +51,6 @@ class PaperController extends Zend_Controller_Action
 		$start = (($page-1) * $rp);
 		$limit = "LIMIT $start, $rp";
 		$result = $this->paper->getpapercategory($where, $sort, $limit);
-		if(!$result) {
-			die('Get Data False!');
-		}
 		$total = count($result);
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
 		header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );

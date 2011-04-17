@@ -1128,6 +1128,7 @@ class Examination extends Zend_Db
 	public function getScoreList($where="",$sort="",$limit="",$teacher_id)
 	{
 		//判断老师级别
+		error_reporting(0);
 		$sql = "SELECT level_id FROM teacher WHERE id=$teacher_id";
 		$result = $this->db->query($sql)->fetchAll();
 		$teachers = "";	//管理员

@@ -40,7 +40,7 @@ $(document).ready(function(){
 				width:'auto',
 				height: (winH-155),
 				resizable:false,
-				nomsg: "没有找到你要搜索的内容...",
+				nomsg: "没有内容...",
 				errormsg : '连接错误!',
 		}
 );   
