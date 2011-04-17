@@ -218,13 +218,14 @@ class StudentController extends Zend_Controller_Action
 	 */
 	function doexamendAction()
 	{
-		$this->sys->checkLogined();
-		if(isset($_GET['examination_id']))
-		{
-			$this->examination->_checkoneanswer($_GET['examination_id'], $this->examSession->student_id);
-		}
-		$result = $this->examination->getStudentScore($this->examSession->student_id, $_GET['examination_id']);
-		echo "<br/>得分：".$result[0]['total_score'];
+	 	$this->sys->checkLogined();
+        if(isset($_GET['examination_id']))
+        {
+            $this->examination->_checkoneanswer($_GET['examination_id'], $this->examSession->student_id);
+            //$this->view->studentId = $this->examSession->student_id;
+            //$this->view->examinationId = $_GET['examination_id'];
+            $this->view->dataXML = $this->examination->getfcxml($_GET['examination_id'], $this->examSession->student_id);
+        }
 	}
 	
 	/**
