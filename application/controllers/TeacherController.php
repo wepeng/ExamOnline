@@ -24,7 +24,7 @@ class TeacherController extends Zend_Controller_Action
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
 		$showlist = file_get_contents("../application/views/scripts/teacher/teacher".$this->examSession->level_id.".phtml");
-
+		
 		$this->quickmenuAction($showlist);
 	}
 	
