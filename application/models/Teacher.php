@@ -25,7 +25,7 @@ class Teacher extends Zend_Db
 	{
 		$sql = "select level_id from teacher where id='".$id."'";
 		$result = $this->db->query($sql)->fetchAll();
-		if(count($result) ==  0) return false; die();
+		if(count($result) ==  0) { return false; die();}
 		if($result[0]['level_id'] == 2)
 		{
 			return true;
@@ -45,7 +45,7 @@ class Teacher extends Zend_Db
 	{
 		$sql = "select level_id from teacher where id='".$id."'";
 		$result = $this->db->query($sql)->fetchAll();
-		if(count($result) ==  0) return false; die();
+		if(count($result) ==  0) { return false; die();}
 		if($result[0]['level_id'] == 3)
 		{
 			return true;
