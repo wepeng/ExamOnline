@@ -711,7 +711,7 @@ class Examination extends Zend_Db
 				$this->db->insert("part_".$result[0]['type'], $data);
 				
 				$sql = "delete from temporary_part where id='".$value."'";
-				//$this->db->query($sql);     //删除临时表
+				$this->db->query($sql);     //删除临时表
 			}	
 			
 			$sql = "select content,answer,hasAudio from ".$partType." where id='".$selorfill_id."'";
