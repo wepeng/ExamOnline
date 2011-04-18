@@ -24,7 +24,7 @@ class TeacherController extends Zend_Controller_Action
 		$this->examSession = new Zend_Session_Namespace('examSession');
 		$this->examination = new Examination();
 		$showlist = file_get_contents("../application/views/scripts/teacher/teacher".$this->examSession->level_id.".phtml");
-
+		
 		$this->quickmenuAction($showlist);
 	}
 	
@@ -1290,31 +1290,6 @@ class TeacherController extends Zend_Controller_Action
 	//monyxie: begin
     //
 
-    
-
-    /**
-     * 此动作执行对某次考试的全部学生的改卷
-     * @access public
-     * @return void
-     */
-    public function checkexamanswerAction()
-    {
-		$this->sys->checkLogined();
-		$recent_exam = $this->examination->getRecentlyExam();
-		$this->view->getRecentlyExamList = $recent_exam;
-        if (isset($_POST['examId']))
-        {
-            $examination_id = $_POST['examId'];
-            echo "<p id='beginInfo'>正在改卷...</p>\n";
-            if ($this->examination->_checkexamanswer($examination_id) === true)
-                echo "<p id='doneInfo'>完成.<a href='managescore'>查看成绩</a></p>\n";
-            else
-                echo "<p id='errorInfo'>有错误发生,操作未完成.<a href='managescore'>查看成绩</a></p>\n";
-        }
-    }
-
-   
-
     /**
      * 此动作执行单个学生的改卷
      * @access public
@@ -1344,7 +1319,40 @@ class TeacherController extends Zend_Controller_Action
         }
     }
 
-
+    /**
+     * 填空题的改卷
+     * @access public
+     * @return void
+     */
+    public function checkexamanswerAction()
+    {
+        $this->sys->checkLogined();
+        if (isset($_POST['exam_id']))
+        {
+        	$examination_id = $_POST['exam_id'];
+        	if (isset($_POST['student_id']))
+        	{
+        		//ti jiao fenshu
+        		$student_id = $_POST['student_id'];
+        		$arr = $_POST['scores'];
+        		$this->examination->addFillblankScore($examination_id, $student_id, $arr);
+        	}
+            $this->view->examination_id = $examination_id;
+            $current_offset = isset($_POST['current_offset']) ? $_POST['current_offset'] : 0;
+            $student_id = 0;
+            $studentAnswer = $this->examination->getNextStudentFillblankAnswer($examination_id, $current_offset, $student_id);
+            $this->view->examAnswer = $this->examination->getExamFillblankAnswer($examination_id);
+            $this->view->studentAnswer = $studentAnswer;
+            $this->view->sudent_id = $student_id;
+            $this->renderScript($this->getViewScript("checkexamanswer2"));
+        }
+        else
+        { //刚进入
+            $recent_exam = $this->examination->getRecentlyExam();
+            $this->view->getRecentlyExamList = $recent_exam;
+            $this->renderScript($this->getViewScript("checkexamanswer"));
+        }
+    }
 
     //
     //monyxie: end   

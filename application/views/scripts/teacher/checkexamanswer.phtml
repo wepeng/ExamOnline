@@ -1,61 +1,23 @@
-<?php  include_once '_header.phtml';?>
-<script type="text/javascript">
-	var xmlHttpRequest;  
-	//XmlHttpRequest对象 
-	function createXmlHttpRequest(){ 
-			if(window.ActiveXObject){ //如果是IE
-					return new ActiveXObject("Microsoft.XMLHTTP"); 
-			}else if(window.XMLHttpRequest){ //非IE浏览器 
-					return new XMLHttpRequest(); 
-			} 
-	}
-	//回调函数 
-	function HuiDiaoFun(){ 
-			if(xmlHttpRequest.readyState == 4 && xmlHttpRequest.status == 200){
-					var valueReturned = xmlHttpRequest.responseText;
-					document.getElementById("paperParts").innerHTML = valueReturned;
-			} 
-	} 
-	
-	//设置已选择的试卷名和试卷ID
-	function setExamName(title,exam_id)
-	{
-		document.getElementById("examName").textContent = title;
-		document.getElementById("examId").value = exam_id;		
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>404</title>
+<style type="text/css">
+<!--
+*{ padding:0; margin:0;}
+bodu{ background:#fff;}
+#notice{
+	margin:0 auto;
+	margin-top:100px;
+	height:200px;
+	width:400px;}
+-->
 
-		var url = "setreexam?exam_id="+exam_id;
+</style>
+</head>
 
-		xmlHttpRequest = createXmlHttpRequest();  
-		xmlHttpRequest.onreadystatechange = HuiDiaoFun;  
-		xmlHttpRequest.open("post",url,true)
-		xmlHttpRequest.send(null);   
-	}
-
-</script>
-<div style="margin-left:30px; margin-top:20px;">
-	<form name="checkexamanswerForm" action="checkexamanswer" method="post">
-	<b>选择考试：</b><span id="examName" style="color:#F00;"></span><br/><br/>
-	<input type="hidden" id="examId" name="examId"/>
-	<div id="showExamList" style="border:1px #CCC solid; padding:10px">
-		<h3>最近进行的考试</h3><br>
-		<?php
-			if(is_array($this->getRecentlyExamList))
-			{
-				$i = 0;
-				foreach($this->getRecentlyExamList as $value)
-				{
-					$i++;
-					echo $i.". <a id='".$value['id']."' href=\"JavaScript:setExamName('".$value['name']."','".$value['id']."')\">".$value['name']."</a><br/>";
-				}
-			}else
-			{
-				echo $this->noSearchResult."<br>";
-			}
-
-		?>
-	</div><br/>
-	<input type="button" onClick="checkexamanswerForm.submit()" value="执行改卷" />
-	</form>
-</div>
-
-<?php include_once '_footer.phtml';?>
+<body>
+<div id="notice"><img src="../../public/images/admin/404.png" /></div>
+</body>
+</html>

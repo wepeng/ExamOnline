@@ -1,0 +1,32 @@
+<?php  include_once '_header.phtml';?>
+
+<div style="margin-left:30px; margin-top:20px;">
+  <form name="checkexamanswerForm" action="checkexamanswer" method="post">
+    <input type="hidden" id="exam_id" name="exam_id" value="<?php echo $this->examination_id; ?>"/>
+    <input type="text" id="student_id" name="student_id" value="<?php echo $this->student_id; ?>"/>
+    <input type="hidden" id="current_offset" name="current_offset" value="<?php echo $this->current_offset; ?>"/>
+    <table width="700" border="1" cellpadding="0" cellspacing="0">
+      <tr>
+        <th scope="col">分类</th>
+        <th scope="col">参考答案</th>
+        <th scope="col">学生答案</th>
+        <th scope="col">分值</th>
+        <th scope="col">打分</th>
+      </tr>
+<?php
+foreach ($this->examAnswer as $key => $value)
+{
+    echo "<tr>\n";
+    echo "<td>" . $value['category'] . "</td>\n";
+    echo "<td>" . str_replace('#', '</br>', $value['answer']) . "</td>\n";
+    echo "<td>" . str_replace('#', '</br>', $this->studentAnswer[$key]) . "</td>\n";
+    echo "<td>" . $value['score'] . "</td>\n";
+    echo "<td><input type=\"text\" name=\"scores\"></td>\n";
+    echo "</tr>\n";
+}
+?>
+    </table>
+    <input type="submit" value="下一个" />
+  </form>
+</div>
+<?php include_once '_footer.phtml';?>

@@ -1,11 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-</head>
-<body>
-	The End 
-	<a href="../">返回</a>
-</body>
-</html>
+﻿<?php
+include "FusionChartsFree/FusionCharts.php";
+include "header.phtml";
+?>
+<div style=" text-align:center">
+	<h1 class='title'>考试结束</h1>
+    </br>
+    <div id="chart">
+    <embed src="../../public/Charts/FCF_Column2D.swf?chartWidth=600&chartHeight=300" flashVars="&dataXML=<?php echo $this->dataXML; ?>" quality="high" width="600" height="300" name="Column3D" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+    </div>
+	</br>
+	<div id="info">
+	<p style="color:#f00">以上成绩为客观题成绩。</p>
+	</div>
+</div>
+<?php include "footer.phtml" ?>

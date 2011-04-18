@@ -1,0 +1,36 @@
+<?php  include_once '_header.phtml';?>
+<script type="text/javascript">
+function setExamName(title,exam_id)
+{
+    document.getElementById("examName").textContent = title;
+    document.getElementById("exam_id").value = exam_id;		
+}
+
+</script>
+<div style="margin-left:30px; margin-top:20px;">
+    <form name="chooseExamForm" action="checkexamanswer" method="post">
+        <b>选择考试：</b><span id="examName" style="color:#F00;"></span><br/><br/>
+        <input type="hidden" id="exam_id" name="exam_id"/>
+        <div id="showExamList" style="border:1px #CCC solid; padding:10px">
+            <h3>最近的考试</h3><br>
+<?php
+if(is_array($this->getRecentlyExamList))
+{
+    $i = 0;
+    foreach($this->getRecentlyExamList as $value)
+    {
+        $i++;
+        echo $i.". <a id='".$value['id']."' href=\"JavaScript:setExamName('".$value['name']."','".$value['id']."')\">".$value['name']."</a><br/>";
+    }
+}else
+    {
+        echo $this->noSearchResult."<br>";
+    }
+
+?>
+        </div><br/>
+        <input type="button" onClick="chooseExamForm.submit()" value="开始改卷" />
+    </form>
+</div>
+
+<?php include_once '_footer.phtml';?>

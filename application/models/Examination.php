@@ -711,7 +711,7 @@ class Examination extends Zend_Db
 				$this->db->insert("part_".$result[0]['type'], $data);
 				
 				$sql = "delete from temporary_part where id='".$value."'";
-				//$this->db->query($sql);     //删除临时表
+				$this->db->query($sql);     //删除临时表
 			}	
 			
 			$sql = "select content,answer,hasAudio from ".$partType." where id='".$selorfill_id."'";
@@ -1093,17 +1093,25 @@ class Examination extends Zend_Db
 	 */
 	public function answerTidy($answer)
 	{
-		$str = "";
 		$partAnswers = explode("</part>", $answer);
+		$ans = array();
 		foreach($partAnswers as $key => $value)
 		{
 			if(($key+1) != count($partAnswers))
-			{		
-				$str .= "<br/>第".($key + 1)."部分答案：";
-				$str .= str_replace("#", ", ", $value);
+			{					
+				$tt = substr($value, 0, strpos($value, ">"));
+				$ans[$tt] = $value;
 			}
 		}
-		return $str;
+		$html = "";
+		$j = 0;
+		foreach($ans as $value)
+		{
+			$j++;
+			$html .= "<br/>第".$j."部分答案：";
+			$html .= str_replace("#", ", ", $value);
+		}	
+		return $html;
 	}
 	
 	/**
@@ -1374,12 +1382,12 @@ class Examination extends Zend_Db
      * @access public
      * @return array
      */
-    public function getPartStruct($part_id)
+public function getPartStruct($part_id)
     {
         $part_struct = array();
 
         //选择题
-        $sql = "SELECT `selection`.`answer`, `selection`.`score`, `part_selection`.`selection_id`, `part_selection`.`index` FROM `selection`, `part_selection` 
+        $sql = "SELECT `selection`.`category`, `selection`.`answer`, `selection`.`score`, `part_selection`.`selection_id`, `part_selection`.`index` FROM `selection`, `part_selection` 
             WHERE `part_selection`.`part_id`='$part_id' AND `part_selection`.`selection_id`=`selection`.`id`";
         $result = $this->db->query($sql)->fetchAll();
         if ($result != null)
@@ -1391,13 +1399,14 @@ class Examination extends Zend_Db
                 $index = $row['index'];
                 $answer = $row['answer'];
                 $score = $row['score'];
-                $answer_count = count(explode('#', $answer));
-                $part_struct[$index] = array('type' => 'selection', 'selection_id' => $selection_id, 'answer_count' => $answer_count, 'score' => $score);
+                $answer_count = count(explode('#',$answer));
+                $category = $row['category'];
+                $part_struct[$index] = array('type' => 'selection', 'category' => $category,  'selection_id' => $selection_id, 'answer' => $answer, 'answer_count' => $answer_count, 'score' => $score);
             }
         }
 
         //填空题
-        $sql = "SELECT `fillblank`.`answer`, `fillblank`.`score`, `part_fillblank`.`fillblank_id`, `part_fillblank`.`index` FROM `fillblank`, `part_fillblank` 
+        $sql = "SELECT `fillblank`.`category`, `fillblank`.`answer`, `fillblank`.`score`, `part_fillblank`.`fillblank_id`, `part_fillblank`.`index` FROM `fillblank`, `part_fillblank` 
             WHERE `part_fillblank`.`part_id`='$part_id' AND `part_fillblank`.`fillblank_id`=`fillblank`.`id`";
         $result = $this->db->query($sql)->fetchAll();
         if ($result != null)
@@ -1409,8 +1418,9 @@ class Examination extends Zend_Db
                 $index = $row['index'];
                 $answer = $row['answer'];
                 $score = $row['score'];
-                $answer_count = count(explode('#', $answer));
-                $part_struct[$index] = array('type' => 'fillblank', 'fillblank_id' => $fillblank_id, 'answer_count' => $answer_count, 'score' => $score);
+                $answer_count = count(explode('#',$answer));
+                $category = $row['category'];
+                $part_struct[$index] = array('type' => 'fillblank', 'category' => $category, 'fillblank_id' => $fillblank_id, 'answer' => $answer,  'answer_count' => $answer_count, 'score' => $score);
             }
         }
         return $part_struct;
@@ -1678,6 +1688,147 @@ class Examination extends Zend_Db
     	else
     		return NULL;	
     }
+    
+     /**
+     * 获取Part名字
+     * @param integer $examination_id 
+     * @access public
+     * @return array|null
+     */
+    public function getPartsNamesByExamId($examination_id)
+    {
+        $sql = " SELECT  `part`.`id` ,  `part`.`name` 
+            FROM  `examination` ,  `paper_part` ,  `part` 
+            WHERE  `examination`.`id` =  '$examination_id'
+            AND  `examination`.`paper_id` =  `paper_part`.`paper_id` 
+            AND  `paper_part`.`part_id` =  `part`.`id` ";
+        $result = $this->db->query($sql)->fetchAll();
+        if (null == $result) return null;
+        else return $result;
+    }
+
+    /**
+     * 获取FusionCharts使用的xml
+     * @param mixed $examination_id 
+     * @param mixed $student_id 
+     * @access public
+     * @return void
+     */
+    function getfcxml($examination_id, $student_id)
+    {
+        $result = $this->getStudentScore($student_id, $examination_id);
+        if (null == $result)
+        {
+            $parts_score = array(0);
+            $total_score = 0;
+        }
+        else
+        {
+            $total_score = $result[0]['total_score'];
+            $parts_score = explode('#', $result[0]['parts_score']);
+        }
+        $parts_names = $this->getPartsNamesByExamId($examination_id);
+        $sets;
+        foreach ($parts_names as $key => $part)
+        {
+            if (array_key_exists($key, $parts_score))
+                $sets[$part['name']] = $parts_score[$key];
+        }
+        $sets['总分'] = $total_score;
+        $xml = "";
+        $xml .= "<graph bgColor='ffffff' caption='本次考试成绩' xaxisname='' yaxisname='得分' canvasbgcolor='F1F1F1' animation='1' numdivlines='3' divLineColor='333333' decimalPrecision='0' showLegend='1' showColumnShadow='1' yAxisMaxValue='100'>";
+        foreach ($sets as $name => $value)
+        {
+            $xml .= "<set name='$name' value='$value' color='009900' showValues='1' alpha='100'/>";
+        }
+        $xml .= "</graph>";
+        return $xml;
+    }
+    
+    public function getExamFillblankAnswer($examination_id)
+    {
+        $paper_struct = $this->getPaperStruct($this->getPaperIdByExamId($examination_id));
+        //$exam_answer = $this->_resolveanswer($this->getExamAnswer($examination_id));
+        $answer = array();
+        foreach ($paper_struct as $index => $part)
+        {
+            $part_id = $part['part_id'];
+            $part_struct = $part['part_struct'];
+            foreach ($part_struct as $sof)
+            {
+                if ($sof['type'] == 'fillblank')
+                {
+                    $sof['part_index'] = $index;
+                    array_push($answer, $sof);
+                }
+            }
+        }
+        return $answer;
+    }
+
+    public function getNextStudentFillblankAnswer($examination_id, &$current_offset, &$out_student_id)
+    {
+        $paper_struct = $this->getPaperStruct($this->getPaperIdByExamId($examination_id));
+        $sql = "SELECT `student_id`,`answer` FROM `student_answer` WHERE `examination_id`='$examination_id' LIMIT 1 OFFSET $current_offset";
+        $result = $this->db->query($sql)->fetchAll();
+        if (null == $result)
+        {
+            $current_offset = null;
+            return null;
+        }
+        $out_student_id = $result[0]['student_id'];
+        $studentanswer = $this->_resolveanswer($result[0]['answer']);
+        $answer = array();
+        foreach ($paper_struct as $index => $part)
+        {
+            $count = 0;
+            $part_id = $part['part_id'];
+            foreach ($part as $sof)
+            {
+                if ($sof['type'] == 'fillblank')
+                {
+                    $f_answer = array();
+                    for ($i = 0; $i<$sof['answer_count']; $i++)
+                    {
+                        array_push($f_answer, $studentanswer[$part_id][$count]);
+                        $count++;
+                    }
+                    $sof['answer'] = $f_answer;
+                    $sof['part_index'] = $index;
+                    array_push($answer, $sof);
+                }
+                else
+                {
+                    $count += $sof['answer_count'];
+                }
+            }
+        }
+        return $answer;
+    }
+
+    public function addFillblankScore($examination_id, $student_id, $arr_score)
+    {
+        $current_score = $this->getStudentScore($student_id, $examination_id);
+        if (null == $current_score)
+        {
+            return;
+        }
+        else
+        {
+            $str_new_score = "";
+            $new_total = 0;
+            $c_parts_score = explode('#', $current_score['parts_score']);
+            foreach ($c_parts_score as $key => $value)
+            {
+                if ($str_new_score != "") $str_new_score .= '#';
+                $new_total += ($value + $arr_score[$key]);
+                $str_new_score .= ($value + $arr_score[$key]);
+            }
+            $this->updateStudentScore($student_id, $examination_id, $str_new_score, $new_total);
+        }
+    }
+    
+    
 }
 
 

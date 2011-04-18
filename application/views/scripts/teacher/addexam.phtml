@@ -84,6 +84,7 @@ a:hover{ color:#900; text-decoration:underline;}
 	background:url(../images/login_Btn_hover.gif);}
 -->
 </style>
+
 </head>
 <script type="text/javascript" src="../js/jquery_corner.js"></script>
 <script type="text/javascript">
@@ -101,7 +102,7 @@ a:hover{ color:#900; text-decoration:underline;}
 		if(flag == 'writing')
 		{
 			document.getElementById("editContent").innerHTML = '<textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>';
-			CKEDITOR.replace( 'writing_answer' );
+			CKEDITOR.replace( 'writing_answer',{toolbarStartupExpanded:false,height:350} );
 		}else{
 			if(flag == 'fastReading'){
 				document.getElementById("editContent").innerHTML = '<textarea class="ckeditor" id="editor1" name="editor1" rows="15"></textarea>开始题号：<input type="text" id="startNum" name="startNum"/>结束题号：<input type="text" id="endNum" name="endNum"/><input id="addBtn" type="button" onclick="add_answer()" value="添加选择题答案" /><br>开始题号：<input type="text" id="fstartNum" name="fstartNum"/>结束题号：<input type="text" id="fendNum" name="fendNum"/><input id="addBtn" type="button" onclick="add_fill_answer()" value="添加填空题答案" /><div id="answers"></div><div id="fanswers"></div><div id="audioFile"></div>';
@@ -118,7 +119,7 @@ a:hover{ color:#900; text-decoration:underline;}
 				document.getElementById('audioFile').innerHTML = '添加音频：<input type="file" id="audio" name="audio" />';
 			}
 		}
-		CKEDITOR.replace( 'editor1' );
+		CKEDITOR.replace( 'editor1',{toolbarStartupExpanded:false,height:350} );
 	}
 	//添加答案选框
 	function add_answer(){
@@ -194,12 +195,15 @@ a:hover{ color:#900; text-decoration:underline;}
 					}
 				?>		
 			</div>
+			<br>
+				<a style="color:#f00;" href="../201006.doc">下载测试Word文档</a>
+			<br/>
 		</div>
 		<div id="" style="width:700px;">
 		<input id="preview" type="button" value="预览"><br/>
 			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center">写作</div>
 			<div id="editContent">
-          <textarea class="ckeditor" id="editor1" name="writing" rows="15"></textarea> <br/>答案：<textarea class="ckeditor" id="writing_answer" name="writing_answer" rows="15"></textarea>
+				<script type="text/javascript">$(document).ready(function(){ replaceContent('writing','写作'); })</script>
 			</div><br/>
 			本题总分：<input type="text" name="score" /><br/>
 			<input type="hidden" id="partType" name="partType" value="writing"><br>

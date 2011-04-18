@@ -35,8 +35,9 @@
 		$hms = explode(':', $date[1]);
 		$endTime = mktime($hms[0],$hms[1],$hms[2],$ymd[1],$ymd[2],$ymd[0]);
 		
-		$now = time()+8*60*60;
-		
+		//$now = time()+8*60*60; //windows
+		$now = time();  //Linux
+
 		if($now>$startTime && $now<$endTime)
 		{
 			echo "<a style='color:#f00' href='doexam?examination_id=".$value['id']."&paper_id=".$value['paper_id']."'>进入考试</a>";
