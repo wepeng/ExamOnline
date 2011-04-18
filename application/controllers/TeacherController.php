@@ -1290,31 +1290,6 @@ class TeacherController extends Zend_Controller_Action
 	//monyxie: begin
     //
 
-    
-
-    /**
-     * 此动作执行对某次考试的全部学生的改卷
-     * @access public
-     * @return void
-     */
-//    public function checkexamanswerAction()
-//    {
-//		$this->sys->checkLogined();
-//		$recent_exam = $this->examination->getRecentlyExam();
-//		$this->view->getRecentlyExamList = $recent_exam;
-//        if (isset($_POST['examId']))
-//        {
-//            $examination_id = $_POST['examId'];
-//            echo "<p id='beginInfo'>正在改卷...</p>\n";
-//            if ($this->examination->_checkexamanswer($examination_id) === true)
-//                echo "<p id='doneInfo'>完成.<a href='managescore'>查看成绩</a></p>\n";
-//            else
-//                echo "<p id='errorInfo'>有错误发生,操作未完成.<a href='managescore'>查看成绩</a></p>\n";
-//        }
-//    }
-
-   
-
     /**
      * 此动作执行单个学生的改卷
      * @access public
