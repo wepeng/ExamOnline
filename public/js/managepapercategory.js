@@ -9,7 +9,7 @@ $(document).ready(function(){
 				url: 'getpapercategoryjsondata',
 					dataType: 'json',
 					colModel : [
-					{display: ' 试 卷ID', name : 'id', width : 40, sortable : true, align: 'center'},
+					{display: '试 卷ID', name : 'id', width : 40, sortable : true, align: 'center'},
 					{display: '试卷类型名称', name : 'name', width : 140, sortable : true, align: 'center'}
 					],
 					buttons : [
@@ -21,22 +21,21 @@ $(document).ready(function(){
 					{separator: true}
 					],
 					searchitems : [
-					{display: '名称', name : 'name'},
+					{display: '名称', name : 'name'}
 					],
 					sortname: "id",
 					sortorder: "asc",
 					usepager: true,
 					title: '试卷分类管理',
 					useRp: true,
-					rp: 30,
+					rp: 60,
 					rpOptions :[30,50,60],
 					pagestat:'显示第{from}条到{to}条，共{total}条数据。',
 					procmsg:'正在处理，请稍后...',
 					showTableToggleBtn: true,
 					width:'auto',
 					height: (winH-155),
-					resizable:false,
-					checkbox:true
+					resizable:false
 			}
 	);   
 	

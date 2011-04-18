@@ -20,7 +20,7 @@ $(document).ready(function(){
 			buttons : [
 			{name: '修 改', bclass: 'edit', onpress: goToDo},
 			{separator: true},
-			{name: '删 除', bclass: 'delete', onpress : goToDo},
+			{name: '删 除', bclass: 'delete', onpress : goToDo}
 			],
 			searchitems : [
 					{display: '学号', name : 'username', isdefault: true},

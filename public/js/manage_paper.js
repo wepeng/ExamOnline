@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	var winW=  document.documentElement.clientWidth;
 	var winH = document.documentElement.clientHeight;
@@ -6,22 +7,24 @@ $(document).ready(function(){
 			{
 				url: 'paperlist',
 					dataType: 'json',
+					
 					colModel : [
-				{display: 'ID', name : 'id', width : 50, sortable : true, align: 'center', hide: false},
+				{display: 'ID', name : 'id', width : 50, sortable : true, align: 'center'},
 				{display: '试 卷 名', name : 'title', width : 200, sortable : true, align: 'left'},
-				{display: '类别ID', name : 'category_id',hide:true },
+				{display: '类别ID', name : 'category_id',width: 100, hide:true },
 				{display: '类 别', name : 'category_name', width : 100, sortable : true, align: 'left'},
-				{display: '试 卷 说  明', name : 'introduction', width : 200, sortable : true, align: 'left'},
+				{display: '试 卷 说 明', name : 'introduction', width : 200, sortable : true, align: 'left'},
 				{display: '试听页面', name : 'listening_test', width : 200, sortable : true, align: 'left', hide: true},
 				{display: '试卷时长(分钟)', name : 'time', width : 100, sortable : true, align: 'left'}
 				],
-					buttons : [
+					
+				buttons : [
 					{name: '编 辑', bclass: 'edit', onpress: goToDo},
 					{separator: true},
 					{name: '添 加', bclass: 'add', onpress : goToDo},
 					{separator: true},
 					{name: '删 除', bclass: 'delete', onpress : goToDo},
-					{separator: true},
+					{separator: true}
 					],
 					searchitems : [
 					{display: '试卷名', name : 'title',isdefault: true}
@@ -38,10 +41,11 @@ $(document).ready(function(){
 					showTableToggleBtn: true,
 					width:'auto',
 					height: (winH-155),
-					resizable:false,
+					resizable:false
+					
 			}
+			
 	);   
-	
 $('div.pSearch').click();
 /* 显示提示信 息*/
 function alert_msg(msg){			
