@@ -52,6 +52,7 @@
 			 onChangeSort: false,//当改变排序时
 			 onSuccess: false,//成功后执行
 			 onSubmit: false // 调用自定义的计算函数
+			
 		  }, p);
 		  		
 
@@ -942,6 +943,7 @@
 			var tDiv2 = document.createElement('div');
 			tDiv2.className = 'tDiv2';
 			
+			
 			for (i=0;i<p.buttons.length;i++)
 				{
 					var btn = p.buttons[i];
@@ -1125,7 +1127,7 @@
 		$(t).before(g.bDiv);
 		$(g.bDiv)
 		.css({ height: (p.height=='auto') ? 'auto' : p.height+"px"})
-		.scroll(function (e) {g.scroll()})
+		//.scroll(function (e) {g.scroll()})
 		.append(t)
 		;
 		

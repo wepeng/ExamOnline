@@ -14,13 +14,13 @@ $(document).ready(function(){
 				{display: '结 束 时 间', name : 'endTime', width : 150, sortable : true, align: 'center'},
 				{display: '所用试卷类别', name : 'category_name', width : 100, sortable : true, align: 'center'}
 				],
-					buttons : [
-					{name: '编 辑', bclass: 'edit', onpress: goToDo},
+				buttons : [
+					{name:'编 辑', bclass: 'edit', onpress: goToDo},
 					{separator: true},
-					{name: '添 加', bclass: 'add', onpress : goToDo},
+					{name:'添 加', bclass: 'add', onpress : goToDo},
 					{separator: true},
-					{name: '删 除', bclass: 'delete', onpress : goToDo},
-					{separator: true},
+					{name:'删 除', bclass: 'delete', onpress : goToDo},
+					{separator: true}
 					],
 					searchitems : [
 					{display: '考试名', name : 'name'},
@@ -38,7 +38,7 @@ $(document).ready(function(){
 					showTableToggleBtn: true,
 					width:'auto',
 					height: (winH-155),
-					resizable:false,
+					resizable:false
 			}
 	);   
 	
