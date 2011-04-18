@@ -20,38 +20,38 @@
 		p = $.extend({
 			 height: 200, //default height
 			 width: 'auto', //auto width
-			 striped: true, //¸ôĞĞ²»Í¬ÑùÊ½
+			 striped: true, //éš”è¡Œä¸åŒæ ·å¼
 			 novstripe: false,
-			 minwidth: 30,  //ÁĞµÄ×îĞ¡¿í¶È
-			 minheight: 80, //ÁĞµÄ×îĞ¡¸ß¶È
-			 resizable: true, //ÊÇ·ñ¿ÉÉìËõ
-			 url: false, //ajax·½Ê½¶ÔÓ¦µÄurlµØÖ·
-			 method: 'POST', // Êı¾İ·¢ËÍ·½Ê½
-			 dataType: 'xml', // Êı¾İ¼ÓÔØµÄÀàĞÍ
-			 checkbox:false,//ÊÇ·ñÒª¶àÑ¡¿ò
-			 errormsg: 'Connection Error',//´íÎóÌáÉıĞÅÏ¢
-			 usepager: false, //ÊÇ·ñ·ÖÒ³
-			 nowrap: true, //ÊÇ·ñ²»»»ĞĞ
-			 page: 1, //Ä¬ÈÏµ±Ç°Ò³
-			 total: 1, //×ÜÒ³ÃæÊı
-			 useRp: true, //ÊÇ·ñ¿ÉÒÔ¶¯Ì¬ÉèÖÃÃ¿Ò³ÏÔÊ¾µÄ½á¹ûÊı
-			 rp: 15, // Ã¿Ò³Ä¬ÈÏµÄ½á¹ûÊı
-			 rpOptions: [10,15,20,25,40],//¿ÉÑ¡ÔñÉè¶¨µÄÃ¿Ò³½á¹ûÊı
-			 title: false,//ÊÇ·ñ°üº¬±êÌâ
-			 pagestat: 'Displaying {from} to {to} of {total} items',//ÏÔÊ¾µ±Ç°Ò³ºÍ×ÜÒ³ÃæµÄÑùÊ½
-			 procmsg: 'Processing, please wait ...',//ÕıÔÚ´¦ÀíµÄÌáÊ¾ĞÅÏ¢
-			 query: '',//ËÑË÷²éÑ¯µÄÌõ¼ş
-			 qtype: '',//ËÑË÷²éÑ¯µÄÀà±ğ
-			 nomsg: 'No items',//ÎŞ½á¹ûµÄÌáÊ¾ĞÅÏ¢
+			 minwidth: 30,  //åˆ—çš„æœ€å°å®½åº¦
+			 minheight: 80, //åˆ—çš„æœ€å°é«˜åº¦
+			 resizable: true, //æ˜¯å¦å¯ä¼¸ç¼©
+			 url: false, //ajaxæ–¹å¼å¯¹åº”çš„urlåœ°å€
+			 method: 'POST', // æ•°æ®å‘é€æ–¹å¼
+			 dataType: 'xml', // æ•°æ®åŠ è½½çš„ç±»å‹
+			 checkbox:false,//æ˜¯å¦è¦å¤šé€‰æ¡†
+			 errormsg: 'Connection Error',//é”™è¯¯æå‡ä¿¡æ¯
+			 usepager: false, //æ˜¯å¦åˆ†é¡µ
+			 nowrap: true, //æ˜¯å¦ä¸æ¢è¡Œ
+			 page: 1, //é»˜è®¤å½“å‰é¡µ
+			 total: 1, //æ€»é¡µé¢æ•°
+			 useRp: true, //æ˜¯å¦å¯ä»¥åŠ¨æ€è®¾ç½®æ¯é¡µæ˜¾ç¤ºçš„ç»“æœæ•°
+			 rp: 15, // æ¯é¡µé»˜è®¤çš„ç»“æœæ•°
+			 rpOptions: [10,15,20,25,40],//å¯é€‰æ‹©è®¾å®šçš„æ¯é¡µç»“æœæ•°
+			 title: false,//æ˜¯å¦åŒ…å«æ ‡é¢˜
+			 pagestat: 'Displaying {from} to {to} of {total} items',//æ˜¾ç¤ºå½“å‰é¡µå’Œæ€»é¡µé¢çš„æ ·å¼
+			 procmsg: 'Processing, please wait ...',//æ­£åœ¨å¤„ç†çš„æç¤ºä¿¡æ¯
+			 query: '',//æœç´¢æŸ¥è¯¢çš„æ¡ä»¶
+			 qtype: '',//æœç´¢æŸ¥è¯¢çš„ç±»åˆ«
+			 nomsg: 'No items',//æ— ç»“æœçš„æç¤ºä¿¡æ¯
 			 minColToggle: 1, //minimum allowed column to be hidden
 			 showToggleBtn: true, //show or hide column toggle popup
-			 hideOnSubmit: true,//Òş²ØÌá½»
-			 autoload: true,//×Ô¶¯¼ÓÔØ
-			 blockOpacity: 0.5,//Í¸Ã÷¶ÈÉèÖÃ
-			 onToggleCol: false,//µ±ÔÚĞĞÖ®¼ä×ª»»Ê±
-			 onChangeSort: false,//µ±¸Ä±äÅÅĞòÊ±
-			 onSuccess: false,//³É¹¦ºóÖ´ĞĞ
-			 onSubmit: false // µ÷ÓÃ×Ô¶¨ÒåµÄ¼ÆËãº¯Êı
+			 hideOnSubmit: true,//éšè—æäº¤
+			 autoload: true,//è‡ªåŠ¨åŠ è½½
+			 blockOpacity: 0.5,//é€æ˜åº¦è®¾ç½®
+			 onToggleCol: false,//å½“åœ¨è¡Œä¹‹é—´è½¬æ¢æ—¶
+			 onChangeSort: false,//å½“æ”¹å˜æ’åºæ—¶
+			 onSuccess: false,//æˆåŠŸåæ‰§è¡Œ
+			 onSubmit: false // è°ƒç”¨è‡ªå®šä¹‰çš„è®¡ç®—å‡½æ•°
 		  }, p);
 		  		
 
@@ -409,7 +409,7 @@
 
 				//build new body
 				var tbody = document.createElement('tbody');
-				//ĞŞ¸Äjson¸ñÊ½
+				//ä¿®æ”¹jsonæ ¼å¼
 				if (p.dataType=='json')
 				{
 					$.each
@@ -425,7 +425,7 @@
 							//by anson
 							var tdVal = [];
 							
-							//¸øÃ¿ĞĞÌí¼Óid
+							//ç»™æ¯è¡Œæ·»åŠ id
 							if (p.rowId){
 								
 								$.each( data.rows[i], function(x,y){
@@ -441,9 +441,9 @@
 							for (j=0;j<p.colModel.length;j++){
 								
 												var cm = p.colModel[j];
-												//È¡ÁĞÃû
+												//å–åˆ—å
 												var seleceName = cm.name;
-												//¹ıÂËkey
+												//è¿‡æ»¤key
 												$.each( data.rows[i], function(x,y){
 																			   
 																			   if(seleceName==x){tdVal.push(y)} 
@@ -484,7 +484,7 @@
 							}							
 							
 							
-							//Ìí¼Ó¶àÑ¡
+							//æ·»åŠ å¤šé€‰
 							if (p.checkbox) {
 
 								var cth = $('<th/>');
@@ -796,7 +796,7 @@
 									{ 
 										var obj = (e.target || e.srcElement); if (obj.href || obj.type) return true;
 										$(this).toggleClass('trSelected');
-										//Ìí¼Ó¶àÑ¡¿ò
+										//æ·»åŠ å¤šé€‰æ¡†
 										if(p.checkbox){
 											if($(this).hasClass('trSelected')){
 												$(this).find('input')[0].checked=true;
@@ -1376,7 +1376,7 @@
 					}
 			);
 			
-			//Ìí¼Ó¶àÑ¡¿ò
+			//æ·»åŠ å¤šé€‰æ¡†
 			if (p.checkbox) {
 				$('tr',g.hDiv).each(
 					function(){
