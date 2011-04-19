@@ -41,7 +41,7 @@ $(document).ready(function(){
 				height: (winH-155),
 				resizable:false,
 				nomsg: "没有内容...",
-				errormsg : '连接错误!',
+				errormsg : '连接错误!'
 		}
 );   
 

@@ -20,7 +20,7 @@
 	//设置已选择的试卷名和试卷ID
 	function setExamName(title,exam_id)
 	{
-		document.getElementById("examName").textContent = title;
+		document.getElementById("examName").innerHTML = title;
 		document.getElementById("examId").value = exam_id;		
 
 		var url = "setreexam?exam_id="+exam_id;

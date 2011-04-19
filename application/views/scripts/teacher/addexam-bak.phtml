@@ -18,7 +18,7 @@
 	//替换提交标识
 	function replaceContent(flag,title)
 	{		
-		document.getElementById("showTitle").textContent = title;
+		document.getElementById("showTitle").innerHTML = title;
 		document.getElementById("partType").value = flag;	
 		
 		if (CKEDITOR.instances['writing']) {

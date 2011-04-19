@@ -91,7 +91,7 @@ a:hover{ color:#900; text-decoration:underline;}
 	//替换提交标识
 	function replaceContent(flag,title)
 	{		
-		document.getElementById("showTitle").textContent = title;
+		document.getElementById("showTitle").innerHTML = title;
 		document.getElementById("partType").value = flag;	
 		if (CKEDITOR.instances['writing_answer']) {
 				CKEDITOR.instances['writing_answer'].destroy();
@@ -203,7 +203,9 @@ a:hover{ color:#900; text-decoration:underline;}
 		<input id="preview" type="button" value="预览"><br/>
 			<div id="showTitle" style="color:#006; font-weight:bold; font-size:20px; text-align:center">写作</div>
 			<div id="editContent">
-				<script type="text/javascript">$(document).ready(function(){ replaceContent('writing','写作'); })</script>
+				<script type="text/javascript">
+					$(document).ready(function(){ replaceContent('writing','写作'); })
+				</script>
 			</div><br/>
 			本题总分：<input type="text" name="score" /><br/>
 			<input type="hidden" id="partType" name="partType" value="writing"><br>

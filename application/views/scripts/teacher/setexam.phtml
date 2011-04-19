@@ -99,7 +99,7 @@ function paging(){
 	//设置已选择的试卷名和试卷ID
 	function setPaperName(title,paper_id)
 	{
-		document.getElementById("paperTitle").textContent = title;
+		document.getElementById("paperTitle").innerHTML = title;
 		document.getElementById("paperName").value = title;
 		document.getElementById("paperId").value = paper_id;
 	}
