@@ -41,7 +41,7 @@ $(function(){
 		var newp1 = $.trim($('input[name=newpassword]').val());
 		var newp2 = $.trim($('input[name=newpassword2]').val());
 		if(pwd!=''){
-			alert(pwd);
+			//alert(pwd);
 			if(newp1!=''){
 				if(newp2!==''){
 					if(newp1==newp2){
